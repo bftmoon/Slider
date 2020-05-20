@@ -1,0 +1,14 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  max-width: 150px;
+  background: #7f7f7f;
+  padding: 30px;
+
+
+  &__input-label {
+    display: flex;
+    flex-direction: column;
+  }
+
+}

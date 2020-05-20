@@ -1,0 +1,13 @@
+.example {
+  &__slider {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  &__slider_vertical {
+    width: auto;
+    max-width: initial;
+    height: 300px;
+  }
+}
+
