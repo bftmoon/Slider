@@ -1,0 +1,117 @@
+$pointer_size: 14px;
+$line_size: 9px;
+
+.slider {
+  padding: 30px;
+  display: flex;
+
+  &_horizontal {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  &_vertical {
+    height: 100%;
+  }
+
+  &__body {
+    position: relative;
+    display: flex;
+    background: whitesmoke;
+    border: 1px solid dimgray {
+      radius: 8px;
+    }
+
+    &_horizontal {
+      height: $line_size;
+      width: 100%;
+    }
+
+    &_vertical {
+      width: $line_size;
+      height: 100%;
+      flex-direction: column;
+    }
+  }
+
+  &__point {
+    position: absolute;
+    z-index: 1;
+    height: $pointer_size;
+    width: $pointer_size;
+    background: coral;
+    border: 1px solid whitesmoke;
+    border-radius: 50%;
+    display: flex;
+
+    &:hover{
+      z-index: 2;
+    }
+
+    &_horizontal {
+      bottom: calc(50% - #{$pointer_size / 2});
+      justify-content: center;
+    }
+
+    &_vertical {
+      left: calc(50% - #{$pointer_size / 2});
+      align-items: center;
+    }
+  }
+
+  &__tooltip {
+    position: absolute;
+
+    font-size: 12px;
+    color: whitesmoke;
+    background: #2d2d2d;
+    border: 1px solid whitesmoke {
+      radius: 4px;
+    }
+    padding: 3px;
+    &_horizontal{
+      bottom: 140%;
+    }
+    &_vertical{
+      left: -220%;
+    }
+  }
+
+  &__range {
+    height: 100%;
+    width: 100%;
+    background: coral;
+  }
+
+  &__scale {
+    display: inline-flex;
+    justify-content: space-evenly;
+    margin: 5px;
+
+    &_horizontal{
+      margin-top: 6px;
+      height: 14px;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+    }
+    &_vertical{
+      margin-left:6px;
+      width: 14px;
+      flex-direction: column;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+    }
+  }
+
+  &__scale-line {
+    background: black;
+    &_horizontal{
+      height: 50%;
+      width: 1px;
+    }
+    &_vertical{
+      width: 50%;
+      height: 1px;
+    }
+  }
+}
