@@ -1,6 +1,6 @@
-import IOptions from "./IOptions";
+import IModel from "./IModel";
 
-class Model implements IOptions{
+class Model implements IModel{
     min = 0;
     max = 100;
     current = {min: 30, max: 80};
@@ -11,7 +11,7 @@ class Model implements IOptions{
     linesCount={min: 2, max: 30}
     withScale=true;
 
-    constructor(options?: IOptions) {
+    constructor(options?: IModel) {
         if (options) {
             for (let key in options) {
                 if (key === 'current' || key === 'linesCount'){

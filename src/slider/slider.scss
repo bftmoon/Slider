@@ -1,5 +1,6 @@
 $pointer_size: 14px;
 $line_size: 9px;
+$scale_border: 2px solid rgba(0, 0, 0, 0.5);
 
 .slider {
   display: inline-flex;
@@ -106,16 +107,16 @@ $line_size: 9px;
     &_horizontal {
       margin-top: 6px;
       height: 18px;
-      border-left: 1px solid black;
-      border-right: 1px solid black;
+      border-left: $scale_border;
+      border-right: $scale_border;
     }
 
     &_vertical {
       margin-left: 6px;
       width: 16px;
       flex-direction: column;
-      border-top: 1px solid black;
-      border-bottom: 1px solid black;
+      border-top: $scale_border;
+      border-bottom: $scale_border;
     }
 
     &_hidden {
@@ -124,16 +125,17 @@ $line_size: 9px;
   }
 
   &__scale-line {
-    background: black;
+    background: coral;
+    opacity: 0.7;
 
     &_horizontal {
       height: 50%;
-      width: 1px;
+      width: 2px;
     }
 
     &_vertical {
       width: 50%;
-      height: 1px;
+      height: 2px;
     }
   }
 }

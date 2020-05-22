@@ -15,15 +15,29 @@ class Presenter {
   init(parent: HTMLDivElement) {
     if (parent === undefined)
       throw new Error('Parent element undefined');
-    this.view.render(parent, this.model);
+    this.view.render(parent, {...this.model, percents: this.model.current});
+    const percent = {
+      min: this.calcPercent(this.model.max, this.model.min, this.model.current.min),
+      max: this.calcPercent(this.model.max, this.model.min, this.model.current.max)
+    };
+    const tooltips = {
+      min: this.model.current.min.toString(),
+      max: this.model.current.max.toString()
+    };
+    this.view.updatePosition(this.model.isVertical, percent, tooltips);
     this.view
       .subscribe(SliderEvent.sliderClick, this.handleSliderClick)
       .subscribe(SliderEvent.pointMove, this.handlePointMove);
   }
 
+  calcPercent(max: number, min: number, current: number) {
+    return 100 / (max - min) * current;
+  }
+
+// todo:percentage on update
   private handleSliderClick = (data: ISliderClickFullData) => {
     const modelValue = this.model.isVertical ?
-      this.calcValue(data.point.y, data.sizes.height)
+      this.calcValue(data.sizes.height - data.point.y, data.sizes.height)
       : this.calcValue(data.point.x, data.sizes.width);
 
     if (this.isSameCurrent(modelValue)) {
@@ -44,7 +58,6 @@ class Presenter {
     return modelValue === this.model.current.min || modelValue === this.model.current.max;
   }
 
-  // todo: min in bottom
   updatePosition(modelValue: number, isMin = true) {
     if (isMin) {
       if (modelValue <= this.model.current.max) {
@@ -91,7 +104,7 @@ class Presenter {
     if (this.model.isVertical) {
       this.updatePosition(
         this.calcValue(
-          data.point.y - data.parent.point.y,
+          data.parent.height - data.point.y + data.parent.point.y,
           data.parent.height
         ),
         data.isMin

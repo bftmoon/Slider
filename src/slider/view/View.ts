@@ -1,5 +1,5 @@
 import Scale from "./scale/Scale";
-import IOptions from "../model/IOptions";
+import {IOptions} from "../model/IModel";
 import Body from "./body/Body";
 import CssClassUtil from "./CssClassUtil";
 import Observer from "../observer/Observer";
@@ -21,7 +21,8 @@ class View extends Observer {
            isRange,
            withTooltip,
            withScale,
-           linesCount
+           linesCount,
+           percents
          }: IOptions) {
 
     this.element = element;
@@ -44,10 +45,10 @@ class View extends Observer {
     withScale ? this.scale.updateLines(10, isVertical) : this.scale.toggle();
 
     element.append(fragment);
-    this.updatePosition(isVertical, {min: current.min, max: current.max}, {
-      min: current.min.toString(),
-      max: current.max.toString()
-    });
+    // this.updatePosition(isVertical, {min: percents.min, max: percents.max}, {
+    //   min: current.min.toString(),
+    //   max: current.max.toString()
+    // });
   }
 
   // todo: real number and percents
@@ -56,6 +57,10 @@ class View extends Observer {
     percent: { min?: number, max?: number },
     tooltips?: { min?: string, max?: string }
   ) {
+    if (isVertical) {
+      percent.min = 100 - percent.min;
+      percent.max = 100 - percent.max;
+    }
     this.body.updatePosition(isVertical, percent, tooltips);
   }
 

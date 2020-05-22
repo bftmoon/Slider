@@ -1,12 +1,12 @@
 import Presenter from "./presenter/Presenter";
 import Model from "./model/Model";
 import View from "./view/View";
-import IOptions from "./model/IOptions";
+import IModel from "./model/IModel";
 
 
 class Slider extends Presenter {
 
-  constructor(options?: IOptions) {
+  constructor(options?: IModel) {
     super(new Model(options), new View());
   }
 }
