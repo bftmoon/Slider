@@ -1,13 +1,22 @@
 .example {
-  &__slider {
-    width: 100%;
-    max-width: 300px;
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
   }
 
-  &__slider_vertical {
-    width: auto;
-    max-width: initial;
-    height: 300px;
+  &__wrapper {
+    width: 100%;
+    max-width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__slider {
+    &_long {
+      width: 100%;
+      max-width: initial;
+    }
   }
 }
 

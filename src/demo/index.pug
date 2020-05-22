@@ -2,7 +2,16 @@ doctype html
 head
   title Slider Demo
 body.example
-  .example__slider.js-example__slider
-  .example__slider.js-example__slider_ranged
-  .example__slider.example__slider_vertical.js-example__slider_vertical
-
+  .example__slider_long.js-example__slider_long
+  .example__container
+    - let i=0;
+      while i < 5
+        .example__wrapper
+          .example__slider.example__slider_horizontal.js-example__slider
+          - i++
+  .example__container
+    - i = 0;
+    while i < 5
+      .example__wrapper
+        .example__slider.example__slider_vertical.js-example__slider_vertical
+        - i++

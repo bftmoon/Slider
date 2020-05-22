@@ -3,6 +3,20 @@ import './theme.scss'
 import '../slider/slider.scss'
 import Slider from "../slider/Slider";
 
-new Slider({isRange: false, withTooltip: false, withScale: false}).init(document.querySelector('.js-example__slider'));
-new Slider({withScale:false}).init(document.querySelector('.js-example__slider_ranged'));
-new Slider({isVertical: true}).init(document.querySelector('.js-example__slider_vertical'));
+$('.js-example__slider_vertical').each((index, el) => {
+    new Slider({
+        isVertical: true,
+        isRange: index > 0,
+        withTooltip: index > 1,
+        withScale: index > 2,
+        step: index > 3 ? 5 : 1
+    }).init(el as HTMLDivElement);
+})
+$('.js-example__slider').each((index, el) => {
+    new Slider({
+        isRange: index > 0, withTooltip: index > 1, withScale: index > 2, step: index > 3 ? 5 : 1
+    }).init(el as HTMLDivElement);
+})
+$('.js-example__slider_long').each((index, el) => {
+    new Slider().init(el as HTMLDivElement);
+})
