@@ -1,31 +1,51 @@
 import IViewElement from "../IViewElement";
 import CssClassUtil from "../CssClassUtil";
 import Tooltip from "../tooltip/Tooltip";
-import IPoint from "./IPoint";
+import Observer from "../../observer/Observer";
+import SliderEvent from "../../observer/SliderEvent";
+import {IAbsolutePoint} from "../SugarAttrInterfaces";
 
-class Point implements IViewElement {
-    element: HTMLDivElement;
-    tooltip: Tooltip;
+class Point extends Observer implements IViewElement {
+  static readonly radius = 7; //todo: css search
+  element: HTMLDivElement;
+  tooltip = new Tooltip();
 
-    buildHtml(isVertical: boolean, {withTooltip, position, value}: IPoint) {
-        this.element = document.createElement("div");
-        CssClassUtil.initClass(this, isVertical);
-        this.updatePosition(position, isVertical);
+  buildHtml(isVertical: boolean) {
+    this.element = document.createElement("div");
+    CssClassUtil.initClass(this, isVertical);
+    this.element.addEventListener('mousedown', this.handlePointMouseDown);
+    this.element.append(this.tooltip.buildHtml(isVertical));
+    return this.element;
+  }
 
-        if (withTooltip) {
-            this.tooltip = new Tooltip();
-            this.element.append(this.tooltip.buildHtml(isVertical, value));
-        }
-        return this.element;
+  private handlePointMouseDown = () => {
+    document.addEventListener('mouseup', this.handleMouseUp);
+    document.addEventListener('mousemove', this.handleMouseMove);
+  }
+  private handleMouseUp = () => {
+    document.removeEventListener('mouseup', this.handleMouseUp);
+    document.removeEventListener('mousemove', this.handleMouseMove);
+  }
+  private handleMouseMove = (event: MouseEvent) => {
+    this.notify(SliderEvent.pointMove, {x: event.clientX, y: event.clientY} as IAbsolutePoint);
+  }
+
+  updatePosition(isVertical: boolean, percent: number, tooltip?: string) {
+    if (isVertical) {
+      this.element.style.bottom = 100 - percent - 100 / this.element.parentElement.offsetHeight * Point.radius + '%';
+    } else {
+      this.element.style.left = percent - 100 / this.element.parentElement.offsetWidth * Point.radius + '%';
     }
+    if (tooltip) this.tooltip.updateText(tooltip)
+  }
 
-    updatePosition = (positionPercent: number, isVertical: boolean) => {
-        this.element.style[isVertical ? 'bottom' : 'left'] = `calc(${positionPercent}% - 7px)`;
-    }
+  toggle() {
+    CssClassUtil.toggleHidden(this);
+  }
 
-    removeHtml = () => {
-        this.element.remove();
-    }
+  toggleTooltip() {
+    this.tooltip.toggle();
+  }
 }
 
 export default Point;
