@@ -1,9 +1,7 @@
-import IOptions from "../model/IOptions";
-
 interface IViewElement {
-    element: HTMLElement;
+  element: HTMLElement;
 
-    buildHtml(...args: any[]): HTMLElement;
+  buildHtml(isVertical: boolean, ...args: any[]): HTMLElement;
 }
 
 export default IViewElement;

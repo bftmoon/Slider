@@ -2,15 +2,16 @@ $pointer_size: 14px;
 $line_size: 9px;
 
 .slider {
-  padding: 30px;
-  display: flex;
+  display: inline-flex;
 
   &_horizontal {
+    padding: 30px $pointer_size/2;
     width: 100%;
     flex-direction: column;
   }
 
   &_vertical {
+    padding: $pointer_size/2 30px;
     height: 100%;
   }
 
@@ -44,7 +45,7 @@ $line_size: 9px;
     border-radius: 50%;
     display: flex;
 
-    &:hover{
+    &:hover {
       z-index: 2;
     }
 
@@ -56,6 +57,10 @@ $line_size: 9px;
     &_vertical {
       left: calc(50% - #{$pointer_size / 2});
       align-items: center;
+    }
+
+    &_hidden {
+      display: none;
     }
   }
 
@@ -69,11 +74,17 @@ $line_size: 9px;
       radius: 4px;
     }
     padding: 3px;
-    &_horizontal{
+
+    &_horizontal {
       bottom: 140%;
     }
-    &_vertical{
+
+    &_vertical {
       left: -220%;
+    }
+
+    &_hidden {
+      display: none;
     }
   }
 
@@ -81,35 +92,46 @@ $line_size: 9px;
     height: 100%;
     width: 100%;
     background: coral;
+
+    &_hidden {
+      display: none;
+    }
   }
 
   &__scale {
     display: inline-flex;
     justify-content: space-evenly;
-    margin: 5px;
+    margin: 3px;
 
-    &_horizontal{
+    &_horizontal {
       margin-top: 6px;
-      height: 14px;
+      height: 18px;
       border-left: 1px solid black;
       border-right: 1px solid black;
     }
-    &_vertical{
-      margin-left:6px;
-      width: 14px;
+
+    &_vertical {
+      margin-left: 6px;
+      width: 16px;
       flex-direction: column;
       border-top: 1px solid black;
       border-bottom: 1px solid black;
+    }
+
+    &_hidden {
+      display: none;
     }
   }
 
   &__scale-line {
     background: black;
-    &_horizontal{
+
+    &_horizontal {
       height: 50%;
       width: 1px;
     }
-    &_vertical{
+
+    &_vertical {
       width: 50%;
       height: 1px;
     }
