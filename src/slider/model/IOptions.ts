@@ -1,5 +1,5 @@
 interface IOptions {
-    current?: number[];
+    current?: { min: number, max: number };
     max?: number;
     min?: number;
     step?: number;
@@ -7,7 +7,7 @@ interface IOptions {
     isRange?: boolean;
     withTooltip?: boolean;
     withScale?: boolean;
-    scaleLinesCount?: number;
+    linesCount?: { min: number, max: number };
 }
 
 export default IOptions;
