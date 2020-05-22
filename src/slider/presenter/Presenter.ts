@@ -64,7 +64,7 @@ class Presenter {
         this.model.current.min = modelValue;
         this.view.updatePosition(
           this.model.isVertical,
-          {min: modelValue},
+          {min: this.calcPercent(this.model.max, this.model.min, modelValue)},
           {min: modelValue.toString()}
         );
       }
@@ -73,7 +73,7 @@ class Presenter {
         this.model.current.max = modelValue;
         this.view.updatePosition(
           this.model.isVertical,
-          {max: modelValue},
+          {max:  this.calcPercent(this.model.max, this.model.min, modelValue)},
           {max: modelValue.toString()}
         );
       }

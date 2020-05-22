@@ -29,10 +29,16 @@ class View extends Observer {
     const fragment = document.createDocumentFragment();
     CssClassUtil.initHtmlClass(this.element, isVertical);
 
+    if(isVertical){
     fragment.append(
+      this.scale.buildHtml(isVertical),
       this.body.buildHtml(isVertical),
-      this.scale.buildHtml(isVertical)
-    )
+    )} else {
+      fragment.append(
+        this.body.buildHtml(isVertical),
+        this.scale.buildHtml(isVertical)
+      )
+    }
 
     this.body
       .subscribe(SliderEvent.sliderClick, this.handleBodyClick)

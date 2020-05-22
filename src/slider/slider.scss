@@ -81,7 +81,7 @@ $scale_border: 2px solid rgba(0, 0, 0, 0.5);
     }
 
     &_vertical {
-      left: -220%;
+      left: 140%;
     }
 
     &_hidden {
@@ -112,11 +112,12 @@ $scale_border: 2px solid rgba(0, 0, 0, 0.5);
     }
 
     &_vertical {
-      margin-left: 6px;
+      margin-right: 6px;
       width: 16px;
       flex-direction: column;
       border-top: $scale_border;
       border-bottom: $scale_border;
+      align-items: flex-end;
     }
 
     &_hidden {
