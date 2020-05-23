@@ -4,6 +4,7 @@ $scale_border: 2px solid rgba(0, 0, 0, 0.5);
 
 .slider {
   display: inline-flex;
+  user-select: none;
 
   &_horizontal {
     padding: 30px $pointer_size/2;
@@ -20,6 +21,7 @@ $scale_border: 2px solid rgba(0, 0, 0, 0.5);
     position: relative;
     display: flex;
     background: whitesmoke;
+    cursor: pointer;
     border: 1px solid dimgray {
       radius: 8px;
     }
@@ -45,6 +47,7 @@ $scale_border: 2px solid rgba(0, 0, 0, 0.5);
     border: 1px solid whitesmoke;
     border-radius: 50%;
     display: flex;
+    cursor: grab;
 
     &:hover {
       z-index: 2;
@@ -93,6 +96,7 @@ $scale_border: 2px solid rgba(0, 0, 0, 0.5);
     height: 100%;
     width: 100%;
     background: coral;
+    border-radius: 8px;
 
     &_hidden {
       display: none;
@@ -103,6 +107,7 @@ $scale_border: 2px solid rgba(0, 0, 0, 0.5);
     display: inline-flex;
     justify-content: space-evenly;
     margin: 3px;
+    cursor: pointer;
 
     &_horizontal {
       margin-top: 6px;

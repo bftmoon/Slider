@@ -1,3 +1,5 @@
+import MinMaxPosition from "../model/MinMaxPosition";
+
 interface IRelativePoint {
   x: number;
   y: number;
@@ -27,7 +29,7 @@ interface ISliderClickFullData {
 interface IPointMoveFullData {
   parent: IParentData;
   point: IAbsolutePoint;
-  isMin: boolean;
+  position: MinMaxPosition;
 }
 
 export {IAbsolutePoint, IParentData, IRelativePoint, IPointMoveFullData, IParentSizes, ISliderClickFullData};
