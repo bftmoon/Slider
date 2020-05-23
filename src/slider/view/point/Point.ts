@@ -4,7 +4,7 @@ import Tooltip from "../tooltip/Tooltip";
 import Observer from "../../observer/Observer";
 import SliderEvent from "../../observer/SliderEvent";
 import IPoint from "../../common-interfaces/IPoint";
-import {IAbsolutePoint} from "../../common-interfaces/NotifyInterfaces";
+import {IAbsolutePoint, IParentSizes} from "../../common-interfaces/NotifyInterfaces";
 
 class Point extends Observer implements IViewElement {
   static readonly radius = 7; //todo: css search
@@ -22,7 +22,6 @@ class Point extends Observer implements IViewElement {
   private handlePointMouseDown = () => {
     document.addEventListener('mouseup', this.handleMouseUp);
     document.addEventListener('mousemove', this.handleMouseMove);
-    // todo: grabbing
   }
 
   private handleMouseUp = () => {
@@ -34,17 +33,21 @@ class Point extends Observer implements IViewElement {
     this.notify(SliderEvent.pointMove, {x: event.clientX, y: event.clientY} as IAbsolutePoint);
   }
 
-  updatePosition(isVertical: boolean, point: IPoint) {
+  updatePosition(isVertical: boolean, point: IPoint, parent: IParentSizes) {
     if (isVertical) {
-      this.element.style.bottom = 100 - point.percent - 100 / this.element.parentElement.offsetHeight * Point.radius + '%';
+      this.element.style.bottom = 100 - point.percent - 100 / parent.height * Point.radius + '%';
     } else {
       this.element.style.left = point.percent - 100 / this.element.parentElement.offsetWidth * Point.radius + '%';
     }
-    if (point.tooltip !== undefined) this.tooltip.updateText(point.tooltip)
+    if (point.tooltip !== undefined) this.tooltip.update(point.tooltip, isVertical)
   }
 
   toggle() {
     CssClassUtil.toggleHidden(this);
+  }
+
+  getRadius(){
+    return this.element.offsetHeight / 2;
   }
 
   toggleTooltip() {

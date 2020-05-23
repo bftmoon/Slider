@@ -1,6 +1,7 @@
 import IViewElement from "../IViewElement";
 import CssClassUtil from "../CssClassUtil";
 import MinMax from "../../common-interfaces/MinMax";
+import {IParentSizes} from "../../common-interfaces/NotifyInterfaces";
 
 class Range implements IViewElement {
   element: HTMLDivElement;
@@ -11,9 +12,9 @@ class Range implements IViewElement {
     return this.element;
   }
 
-  updatePosition(isVertical: boolean, percent: MinMax<number>) {
+  updatePosition(isVertical: boolean, percent: MinMax<number>, sizes: IParentSizes) {
     if (isVertical) {
-      const heightPart = this.element.parentElement.clientHeight / 100;
+      const heightPart = sizes.height / 100;
       if (percent.min !== undefined) this.element.style.marginBottom = heightPart * (100 - percent.min) + 'px';
       if (percent.max !== undefined) this.element.style.marginTop = heightPart * percent.max + 'px';
     } else {

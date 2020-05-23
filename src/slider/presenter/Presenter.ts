@@ -2,7 +2,7 @@ import Model from "../model/Model";
 import View from "../view/View";
 import SliderEvent from "../observer/SliderEvent";
 import MinMaxPosition from "../model/MinMaxPosition";
-import {IPointMoveFullData, ISliderClickFullData} from "../common-interfaces/NotifyInterfaces";
+import {IMinMaxPointChangeData, IPointChangeData} from "../common-interfaces/NotifyInterfaces";
 
 class Presenter {
   model: Model;
@@ -16,21 +16,20 @@ class Presenter {
   init(parent: HTMLDivElement) {
     if (parent === undefined)
       throw new Error('Parent element undefined');
-    this.view.render(parent, this.model.getBoolOptions(), this.model.getCurrentPoints());
+    this.view.render(
+      parent,
+      this.model.getBoolOptions(),
+      this.model.getCurrentPoints(),
+      this.calcScaleLinesCount()
+    );
     this.view
       .subscribe(SliderEvent.sliderClick, this.handleSliderClick)
       .subscribe(SliderEvent.pointMove, this.handlePointMove);
   }
 
-  private handleSliderClick = (data: ISliderClickFullData) => {
-    const modelValue = this.model.isVertical ?
-      this.calcValue(data.sizes.height - data.point.y, data.sizes.height)
-      : this.calcValue(data.point.x, data.sizes.width);
-
-    if (this.model.isSameCurrent(modelValue)) {
-      return;
-    }
-
+  private handleSliderClick = (data: IPointChangeData) => {
+    const modelValue = this.calcModelValueWithOrientation(data);
+    if (this.model.isSameCurrent(modelValue)) return;
     this.updatePosition(modelValue, this.model.selectPosition(modelValue))
   }
 
@@ -50,10 +49,10 @@ class Presenter {
     }
   }
 
-  calcValue(viewValue: number, sliderSize: number): number {
+  calcModelValue(viewValue: number, sliderSize: number): number {
     if (viewValue <= 0) return this.model.border.min;
     if (viewValue >= sliderSize) return this.model.border.max;
-    
+
     const modelSize = this.model.getBorderSize();
     let modelPosition = modelSize * viewValue / sliderSize;
     const diff = modelPosition % this.model.step;
@@ -69,11 +68,22 @@ class Presenter {
     return modelPosition + this.model.border.min;
   }
 
-  private handlePointMove = (data: IPointMoveFullData) => {
+  calcModelValueWithOrientation(data: IPointChangeData) {
+    return this.model.isVertical ?
+      this.calcModelValue(data.sizes.height - data.point.y, data.sizes.height)
+      : this.calcModelValue(data.point.x, data.sizes.width);
+  }
+
+  calcScaleLinesCount(): number {
+    const count = this.model.getBorderSize() / this.model.step;
+    if (count < this.model.linesCount.min) return this.model.linesCount.min;
+    if (count > this.model.linesCount.max) return this.model.linesCount.max;
+    return count;
+  }
+
+  private handlePointMove = (data: IMinMaxPointChangeData) => {
     this.updatePosition(
-      this.model.isVertical ?
-        this.calcValue(data.parent.height - data.point.y + data.parent.point.y, data.parent.height)
-        : this.calcValue(data.point.x - data.parent.point.x, data.parent.width),
+      this.calcModelValueWithOrientation(data),
       data.position
     );
   }

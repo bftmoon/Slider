@@ -9,7 +9,7 @@ class Model implements IModel {
 
   border = {min: 0, max: 100};
   step = 1;
-  linesCount = {min: 2, max: 30}
+  linesCount = {min: 0, max: 10}
 
   isRange = true;
   isVertical = false;

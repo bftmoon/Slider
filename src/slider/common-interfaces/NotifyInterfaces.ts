@@ -21,15 +21,13 @@ interface IParentSizes {
   height: number;
 }
 
-interface ISliderClickFullData {
+interface IPointChangeData {
   sizes: IParentSizes;
   point: IRelativePoint;
 }
 
-interface IPointMoveFullData {
-  parent: IParentData;
-  point: IAbsolutePoint;
+interface IMinMaxPointChangeData extends IPointChangeData {
   position: MinMaxPosition;
 }
 
-export {IAbsolutePoint, IParentData, IRelativePoint, IPointMoveFullData, IParentSizes, ISliderClickFullData};
+export {IAbsolutePoint, IParentData, IRelativePoint, IMinMaxPointChangeData, IParentSizes, IPointChangeData};

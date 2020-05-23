@@ -2,6 +2,7 @@ import IViewElement from "../IViewElement";
 import CssClassUtil from "../CssClassUtil";
 import Observer from "../../observer/Observer";
 import SliderEvent from "../../observer/SliderEvent";
+import PositionUtil from "../PositionUtil";
 
 class Scale extends Observer implements IViewElement {
   element: HTMLElement;
@@ -20,7 +21,7 @@ class Scale extends Observer implements IViewElement {
   }
 
   updateLines(count: number, isVertical: boolean) {
-    const diff = count - 2 - this.element.childElementCount;
+    const diff = count - this.element.childElementCount;
     if (diff > 0) {
       const fragment = document.createDocumentFragment();
       for (let i = 0; i < diff; i++) {
@@ -39,7 +40,7 @@ class Scale extends Observer implements IViewElement {
   }
 
   private handleScaleClick = (event: MouseEvent) => {
-    this.notify(SliderEvent.sliderClick, {x: event.offsetX, y: event.offsetY});
+    this.notify(SliderEvent.sliderClick, PositionUtil.calculatePoint(this.element, event));
   }
 }
 

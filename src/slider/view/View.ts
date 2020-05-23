@@ -6,12 +6,13 @@ import SliderEvent from "../observer/SliderEvent";
 import IViewOptions from "../common-interfaces/IViewOptions";
 import MinMax from "../common-interfaces/MinMax";
 import IPoint from "../common-interfaces/IPoint";
-import {IPointMoveFullData, IRelativePoint, ISliderClickFullData} from "../common-interfaces/NotifyInterfaces";
+import {IMinMaxPointChangeData, IRelativePoint, IPointChangeData} from "../common-interfaces/NotifyInterfaces";
 
 class View extends Observer {
   element: HTMLDivElement;
   body: Body = new Body();
   scale: Scale = new Scale();
+  pointRadius: number;
 
   render(element: HTMLDivElement,
          {
@@ -20,7 +21,8 @@ class View extends Observer {
            withTooltip,
            withScale,
          }: IViewOptions,
-         points: MinMax<IPoint>
+         points: MinMax<IPoint>,
+         linesCount: number
   ) {
     this.element = element;
     const fragment = document.createDocumentFragment();
@@ -44,8 +46,7 @@ class View extends Observer {
     this.scale.subscribe(SliderEvent.sliderClick, this.handleScaleClick);
 
     if (!withTooltip) this.body.toggleTooltip();
-    // todo: lines count in presenter
-    withScale ? this.scale.updateLines(10, isVertical) : this.scale.toggle();
+    withScale ? this.scale.updateLines(linesCount, isVertical) : this.scale.toggle();
 
     element.append(fragment);
     this.updatePosition(isVertical, points);
@@ -67,13 +68,23 @@ class View extends Observer {
     this.notifyWithSize(data);
   }
 
-  private handlePointMove = (data: IPointMoveFullData) => {
+  private handlePointMove = (data: IMinMaxPointChangeData) => {
     this.notify(SliderEvent.pointMove, data);
   }
 
   private notifyWithSize(data: IRelativePoint) {
-    this.notify(SliderEvent.sliderClick, {point: data, sizes: this.body.getSize()} as ISliderClickFullData);
+    this.notify(SliderEvent.sliderClick, {
+      point: data,
+      sizes: this.body.getSize()
+    } as IPointChangeData);
   }
+
+  // addPointRadius(data: IRelativePoint): IRelativePoint{
+  //   return {
+  //     x: data.x + this.pointRadius,
+  //     y: data.u + this.pointRadius,
+  //   }
+  // }
 }
 
 export default View;

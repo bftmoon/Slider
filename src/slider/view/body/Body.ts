@@ -7,12 +7,8 @@ import SliderEvent from "../../observer/SliderEvent";
 import MinMaxPosition from "../../model/MinMaxPosition";
 import MinMax from "../../common-interfaces/MinMax";
 import IPoint from "../../common-interfaces/IPoint";
-import {
-  IAbsolutePoint,
-  IParentData, IParentSizes,
-  IPointMoveFullData,
-  IRelativePoint
-} from "../../common-interfaces/NotifyInterfaces";
+import {IAbsolutePoint, IMinMaxPointChangeData, IParentSizes,} from "../../common-interfaces/NotifyInterfaces";
+import PositionUtil from "../PositionUtil";
 
 class Body extends Observer implements IViewElement {
   element: HTMLElement;
@@ -46,24 +42,22 @@ class Body extends Observer implements IViewElement {
     const {left, top, height, width} = this.element.getBoundingClientRect();
     this.notify(
       SliderEvent.pointMove, {
-        parent: {
-          width,
-          height,
-          point: {
-            x: left,
-            y: top
-          }
-        } as IParentData,
-        point: data,
+        sizes: {width, height},
+        point: {x: data.x - left, y: data.y - top},
         position
-      } as IPointMoveFullData
+      } as IMinMaxPointChangeData
     );
   }
 
   toggleRange(isVertical: boolean, minPoint?: IPoint) {
-    this.points.min.updatePosition(isVertical, minPoint || {percent: 0});
+    const sizes = this.getSize();
+    this.points.min.updatePosition(isVertical, minPoint || {percent: 0}, sizes);
     this.points.min.toggle();
-    this.range.updatePosition(isVertical, {min: minPoint ? minPoint.percent : 0});
+    if (minPoint) {
+      this.range.updatePosition(isVertical, {min: minPoint.percent}, sizes);
+    } else {
+      this.range.updatePosition(isVertical, {min: isVertical ? 100 : 0}, sizes);
+    }
   }
 
   toggleTooltip() {
@@ -72,29 +66,21 @@ class Body extends Observer implements IViewElement {
   }
 
   updatePosition(isVertical: boolean, points: MinMax<IPoint>) {
+    const sizes = this.getSize();
     const percents: MinMax<number> = {};
     if (points.min !== undefined) {
-      this.points.min.updatePosition(isVertical, points.min);
+      this.points.min.updatePosition(isVertical, points.min, sizes);
       percents.min = points.min.percent;
     }
     if (points.max !== undefined) {
-      this.points.max.updatePosition(isVertical, points.max);
+      this.points.max.updatePosition(isVertical, points.max, sizes);
       percents.max = points.max.percent;
     }
-    this.range.updatePosition(isVertical, percents);
+    this.range.updatePosition(isVertical, percents, sizes);
   }
 
   private handleSliderBodyClick = (event: MouseEvent) => {
-    this.notify(
-      SliderEvent.sliderClick,
-      this.calculatePoint(event.target === this.element, event)
-    );
-  }
-
-  private calculatePoint(canUseRelative: boolean, event: MouseEvent): IRelativePoint {
-    if (canUseRelative) return {x: event.offsetX, y: event.offsetY};
-    const {left, top} = this.element.getBoundingClientRect();
-    return {x: event.clientX - left, y: event.clientY - top};
+    this.notify(SliderEvent.sliderClick, PositionUtil.calculatePoint(this.element, event));
   }
 
   getSize(): IParentSizes {
@@ -103,6 +89,7 @@ class Body extends Observer implements IViewElement {
       height: this.element.offsetHeight
     };
   }
+
 }
 
 export default Body;
