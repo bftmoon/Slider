@@ -4,12 +4,20 @@ import Point from "../point/Point";
 import Range from "../range/Range";
 import Observer from "../../observer/Observer";
 import SliderEvent from "../../observer/SliderEvent";
-import {IAbsolutePoint, IParentData, IParentSizes, IPointMoveFullData, IRelativePoint} from "../SugarAttrInterfaces";
+import MinMaxPosition from "../../model/MinMaxPosition";
+import MinMax from "../../common-interfaces/MinMax";
+import IPoint from "../../common-interfaces/IPoint";
+import {
+  IAbsolutePoint,
+  IParentData, IParentSizes,
+  IPointMoveFullData,
+  IRelativePoint
+} from "../../common-interfaces/NotifyInterfaces";
 
 class Body extends Observer implements IViewElement {
   element: HTMLElement;
   range: Range = new Range();
-  points: Point[] = [new Point(), new Point()];
+  points: MinMax<Point> = {min: new Point(), max: new Point()};
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement("div");
@@ -17,13 +25,13 @@ class Body extends Observer implements IViewElement {
 
     this.element.addEventListener('click', this.handleSliderBodyClick);
     this.element.append(
-      this.points[0].buildHtml(isVertical),
-      this.points[1].buildHtml(isVertical),
+      this.points.min.buildHtml(isVertical),
+      this.points.max.buildHtml(isVertical),
       this.range.buildHtml(isVertical)
     );
 
-    this.points[0].subscribe(SliderEvent.pointMove, this.handleMinPointMove);
-    this.points[1].subscribe(SliderEvent.pointMove, this.handleMaxPointMove);
+    this.points.min.subscribe(SliderEvent.pointMove, this.handleMinPointMove);
+    this.points.max.subscribe(SliderEvent.pointMove, this.handleMaxPointMove);
     return this.element;
   }
 
@@ -31,10 +39,10 @@ class Body extends Observer implements IViewElement {
     this.handlePointMove(data);
   }
   private handleMaxPointMove = (data: IAbsolutePoint) => {
-    this.handlePointMove(data, false);
+    this.handlePointMove(data, MinMaxPosition.max);
   }
 
-  private handlePointMove = (data: IAbsolutePoint, isMin = true) => {
+  private handlePointMove = (data: IAbsolutePoint, position = MinMaxPosition.min) => {
     const {left, top, height, width} = this.element.getBoundingClientRect();
     this.notify(
       SliderEvent.pointMove, {
@@ -47,40 +55,46 @@ class Body extends Observer implements IViewElement {
           }
         } as IParentData,
         point: data,
-        isMin
+        position
       } as IPointMoveFullData
     );
   }
 
-  toggleRange() {
-    this.points[1].toggle();
-    this.range.toggle();
+  toggleRange(isVertical: boolean, minPoint?: IPoint) {
+    this.points.min.updatePosition(isVertical, minPoint || {percent: 0});
+    this.points.min.toggle();
+    this.range.updatePosition(isVertical, {min: minPoint ? minPoint.percent : 0});
   }
 
   toggleTooltip() {
-    this.points[0].toggleTooltip();
-    this.points[1].toggleTooltip();
+    this.points.min.toggleTooltip();
+    this.points.max.toggleTooltip();
   }
 
-  updatePosition(isVertical: boolean, percent: { min?: number; max?: number }, tooltips?: { min?: string, max?: string }) {
-    if (percent.min !== undefined) this.points[0].updatePosition(isVertical, percent.min, tooltips.min);
-    if (percent.max !== undefined) this.points[1].updatePosition(isVertical, percent.max, tooltips.max);
-    this.range.updatePosition(isVertical, percent);
+  updatePosition(isVertical: boolean, points: MinMax<IPoint>) {
+    const percents: MinMax<number> = {};
+    if (points.min !== undefined) {
+      this.points.min.updatePosition(isVertical, points.min);
+      percents.min = points.min.percent;
+    }
+    if (points.max !== undefined) {
+      this.points.max.updatePosition(isVertical, points.max);
+      percents.max = points.max.percent;
+    }
+    this.range.updatePosition(isVertical, percents);
   }
 
   private handleSliderBodyClick = (event: MouseEvent) => {
-    if (event.target === this.element) {
-      this.notify(
-        SliderEvent.sliderClick,
-        {x: event.offsetX, y: event.offsetY} as IRelativePoint
-      );
-    } else {
-      const {left, top} = this.element.getBoundingClientRect();
-      this.notify(
-        SliderEvent.sliderClick,
-        {x: event.clientX - left, y: event.clientY - top} as IRelativePoint
-      );
-    }
+    this.notify(
+      SliderEvent.sliderClick,
+      this.calculatePoint(event.target === this.element, event)
+    );
+  }
+
+  private calculatePoint(canUseRelative: boolean, event: MouseEvent): IRelativePoint {
+    if (canUseRelative) return {x: event.offsetX, y: event.offsetY};
+    const {left, top} = this.element.getBoundingClientRect();
+    return {x: event.clientX - left, y: event.clientY - top};
   }
 
   getSize(): IParentSizes {

@@ -14,8 +14,8 @@ class Tooltip implements IViewElement {
     CssClassUtil.toggleHidden(this);
   }
 
-  updateText(text: string) {
-    this.element.innerText = text;
+  updateText(text: any) {
+    this.element.innerText = text.toString();
   }
 }
 

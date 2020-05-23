@@ -1,27 +1,16 @@
-interface IModel {
-  current?: { min: number, max: number };
-  max?: number;
-  min?: number;
-  step?: number;
-  isVertical?: boolean;
-  isRange?: boolean;
-  withTooltip?: boolean;
-  withScale?: boolean;
-  linesCount?: { min: number, max: number };
-}
+import MinMax from "../common-interfaces/MinMax";
 
-interface IOptions extends IModel {
-  current?: { min: number, max: number };
-  max?: number;
-  min?: number;
+interface IModel {
+  border?: MinMax<number>;
   step?: number;
+  linesCount?: MinMax<number>;
+
   isVertical?: boolean;
   isRange?: boolean;
   withTooltip?: boolean;
   withScale?: boolean;
-  linesCount?: { min: number, max: number };
-  percents?: { min: number, max: number };
+
+  [index: string]: any;
 }
 
 export default IModel;
-export {IOptions};

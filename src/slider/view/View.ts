@@ -1,10 +1,12 @@
 import Scale from "./scale/Scale";
-import {IOptions} from "../model/IModel";
 import Body from "./body/Body";
 import CssClassUtil from "./CssClassUtil";
 import Observer from "../observer/Observer";
 import SliderEvent from "../observer/SliderEvent";
-import {IPointMoveFullData, IRelativePoint, ISliderClickFullData} from "./SugarAttrInterfaces";
+import IViewOptions from "../common-interfaces/IViewOptions";
+import MinMax from "../common-interfaces/MinMax";
+import IPoint from "../common-interfaces/IPoint";
+import {IPointMoveFullData, IRelativePoint, ISliderClickFullData} from "../common-interfaces/NotifyInterfaces";
 
 class View extends Observer {
   element: HTMLDivElement;
@@ -13,27 +15,23 @@ class View extends Observer {
 
   render(element: HTMLDivElement,
          {
-           current,
-           max,
-           min,
-           step,
            isVertical,
            isRange,
            withTooltip,
            withScale,
-           linesCount,
-           percents
-         }: IOptions) {
-
+         }: IViewOptions,
+         points: MinMax<IPoint>
+  ) {
     this.element = element;
     const fragment = document.createDocumentFragment();
     CssClassUtil.initHtmlClass(this.element, isVertical);
 
-    if(isVertical){
-    fragment.append(
-      this.scale.buildHtml(isVertical),
-      this.body.buildHtml(isVertical),
-    )} else {
+    if (isVertical) {
+      fragment.append(
+        this.scale.buildHtml(isVertical),
+        this.body.buildHtml(isVertical),
+      )
+    } else {
       fragment.append(
         this.body.buildHtml(isVertical),
         this.scale.buildHtml(isVertical)
@@ -45,29 +43,21 @@ class View extends Observer {
       .subscribe(SliderEvent.pointMove, this.handlePointMove);
     this.scale.subscribe(SliderEvent.sliderClick, this.handleScaleClick);
 
-    if (!isRange) this.body.toggleRange();
     if (!withTooltip) this.body.toggleTooltip();
     // todo: lines count in presenter
     withScale ? this.scale.updateLines(10, isVertical) : this.scale.toggle();
 
     element.append(fragment);
-    // this.updatePosition(isVertical, {min: percents.min, max: percents.max}, {
-    //   min: current.min.toString(),
-    //   max: current.max.toString()
-    // });
+    this.updatePosition(isVertical, points);
+    if (!isRange) this.body.toggleRange(isVertical);
   }
 
-  // todo: real number and percents
-  updatePosition(
-    isVertical: boolean,
-    percent: { min?: number, max?: number },
-    tooltips?: { min?: string, max?: string }
-  ) {
+  updatePosition(isVertical: boolean, points: MinMax<IPoint>) {
     if (isVertical) {
-      percent.min = 100 - percent.min;
-      percent.max = 100 - percent.max;
+      if (points.min !== undefined) points.min.percent = 100 - points.min.percent;
+      if (points.max !== undefined) points.max.percent = 100 - points.max.percent;
     }
-    this.body.updatePosition(isVertical, percent, tooltips);
+    this.body.updatePosition(isVertical, points);
   }
 
   private handleScaleClick = (data: IRelativePoint) => {
