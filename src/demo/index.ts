@@ -27,8 +27,6 @@ $('.js-example__slider_long_and_big').each((index, el) => {
   }).init(el as HTMLDivElement);
 })
 
-// todo: visible current
-
 function optionsGenerator(index: number): IModel {
   const option: IModel = {
     isRange: index > 0,

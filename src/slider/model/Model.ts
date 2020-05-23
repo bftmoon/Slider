@@ -4,7 +4,7 @@ import MinMax from "../common-interfaces/MinMax";
 import IPoint from "../common-interfaces/IPoint";
 import IViewOptions from "../common-interfaces/IViewOptions";
 
-class Model implements IModel {
+class Model {
   private _current = {min: 30, max: 80};
 
   border = {min: 0, max: 100};
@@ -21,14 +21,20 @@ class Model implements IModel {
   constructor(options?: IModel) {
     if (options) {
       for (let key in options) {
-        if (this[key].hasOwnProperty('min')) {
-          if (options[key].max !== undefined) this[key].max = options[key].max;
-          if (options[key].min !== undefined) this[key].min = options[key].min;
+        if (key==='current'){
+          Model.copyMinMax(this._current, options[key]);
+        } else if (this[key].hasOwnProperty('min')) {
+          Model.copyMinMax(this[key], options[key]);
         } else {
           this[key] = options[key];
         }
       }
     }
+  }
+
+  private static copyMinMax(thisOption: MinMax<any>, option: MinMax<any>){
+    if (option.max !== undefined) thisOption.max = option.max;
+    if (option.min !== undefined) thisOption.min = option.min;
   }
 
   setCurrent(current: MinMax<number>) {

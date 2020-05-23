@@ -7,7 +7,6 @@ import IPoint from "../../common-interfaces/IPoint";
 import {IAbsolutePoint, IParentSizes} from "../../common-interfaces/NotifyInterfaces";
 
 class Point extends Observer implements IViewElement {
-  static readonly radius = 7; //todo: css search
   element: HTMLDivElement;
   tooltip = new Tooltip();
 
@@ -35,9 +34,9 @@ class Point extends Observer implements IViewElement {
 
   updatePosition(isVertical: boolean, point: IPoint, parent: IParentSizes) {
     if (isVertical) {
-      this.element.style.bottom = 100 - point.percent - 100 / parent.height * Point.radius + '%';
+      this.element.style.bottom = 100 - point.percent - this.calculatePercentRadius(parent.height) + '%';
     } else {
-      this.element.style.left = point.percent - 100 / this.element.parentElement.offsetWidth * Point.radius + '%';
+      this.element.style.left = point.percent - this.calculatePercentRadius(parent.width) + '%';
     }
     if (point.tooltip !== undefined) this.tooltip.update(point.tooltip, isVertical)
   }
@@ -46,12 +45,12 @@ class Point extends Observer implements IViewElement {
     CssClassUtil.toggleHidden(this);
   }
 
-  getRadius(){
-    return this.element.offsetHeight / 2;
-  }
-
   toggleTooltip() {
     this.tooltip.toggle();
+  }
+
+  private calculatePercentRadius(parentSize: number) {
+    return 100 / parentSize * this.element.offsetWidth / 2;
   }
 }
 

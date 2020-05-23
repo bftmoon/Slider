@@ -3,4 +3,4 @@ enum MinMaxPosition {
   max = 'max',
 }
 
-export default MinMaxPosition; // todo: why error?
+export default MinMaxPosition;

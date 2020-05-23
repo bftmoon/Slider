@@ -4,6 +4,7 @@ interface IModel {
   border?: MinMax<number>;
   step?: number;
   linesCount?: MinMax<number>;
+  current?: MinMax<number>;
 
   isVertical?: boolean;
   isRange?: boolean;
