@@ -1,8 +1,12 @@
 import IViewElement from "../IViewElement";
-import CssClassUtil from "../CssClassUtil";
+import CssClassUtil from "../utils/CssClassUtil";
 
 class Tooltip implements IViewElement {
-  element: HTMLElement;
+  private element: HTMLElement;
+
+  getElement(): HTMLElement {
+    return this.element;
+  }
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
@@ -10,7 +14,7 @@ class Tooltip implements IViewElement {
     return this.element;
   }
 
-  toggle() {
+  toggleHidden() {
     CssClassUtil.toggleHidden(this);
   }
 
@@ -21,13 +25,17 @@ class Tooltip implements IViewElement {
       this.element.style.left = '';
       this.element.style.right = '';
       const rect = this.element.getBoundingClientRect();
-      if (rect.x < 0) {
+      if (rect.left < 0) {
         this.element.style.left = '0';
       }
-      if(rect.right > document.documentElement.offsetWidth){
+      if (rect.right > document.documentElement.offsetWidth) {
         this.element.style.right = '0'
       }
     }
+  }
+
+  toggleOrientation() {
+    CssClassUtil.toggleOrientation(this);
   }
 }
 
