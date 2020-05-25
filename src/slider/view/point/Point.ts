@@ -1,5 +1,5 @@
 import IViewElement from "../IViewElement";
-import CssClassUtil from "../CssClassUtil";
+import CssClassUtil from "../utils/CssClassUtil";
 import Tooltip from "../tooltip/Tooltip";
 import Observer from "../../observer/Observer";
 import SliderEvent from "../../observer/SliderEvent";
@@ -7,8 +7,12 @@ import IPoint from "../../common-interfaces/IPoint";
 import {IAbsolutePoint, IParentSizes} from "../../common-interfaces/NotifyInterfaces";
 
 class Point extends Observer implements IViewElement {
-  element: HTMLDivElement;
-  tooltip = new Tooltip();
+  private element: HTMLDivElement;
+  private tooltip = new Tooltip();
+
+  getElement(): HTMLElement {
+    return this.element;
+  }
 
   buildHtml(isVertical: boolean) {
     this.element = document.createElement("div");
@@ -46,11 +50,17 @@ class Point extends Observer implements IViewElement {
   }
 
   toggleTooltip() {
-    this.tooltip.toggle();
+    this.tooltip.toggleHidden();
   }
 
   private calculatePercentRadius(parentSize: number) {
     return 100 / parentSize * this.element.offsetWidth / 2;
+  }
+
+  toggleOrientation() {
+    this.element.removeAttribute('style');
+    CssClassUtil.toggleOrientation(this);
+    this.tooltip.toggleOrientation();
   }
 }
 

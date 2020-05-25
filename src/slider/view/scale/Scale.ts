@@ -1,11 +1,15 @@
 import IViewElement from "../IViewElement";
-import CssClassUtil from "../CssClassUtil";
+import CssClassUtil from "../utils/CssClassUtil";
 import Observer from "../../observer/Observer";
 import SliderEvent from "../../observer/SliderEvent";
-import PositionUtil from "../PositionUtil";
+import PositionUtil from "../utils/PositionUtil";
 
 class Scale extends Observer implements IViewElement {
-  element: HTMLElement;
+  private element: HTMLElement;
+
+  getElement(): HTMLElement {
+    return this.element;
+  }
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
@@ -42,6 +46,14 @@ class Scale extends Observer implements IViewElement {
   private handleScaleClick = (event: MouseEvent) => {
     this.notify(SliderEvent.sliderClick, PositionUtil.calculatePoint(this.element, event));
   }
+
+  toggleOrientation() {
+    CssClassUtil.toggleOrientation(this);
+    this.element.childNodes.forEach((child: ChildNode) => {
+      CssClassUtil.toggleHtmlOrientation(child as HTMLElement, 'scale-line');
+    })
+  }
+
 }
 
 export default Scale;

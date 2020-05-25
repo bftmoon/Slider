@@ -1,10 +1,14 @@
 import IViewElement from "../IViewElement";
-import CssClassUtil from "../CssClassUtil";
+import CssClassUtil from "../utils/CssClassUtil";
 import MinMax from "../../common-interfaces/MinMax";
 import {IParentSizes} from "../../common-interfaces/NotifyInterfaces";
 
 class Range implements IViewElement {
-  element: HTMLDivElement;
+  private element: HTMLDivElement;
+
+  getElement(): HTMLElement {
+    return this.element;
+  }
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
@@ -21,6 +25,10 @@ class Range implements IViewElement {
       if (percent.min !== undefined) this.element.style.marginLeft = percent.min + '%';
       if (percent.max !== undefined) this.element.style.marginRight = 100 - percent.max + '%'
     }
+  }
+
+  toggleOrientation(){
+    this.element.removeAttribute('style');
   }
 }
 
