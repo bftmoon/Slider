@@ -1,0 +1,25 @@
+mixin panel
+  .panel.js-panel
+    label.panel__input-label Min
+      input(name='min').panel__min
+    label.panel__input-label Max
+      input(name='max').panel__max
+    label.panel__input-label Step
+      input(name='step').panel__step
+    label.panel__input-label Current
+      input(name='currentMax').panel__current-max
+    label.panel__checkbox-label
+      input(type="checkbox" name='isRange').panel__range
+      | Is range
+      .panel__config
+        label.panel__input-label Current 2
+          input(name='currentMin').panel__current-min
+    label.panel__checkbox-label
+      input(type="checkbox" name='isVertical').panel__vertical
+      | Is vertical
+    label.panel__checkbox-label
+      input(type="checkbox" name='withTooltip').panel__tooltip
+      | With tooltip
+    label.panel__checkbox-label
+      input(type="checkbox" name='withScale').panel__scale
+      | With scale

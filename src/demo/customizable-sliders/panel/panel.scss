@@ -1,14 +1,19 @@
 .panel {
   display: flex;
   flex-direction: column;
-  max-width: 150px;
+  max-width: 250px;
   background: #7f7f7f;
   padding: 30px;
-
 
   &__input-label {
     display: flex;
     flex-direction: column;
   }
 
+  &__config{
+    display: none;
+  }
+  &__range:checked + &__config{
+    display: initial;
+  }
 }
