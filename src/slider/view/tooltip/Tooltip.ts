@@ -20,7 +20,6 @@ class Tooltip implements IViewElement {
 
   update(text: any, isVertical: boolean) {
     this.element.innerText = text.toString();
-
     if (!isVertical) {
       this.element.style.left = '';
       this.element.style.right = '';

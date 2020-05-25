@@ -54,7 +54,7 @@ class Body extends Observer implements IViewElement {
   }
 
   toggleRange() {
-    this.points.min.toggle();
+    this.points.min.toggleHidden();
   }
 
   toggleTooltip() {
@@ -73,7 +73,7 @@ class Body extends Observer implements IViewElement {
       this.points.max.updatePosition(isVertical, points.max, sizes);
       percents.max = points.max.percent;
     }
-    this.range.updatePosition(isVertical, percents, sizes);
+    this.range.updatePosition(isVertical, percents, sizes.height);
   }
 
   private handleSliderBodyClick = (event: MouseEvent) => {

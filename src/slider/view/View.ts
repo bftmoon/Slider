@@ -46,10 +46,10 @@ class View extends Observer {
   }
 
   updatePosition(isVertical: boolean, points: MinMax<IPoint>) {
-    if (isVertical) {
-      if (points.min !== undefined) points.min.percent = 100 - points.min.percent;
-      if (points.max !== undefined) points.max.percent = 100 - points.max.percent;
-    }
+    // if (isVertical) {
+    //   if (points.min !== undefined) points.min.percent = 100 - points.min.percent;
+    //   if (points.max !== undefined) points.max.percent = 100 - points.max.percent;
+    // }
     this.body.updatePosition(isVertical, points);
   }
 

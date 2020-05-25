@@ -38,14 +38,14 @@ class Point extends Observer implements IViewElement {
 
   updatePosition(isVertical: boolean, point: IPoint, parent: IParentSizes) {
     if (isVertical) {
-      this.element.style.bottom = 100 - point.percent - this.calculatePercentRadius(parent.height) + '%';
+      this.element.style.bottom = point.percent - this.calculatePercentRadius(parent.height) + '%';
     } else {
       this.element.style.left = point.percent - this.calculatePercentRadius(parent.width) + '%';
     }
     if (point.tooltip !== undefined) this.tooltip.update(point.tooltip, isVertical)
   }
 
-  toggle() {
+  toggleHidden() {
     CssClassUtil.toggleHidden(this);
   }
 
