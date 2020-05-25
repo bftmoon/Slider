@@ -5,7 +5,7 @@ import IPoint from "../common-interfaces/IPoint";
 import IViewOptions from "../common-interfaces/IViewOptions";
 
 class Model {
-  private current = {min: 0, max: 80};
+  protected current = {min: 0, max: 80};
 
   border = {min: 0, max: 100};
   step = 1;
@@ -156,6 +156,10 @@ class Model {
 
   toggleOrientation() {
     this.isVertical = !this.isVertical;
+  }
+
+  toggleScale() {
+    this.withScale = !this.withScale;
   }
 }
 
