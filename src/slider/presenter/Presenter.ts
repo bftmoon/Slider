@@ -5,7 +5,7 @@ import MinMaxPosition from "../model/MinMaxPosition";
 import {IMinMaxPointChangeData, IPointChangeData} from "../common-interfaces/NotifyInterfaces";
 import Observer from "../observer/Observer";
 
-class Presenter extends Observer{
+class Presenter extends Observer {
   protected model: Model;
   protected view: View;
 
@@ -22,11 +22,21 @@ class Presenter extends Observer{
       parent,
       this.model.getBoolOptions(),
       this.model.getCurrentPoints(),
-      this.calcScaleLinesCount()
+      this.model.step,
+      this.model.getBorderSize()
     );
     this.view
       .subscribe(SliderEvent.sliderClick, this.handleSliderClick)
       .subscribe(SliderEvent.pointMove, this.handlePointMove);
+    window.addEventListener('resize', this.handleWindowResize);
+  }
+
+  protected handleWindowResize = () => {
+    this.updateScaleLines(this.model.step);
+  }
+
+  protected updateScaleLines(step: number) {
+    this.view.updateScaleLines(step, this.model.getBorderSize(), this.model.isVertical);
   }
 
   private handleSliderClick = (data: IPointChangeData) => {
@@ -43,6 +53,8 @@ class Presenter extends Observer{
     }
   }
 
+  // todo: common percentage
+  // fix: on negative min anf positive max
   private calcModelValue(viewValue: number, sliderSize: number): number {
     if (viewValue <= 0) return this.model.border.min;
     if (viewValue >= sliderSize) return this.model.border.max;
@@ -56,13 +68,6 @@ class Presenter extends Observer{
     return this.model.isVertical ?
       this.calcModelValue(data.sizes.height - data.point.y, data.sizes.height)
       : this.calcModelValue(data.point.x, data.sizes.width);
-  }
-
-  protected calcScaleLinesCount(): number {
-    const count = this.model.getBorderSize() / this.model.step;
-    if (count < this.model.linesCount.min) return this.model.linesCount.min;
-    if (count > this.model.linesCount.max) return this.model.linesCount.max;
-    return count;
   }
 
   private handlePointMove = (data: IMinMaxPointChangeData) => {

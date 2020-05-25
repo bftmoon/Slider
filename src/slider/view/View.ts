@@ -21,7 +21,8 @@ class View extends Observer {
            withScale,
          }: IViewOptions,
          points: MinMax<IPoint>,
-         linesCount: number
+         step: number,
+         size: number
   ) {
     this.element = element;
     const fragment = document.createDocumentFragment();
@@ -30,26 +31,23 @@ class View extends Observer {
     fragment.append(
       this.body.buildHtml(isVertical),
       this.scale.buildHtml(isVertical)
-    )
+    );
 
     this.body
       .subscribe(SliderEvent.sliderClick, this.handleBodyClick)
-      .subscribe(SliderEvent.pointMove, this.handlePointMove);
+      .subscribe(SliderEvent.pointMove, this.handlePointMove)
+    ;
     this.scale.subscribe(SliderEvent.sliderClick, this.handleScaleClick);
 
     if (!withTooltip) this.body.toggleTooltip();
-    withScale ? this.scale.updateLines(linesCount, isVertical) : this.scale.toggle();
-
     element.append(fragment);
+
     this.updatePosition(isVertical, points);
     if (!isRange) this.body.toggleRange();
+    withScale ? this.scale.updateLines(step, size, isVertical) : this.scale.toggleHidden();
   }
 
   updatePosition(isVertical: boolean, points: MinMax<IPoint>) {
-    // if (isVertical) {
-    //   if (points.min !== undefined) points.min.percent = 100 - points.min.percent;
-    //   if (points.max !== undefined) points.max.percent = 100 - points.max.percent;
-    // }
     this.body.updatePosition(isVertical, points);
   }
 
@@ -85,12 +83,12 @@ class View extends Observer {
     this.scale.toggleOrientation();
   }
 
-  updateScaleLines(count: number, isVertical: boolean) {
-    this.scale.updateLines(count, isVertical)
+  updateScaleLines(step: number, size: number, isVertical: boolean) {
+    this.scale.updateLines(step, size, isVertical);
   }
 
   toggleScale() {
-    this.scale.toggle();
+    this.scale.toggleHidden();
   }
 }
 
