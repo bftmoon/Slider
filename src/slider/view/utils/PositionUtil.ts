@@ -1,4 +1,4 @@
-import {IRelativePoint} from "../common-interfaces/NotifyInterfaces";
+import {IRelativePoint} from "../../common-interfaces/NotifyInterfaces";
 
 class PositionUtil {
   static calculatePoint(element: HTMLElement, event: MouseEvent): IRelativePoint {

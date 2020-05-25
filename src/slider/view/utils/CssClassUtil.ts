@@ -1,11 +1,11 @@
-import IViewElement from "./IViewElement";
+import IViewElement from "../IViewElement";
 
 class CssClassUtil {
   static readonly MAIN_PREFIX = 'slider'
 
   static initClass(viewElement: IViewElement, isVertical: boolean) {
     const cssClass = CssClassUtil.getFullName(viewElement);
-    viewElement.element.classList.add(cssClass, cssClass + (isVertical ? '_vertical' : '_horizontal'));
+    viewElement.getElement().classList.add(cssClass, cssClass + (isVertical ? '_vertical' : '_horizontal'));
   }
 
   static initHtmlClass(element: HTMLElement, isVertical: boolean, name?: string) {
@@ -14,19 +14,19 @@ class CssClassUtil {
   }
 
   static toggleOrientation(viewElement: IViewElement) {
-    const cssClass = CssClassUtil.getFullName(viewElement)
-    viewElement.element.classList.toggle(cssClass + '_vertical ')
-    viewElement.element.classList.toggle(cssClass + '_horizontal');
+    const cssClass = CssClassUtil.getFullName(viewElement);
+    viewElement.getElement().classList.toggle(cssClass + '_vertical')
+    viewElement.getElement().classList.toggle(cssClass + '_horizontal');
   }
 
-  static toggleHtmlOrientation(element: HTMLElement, name: string) {
-    const cssClass = CssClassUtil.MAIN_PREFIX + '__' + name;
-    element.classList.toggle(cssClass + '_vertical ')
+  static toggleHtmlOrientation(element: HTMLElement, name?: string) {
+    const cssClass = CssClassUtil.MAIN_PREFIX + (name ? '__' + name : '');
+    element.classList.toggle(cssClass + '_vertical')
     element.classList.toggle(cssClass + '_horizontal');
   }
 
   static toggleHidden(viewElement: IViewElement) {
-    viewElement.element.classList.toggle(CssClassUtil.getFullName(viewElement) + '_hidden');
+    viewElement.getElement().classList.toggle(CssClassUtil.getFullName(viewElement) + '_hidden');
   }
 
   private static getFullName(viewElement: IViewElement) {
