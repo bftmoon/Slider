@@ -3,10 +3,6 @@ enum SliderEvent {
   pointMove,
 
   valueChanged,
-  rangeValuesChanged,
-  rangeAmbitsChanged,
-  orientationChanged,
-  rangeChanged
 }
 
 export default SliderEvent;
