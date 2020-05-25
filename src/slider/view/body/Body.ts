@@ -1,5 +1,5 @@
 import IViewElement from "../IViewElement";
-import CssClassUtil from "../CssClassUtil";
+import CssClassUtil from "../utils/CssClassUtil";
 import Point from "../point/Point";
 import Range from "../range/Range";
 import Observer from "../../observer/Observer";
@@ -8,12 +8,16 @@ import MinMaxPosition from "../../model/MinMaxPosition";
 import MinMax from "../../common-interfaces/MinMax";
 import IPoint from "../../common-interfaces/IPoint";
 import {IAbsolutePoint, IMinMaxPointChangeData, IParentSizes,} from "../../common-interfaces/NotifyInterfaces";
-import PositionUtil from "../PositionUtil";
+import PositionUtil from "../utils/PositionUtil";
 
 class Body extends Observer implements IViewElement {
-  element: HTMLElement;
-  range: Range = new Range();
-  points: MinMax<Point> = {min: new Point(), max: new Point()};
+  private element: HTMLElement;
+  private range: Range = new Range();
+  private points: MinMax<Point> = {min: new Point(), max: new Point()};
+
+  getElement(): HTMLElement {
+    return this.element;
+  }
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement("div");
@@ -49,15 +53,8 @@ class Body extends Observer implements IViewElement {
     );
   }
 
-  toggleRange(isVertical: boolean, minPoint?: IPoint) {
-    const sizes = this.getSize();
-    this.points.min.updatePosition(isVertical, minPoint || {percent: 0}, sizes);
+  toggleRange() {
     this.points.min.toggle();
-    if (minPoint) {
-      this.range.updatePosition(isVertical, {min: minPoint.percent}, sizes);
-    } else {
-      this.range.updatePosition(isVertical, {min: isVertical ? 100 : 0}, sizes);
-    }
   }
 
   toggleTooltip() {
@@ -90,6 +87,12 @@ class Body extends Observer implements IViewElement {
     };
   }
 
+  toggleOrientation() {
+    CssClassUtil.toggleOrientation(this);
+    this.points.min.toggleOrientation();
+    this.points.max.toggleOrientation();
+    this.range.toggleOrientation();
+  }
 }
 
 export default Body;
