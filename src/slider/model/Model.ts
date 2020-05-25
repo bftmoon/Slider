@@ -5,7 +5,7 @@ import IPoint from "../common-interfaces/IPoint";
 import IViewOptions from "../common-interfaces/IViewOptions";
 
 class Model {
-  private _current = {min: 30, max: 80};
+  private current = {min: 0, max: 80};
 
   border = {min: 0, max: 100};
   step = 1;
@@ -16,30 +16,32 @@ class Model {
   withTooltip = true;
   withScale = true;
 
-  [index: string]: any;
+  // [index: string]: any;
 
+  // todo: other copy
   constructor(options?: IModel) {
     if (options) {
       for (let key in options) {
-        if (key==='current'){
-          Model.copyMinMax(this._current, options[key]);
-        } else if (this[key].hasOwnProperty('min')) {
+        // @ts-ignore
+        if (this[key].hasOwnProperty('min')) {
+          //@ts-ignore
           Model.copyMinMax(this[key], options[key]);
         } else {
+          //@ts-ignore
           this[key] = options[key];
         }
       }
     }
   }
 
-  private static copyMinMax(thisOption: MinMax<any>, option: MinMax<any>){
+  private static copyMinMax(thisOption: MinMax<any>, option: MinMax<any>) {
     if (option.max !== undefined) thisOption.max = option.max;
     if (option.min !== undefined) thisOption.min = option.min;
   }
 
   setCurrent(current: MinMax<number>) {
-    if (current.min !== undefined) this._current.min = current.min;
-    if (current.max !== undefined) this._current.max = current.max;
+    if (current.min !== undefined) this.current.min = current.min;
+    if (current.max !== undefined) this.current.max = current.max;
   }
 
   getCurrentPoints(): MinMax<IPoint> {
@@ -51,8 +53,8 @@ class Model {
 
   getPoint(position: MinMaxPosition): IPoint {
     return {
-      percent: this.calcPercent(this.current[position]),
-      tooltip: this.current[position]
+      percent: this.calcPercent(this.getCurrent()[position]),
+      tooltip: this.getCurrent()[position]
     };
   }
 
@@ -78,27 +80,41 @@ class Model {
     return value < middle ? MinMaxPosition.min : MinMaxPosition.max;
   }
 
-  normalizeCurrent() {
-    const temp = this._current.min;
-    this._current.min = this._current.max;
-    this._current.max = temp;
+  normalizeCurrentOrder() {
+    const temp = this.current.min;
+    this.current.min = this.current.max;
+    this.current.max = temp;
   }
 
-  isNormalizeRequired(): boolean {
-    return this.current.max < this.current.min;
+  normalizeByStep(value: number) {
+    const diff = (value - this.border.min) % this.step;
+    if (diff !== 0) {
+      // if (this.step / 2 > diff) {
+      //   value -= diff;
+      // } else {
+      //   value += this.step - diff;
+      // }
+      value += this.step / 2 > diff ? -diff : this.step - diff; // todo: check this
+    }
+    return this.border.min + value;
+  }
+
+  isOrderNormalizeRequired(): boolean {
+    return this.getCurrent().max < this.getCurrent().min;
+  }
+
+  isNormalizeByStepRequired(normalizedCurrent: number, position: MinMaxPosition): boolean {
+    return normalizedCurrent !== this.current[position] && this.current[position] !== this.border[position];
   }
 
   isSameCurrent(value: number): boolean {
-    return value === this.current.min || value === this.current.max;
+    return value === this.getCurrent().min || value === this.getCurrent().max;
   }
 
   willCurrentCollapse(position: MinMaxPosition, value: number): boolean {
-    if (position === MinMaxPosition.min) {
-      if (value > this.current.max) return true;
-    } else {
-      if (value < this.current.min) return true;
-    }
-    return false;
+    const current = this.getCurrent();
+    return position === MinMaxPosition.min && value > current.max
+      || position === MinMaxPosition.max && value < current.min;
   }
 
   toggleRange() {
@@ -106,15 +122,40 @@ class Model {
   }
 
   private calcPercent(current: number): number {
-    return 100 / (this.border.max - this.border.min) * current;
+    return 100 / (this.border.max - this.border.min) * (current - this.border.min);
   }
 
-  private get current(): MinMax<number> {
-    if (this.isRange) return this._current;
+  getRealCurrent(): MinMax<number> {
+    return this.current;
+  }
+
+  getCurrent(): MinMax<number> {
+    if (this.isRange) return this.current;
     return {
-      max: this._current.max,
-      min: 0
+      max: this.current.max,
+      min: this.border.min
     };
+  }
+
+  getOptions(): IModel {
+    return {
+      current: this.getCurrent(),
+      border: this.border,
+      linesCount: this.linesCount,
+      step: this.step,
+      isVertical: this.isVertical,
+      isRange: this.isRange,
+      withScale: this.withScale,
+      withTooltip: this.withTooltip
+    }
+  }
+
+  toggleTooltip() {
+    this.withTooltip = !this.withTooltip;
+  }
+
+  toggleOrientation() {
+    this.isVertical = !this.isVertical;
   }
 }
 
