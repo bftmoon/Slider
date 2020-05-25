@@ -3,17 +3,19 @@ import View from "../view/View";
 import SliderEvent from "../observer/SliderEvent";
 import MinMaxPosition from "../model/MinMaxPosition";
 import {IMinMaxPointChangeData, IPointChangeData} from "../common-interfaces/NotifyInterfaces";
+import Observer from "../observer/Observer";
 
-class Presenter {
-  model: Model;
-  view: View;
+class Presenter extends Observer{
+  protected model: Model;
+  protected view: View;
 
   constructor(model: Model, view: View) {
+    super();
     this.model = model;
     this.view = view;
   }
 
-  init(parent: HTMLDivElement) {
+  init(parent: HTMLElement) {
     if (parent === undefined)
       throw new Error('Parent element undefined');
     this.view.render(
@@ -30,51 +32,33 @@ class Presenter {
   private handleSliderClick = (data: IPointChangeData) => {
     const modelValue = this.calcModelValueWithOrientation(data);
     if (this.model.isSameCurrent(modelValue)) return;
-    this.updatePosition(modelValue, this.model.selectPosition(modelValue))
+    this.updatePosition(modelValue, this.model.selectPosition(modelValue));
   }
 
-  updatePosition(modelValue: number, position: MinMaxPosition) {
+  protected updatePosition(modelValue: number, position: MinMaxPosition) {
     if (!this.model.willCurrentCollapse(position, modelValue)) {
       this.model.setCurrent({[position]: modelValue});
       this.view.updatePosition(this.model.isVertical, {[position]: this.model.getPoint(position)});
+      this.notify(SliderEvent.valueChanged, {value: modelValue, position});
     }
   }
 
-  toggleRange() {
-    this.model.toggleRange();
-    // this.view.toggleRange();
-    if (this.model.isNormalizeRequired()) {
-      this.model.normalizeCurrent();
-      this.view.updatePosition(this.model.isVertical, this.model.getCurrentPoints());
-    }
-  }
-
-  calcModelValue(viewValue: number, sliderSize: number): number {
+  private calcModelValue(viewValue: number, sliderSize: number): number {
     if (viewValue <= 0) return this.model.border.min;
     if (viewValue >= sliderSize) return this.model.border.max;
 
     const modelSize = this.model.getBorderSize();
-    let modelPosition = modelSize * viewValue / sliderSize;
-    const diff = modelPosition % this.model.step;
-
-    if (diff !== 0) {
-      if (this.model.step / 2 > diff) {
-        modelPosition -= diff;
-      } else {
-        modelPosition += this.model.step - diff;
-      }
-    }
-
-    return modelPosition + this.model.border.min;
+    let modelPosition = modelSize * viewValue / sliderSize + this.model.border.min;
+    return this.model.normalizeByStep(modelPosition);
   }
 
-  calcModelValueWithOrientation(data: IPointChangeData) {
+  private calcModelValueWithOrientation(data: IPointChangeData) {
     return this.model.isVertical ?
       this.calcModelValue(data.sizes.height - data.point.y, data.sizes.height)
       : this.calcModelValue(data.point.x, data.sizes.width);
   }
 
-  calcScaleLinesCount(): number {
+  protected calcScaleLinesCount(): number {
     const count = this.model.getBorderSize() / this.model.step;
     if (count < this.model.linesCount.min) return this.model.linesCount.min;
     if (count > this.model.linesCount.max) return this.model.linesCount.max;
