@@ -1,20 +1,19 @@
 import Scale from "./scale/Scale";
 import Body from "./body/Body";
-import CssClassUtil from "./CssClassUtil";
 import Observer from "../observer/Observer";
 import SliderEvent from "../observer/SliderEvent";
 import IViewOptions from "../common-interfaces/IViewOptions";
 import MinMax from "../common-interfaces/MinMax";
 import IPoint from "../common-interfaces/IPoint";
-import {IMinMaxPointChangeData, IRelativePoint, IPointChangeData} from "../common-interfaces/NotifyInterfaces";
+import {IMinMaxPointChangeData, IPointChangeData, IRelativePoint} from "../common-interfaces/NotifyInterfaces";
+import CssClassUtil from "./utils/CssClassUtil";
 
 class View extends Observer {
-  element: HTMLDivElement;
+  element: HTMLElement;
   body: Body = new Body();
   scale: Scale = new Scale();
-  pointRadius: number;
 
-  render(element: HTMLDivElement,
+  render(element: HTMLElement,
          {
            isVertical,
            isRange,
@@ -28,17 +27,10 @@ class View extends Observer {
     const fragment = document.createDocumentFragment();
     CssClassUtil.initHtmlClass(this.element, isVertical);
 
-    if (isVertical) {
-      fragment.append(
-        this.scale.buildHtml(isVertical),
-        this.body.buildHtml(isVertical),
-      )
-    } else {
-      fragment.append(
-        this.body.buildHtml(isVertical),
-        this.scale.buildHtml(isVertical)
-      )
-    }
+    fragment.append(
+      this.body.buildHtml(isVertical),
+      this.scale.buildHtml(isVertical)
+    )
 
     this.body
       .subscribe(SliderEvent.sliderClick, this.handleBodyClick)
@@ -50,7 +42,7 @@ class View extends Observer {
 
     element.append(fragment);
     this.updatePosition(isVertical, points);
-    if (!isRange) this.body.toggleRange(isVertical);
+    if (!isRange) this.body.toggleRange();
   }
 
   updatePosition(isVertical: boolean, points: MinMax<IPoint>) {
@@ -79,12 +71,27 @@ class View extends Observer {
     } as IPointChangeData);
   }
 
-  // addPointRadius(data: IRelativePoint): IRelativePoint{
-  //   return {
-  //     x: data.x + this.pointRadius,
-  //     y: data.u + this.pointRadius,
-  //   }
-  // }
+  toggleRange() {
+    this.body.toggleRange();
+  }
+
+  toggleTooltip() {
+    this.body.toggleTooltip();
+  }
+
+  toggleOrientation() {
+    CssClassUtil.toggleHtmlOrientation(this.element);
+    this.body.toggleOrientation();
+    this.scale.toggleOrientation();
+  }
+
+  updateScaleLines(count: number, isVertical: boolean) {
+    this.scale.updateLines(count, isVertical)
+  }
+
+  toggleScale() {
+    this.scale.toggle();
+  }
 }
 
 export default View;

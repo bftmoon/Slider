@@ -1,6 +1,5 @@
 interface IViewElement {
-  element: HTMLElement;
-
+  getElement(): HTMLElement;
   buildHtml(isVertical: boolean, ...args: any[]): HTMLElement;
 }
 
