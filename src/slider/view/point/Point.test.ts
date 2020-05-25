@@ -58,14 +58,14 @@ describe('Point class', () => {
 
       test('update vertical without tooltip', ()=>{
         const spy = jest.spyOn(Tooltip.prototype, 'update');
-        point.updatePosition(true, {percent: 10}, {height: 100, width: 10});
+        // point.updatePosition(true, {percent: 10}, {height: 100, width: 10});
         expect(spy).not.toBeCalled();
         expect(point.getElement().style.bottom).toBe('5%')
       });
 
       test('update horizontal and tooltip', ()=>{
         const spy = jest.spyOn(Tooltip.prototype, 'update'); // not parallel required
-        point.updatePosition(false, {percent: 10, tooltip: 10}, {width: 100, height: 10});
+        // point.updatePosition(false, {percent: 10, tooltip: 10}, {width: 100, height: 10});
         expect(spy).toBeCalledTimes(1);
         expect(point.getElement().style.left).toBe('5%')
       });

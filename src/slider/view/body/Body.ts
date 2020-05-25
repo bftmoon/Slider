@@ -63,17 +63,17 @@ class Body extends Observer implements IViewElement {
   }
 
   updatePosition(isVertical: boolean, points: MinMax<IPoint>) {
-    const sizes = this.getSize();
     const percents: MinMax<number> = {};
     if (points.min !== undefined) {
-      this.points.min.updatePosition(isVertical, points.min, sizes);
+      this.points.min.updatePosition(isVertical, points.min);
       percents.min = points.min.percent;
     }
     if (points.max !== undefined) {
-      this.points.max.updatePosition(isVertical, points.max, sizes);
+      this.points.max.updatePosition(isVertical, points.max);
       percents.max = points.max.percent;
     }
-    this.range.updatePosition(isVertical, percents, sizes.height);
+
+    this.range.updatePosition(isVertical, percents, isVertical ? this.element.offsetHeight : undefined);
   }
 
   private handleSliderBodyClick = (event: MouseEvent) => {

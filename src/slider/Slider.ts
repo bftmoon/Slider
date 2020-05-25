@@ -4,12 +4,13 @@ import IModel from "./model/IModel";
 import './slider.scss'
 import PresenterProxy from "./presenter/PresenterProxy";
 import MinMax from "./common-interfaces/MinMax";
+import ValidModel from "./model/ValidModel";
 
 
 class Slider extends PresenterProxy {
 
   constructor(options?: IModel) {
-    super(new Model(options), new View());
+    super(new ValidModel(options), new View());
   }
 
 }

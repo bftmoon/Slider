@@ -4,7 +4,7 @@ import Tooltip from "../tooltip/Tooltip";
 import Observer from "../../observer/Observer";
 import SliderEvent from "../../observer/SliderEvent";
 import IPoint from "../../common-interfaces/IPoint";
-import {IAbsolutePoint, IParentSizes} from "../../common-interfaces/NotifyInterfaces";
+import {IAbsolutePoint} from "../../common-interfaces/NotifyInterfaces";
 
 class Point extends Observer implements IViewElement {
   private element: HTMLDivElement;
@@ -23,11 +23,14 @@ class Point extends Observer implements IViewElement {
   }
 
   private handlePointMouseDown = () => {
+    document.documentElement.classList.add('slider-plugin');
+    this.notify(SliderEvent.pointGrab, {isGrabbed: true});
     document.addEventListener('mouseup', this.handleMouseUp);
     document.addEventListener('mousemove', this.handleMouseMove);
   }
 
   private handleMouseUp = () => {
+    document.documentElement.classList.remove('slider-plugin');
     document.removeEventListener('mouseup', this.handleMouseUp);
     document.removeEventListener('mousemove', this.handleMouseMove);
   }
@@ -36,13 +39,10 @@ class Point extends Observer implements IViewElement {
     this.notify(SliderEvent.pointMove, {x: event.clientX, y: event.clientY} as IAbsolutePoint);
   }
 
-  updatePosition(isVertical: boolean, point: IPoint, parent: IParentSizes) {
-    if (isVertical) {
-      this.element.style.bottom = point.percent - this.calculatePercentRadius(parent.height) + '%';
-    } else {
-      this.element.style.left = point.percent - this.calculatePercentRadius(parent.width) + '%';
-    }
-    if (point.tooltip !== undefined) this.tooltip.update(point.tooltip, isVertical)
+  updatePosition(isVertical: boolean, point: IPoint) {
+    const radius = this.element.offsetHeight / 2;
+    this.element.style[isVertical ? 'bottom' : 'left'] = `calc(${point.percent}% - ${radius}px)`;
+    if (point.tooltip !== undefined) this.tooltip.update(point.tooltip, isVertical);
   }
 
   toggleHidden() {
@@ -51,10 +51,6 @@ class Point extends Observer implements IViewElement {
 
   toggleTooltip() {
     this.tooltip.toggleHidden();
-  }
-
-  private calculatePercentRadius(parentSize: number) {
-    return 100 / parentSize * this.element.offsetWidth / 2;
   }
 
   toggleOrientation() {
