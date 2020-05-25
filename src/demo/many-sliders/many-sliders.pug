@@ -1,0 +1,18 @@
+doctype html
+head
+  title Slider Demo
+body.example-many
+  .example-many__slider_long.js-example-many__slider_long
+  .example-many__slider_long.js-example-many__slider_long_and_big
+  .example-many__container
+    - let i=0;
+      while i < 7
+        .example-many__wrapper
+          .example-many__slider.example-many__slider_horizontal.js-example-many__slider
+          - i++
+  .example-many__container
+    - i = 0;
+    while i < 7
+      .example-many__wrapper
+        .example-many__slider.example-many__slider_vertical.js-example-many__slider_vertical
+        - i++

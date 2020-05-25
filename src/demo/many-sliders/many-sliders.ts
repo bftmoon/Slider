@@ -1,19 +1,20 @@
-import './index.scss'
+import './many-sliders.scss'
 import './theme.scss'
 import '../slider/slider.scss'
-import Slider from "../slider/Slider";
-import IModel from "../slider/model/IModel";
+import Slider from "../../slider/Slider";
+import IModel from "../../slider/model/IModel";
 
-$('.js-example__slider_vertical').each((index, el) => {
+
+$('.js-example-many__slider_vertical').each((index, el) => {
   new Slider({...optionsGenerator(index), isVertical: true}).init(el as HTMLDivElement);
 })
-$('.js-example__slider').each((index, el) => {
+$('.js-example-many__slider').each((index, el) => {
   new Slider(optionsGenerator(index)).init(el as HTMLDivElement);
 })
-$('.js-example__slider_long').each((index, el) => {
+$('.js-example-many__slider_long').each((index, el) => {
   new Slider().init(el as HTMLDivElement);
 })
-$('.js-example__slider_long_and_big').each((index, el) => {
+$('.js-example-many__slider_long_and_big').each((index, el) => {
   new Slider({
     border: {
       min: 0,
