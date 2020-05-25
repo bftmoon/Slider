@@ -33,9 +33,20 @@ class Panel {
     }
     if (element.name === 'currentMin') this.changeableInputs.min = element;
     if (element.name === 'currentMax') this.changeableInputs.max = element;
-    element.addEventListener('input', mappedData.listener);
+    element.addEventListener('input', this.wrapListener(mappedData.listener));
   }
 
+  private wrapListener(listener: (event: InputEvent) => void): ((event: InputEvent) => void) {
+    return (event: InputEvent) => {
+      try {
+        listener(event);
+        (event.target as HTMLInputElement).setCustomValidity("");
+      } catch (e) {
+        (event.target as HTMLInputElement).setCustomValidity(e);
+        (event.target as HTMLInputElement).reportValidity();
+      }
+    }
+  }
 
   private mapData(data: IModel, inputName: string): {
     value: number | boolean,
@@ -80,23 +91,23 @@ class Panel {
   }
 
   private handleCurrentMinInput = (event: InputEvent) => {
-    this.slider.setCurrentRange({min: Number((event.target as HTMLInputElement).value)});
+    this.slider.setCurrentRangeMin((event.target as HTMLInputElement).value);
   }
 
   private handleCurrentMaxInput = (event: InputEvent) => {
-    this.slider.setCurrentRange({max: Number((event.target as HTMLInputElement).value)});
+    this.slider.setCurrentRangeMax((event.target as HTMLInputElement).value);
   }
 
   private handleStepInput = (event: InputEvent) => {
-    this.slider.setStep(Number((event.target as HTMLInputElement).value))
+    this.slider.setStep((event.target as HTMLInputElement).value);
   }
 
   private handleMaxInput = (event: InputEvent) => {
-    this.slider.setBorders({max: Number((event.target as HTMLInputElement).value)})
+    this.slider.setBorderMax((event.target as HTMLInputElement).value);
   }
 
   private handleMinInput = (event: InputEvent) => {
-    this.slider.setBorders({min: Number((event.target as HTMLInputElement).value)})
+    this.slider.setBorderMin((event.target as HTMLInputElement).value);
   }
 }
 
