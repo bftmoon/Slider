@@ -29,6 +29,10 @@ class CssClassUtil {
     viewElement.getElement().classList.toggle(CssClassUtil.getFullName(viewElement) + '_hidden');
   }
 
+  static toggleGrab(viewElement:IViewElement){
+    viewElement.getElement().classList.toggle(CssClassUtil.getFullName(viewElement) + '_grabbed');
+  }
+
   private static getFullName(viewElement: IViewElement) {
     return CssClassUtil.MAIN_PREFIX + '__' + viewElement.constructor.name.toLowerCase();
   }

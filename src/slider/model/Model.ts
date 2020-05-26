@@ -3,6 +3,7 @@ import MinMaxPosition from "./MinMaxPosition";
 import MinMax from "../common-interfaces/MinMax";
 import IPoint from "../common-interfaces/IPoint";
 import IViewOptions from "../common-interfaces/IViewOptions";
+import ConvertUtil from "../view/utils/ConvertUtil";
 
 class Model {
   protected current = {min: 0, max: 80};
@@ -53,7 +54,7 @@ class Model {
 
   getPoint(position: MinMaxPosition): IPoint {
     return {
-      percent: this.calcPercent(this.getCurrent()[position]),
+      percent: ConvertUtil.toPercentWithDiff(this.getCurrent()[position], this.border.min, this.border.max),
       tooltip: this.getCurrent()[position]
     };
   }
@@ -67,7 +68,7 @@ class Model {
     }
   }
 
-  getBorderSize(): number {
+  getRangeSize(): number {
     return this.border.max - this.border.min;
   }
 
@@ -88,15 +89,16 @@ class Model {
 
   normalizeByStep(value: number) {
     const diff = (value - this.border.min) % this.step;
-    if (diff !== 0) {
-      // if (this.step / 2 > diff) {
-      //   value -= diff;
-      // } else {
-      //   value += this.step - diff;
-      // }
-      value += this.step / 2 > diff ? -diff : this.step - diff; // todo: check this
-    }
-    return this.border.min + value;
+    value += this.step / 2 > diff ? -diff : this.step - diff;
+    return value;
+  }
+
+  calcModelValue(percent: number): number {
+    if (percent <= 0) return this.border.min;
+    if (percent >= 100) return this.border.max;
+
+    let modelValue = ConvertUtil.fromPercentWithDiff(percent, this.border.min, this.border.max);
+    return this.normalizeByStep(modelValue);
   }
 
   isOrderNormalizeRequired(): boolean {
@@ -119,10 +121,6 @@ class Model {
 
   toggleRange() {
     this.isRange = !this.isRange;
-  }
-
-  private calcPercent(current: number): number {
-    return 100 / (this.border.max - this.border.min) * (current - this.border.min);
   }
 
   getRealCurrent(): MinMax<number> {

@@ -53,6 +53,10 @@ $scale_border: 2px solid rgba(0, 0, 0, 0.5);
       z-index: 2;
     }
 
+    &_grabbed{
+      z-index: 2;
+    }
+
     &_horizontal {
       bottom: calc(50% - #{$pointer_size / 2});
       justify-content: center;

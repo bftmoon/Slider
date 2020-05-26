@@ -6,7 +6,7 @@ describe('calc relative click position', () => {
     const sliderBody = document.createElement('div');
     const bodyClick = {offsetX: 10, offsetY: 20, target: sliderBody};
     // @ts-ignore
-    expect(PositionUtil.calculatePoint(sliderBody, bodyClick))
+    expect(PositionUtil.calcEventPoint(sliderBody, bodyClick))
       .toEqual({x: 10, y: 20});
   });
 
@@ -19,7 +19,7 @@ describe('calc relative click position', () => {
     }
     const rangeClick = {clientX: 100, clientY: 50, target: sliderRangeOrScale};
     // @ts-ignore
-    expect(PositionUtil.calculatePoint(sliderBody, rangeClick))
+    expect(PositionUtil.calcEventPoint(sliderBody, rangeClick))
       .toEqual({x: 80, y: 20});
   });
 })

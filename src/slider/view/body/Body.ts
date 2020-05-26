@@ -7,7 +7,7 @@ import SliderEvent from "../../observer/SliderEvent";
 import MinMaxPosition from "../../model/MinMaxPosition";
 import MinMax from "../../common-interfaces/MinMax";
 import IPoint from "../../common-interfaces/IPoint";
-import {IAbsolutePoint, IMinMaxPointChangeData, IParentSizes,} from "../../common-interfaces/NotifyInterfaces";
+import {IAbsolutePoint, IPointMoveData,} from "../../common-interfaces/NotifyInterfaces";
 import PositionUtil from "../utils/PositionUtil";
 
 class Body extends Observer implements IViewElement {
@@ -43,13 +43,11 @@ class Body extends Observer implements IViewElement {
   }
 
   private handlePointMove = (data: IAbsolutePoint, position = MinMaxPosition.min) => {
-    const {left, top, height, width} = this.element.getBoundingClientRect();
     this.notify(
       SliderEvent.pointMove, {
-        sizes: {width, height},
-        point: {x: data.x - left, y: data.y - top},
+        ...PositionUtil.calcPointByParent(this.element, data),
         position
-      } as IMinMaxPointChangeData
+      } as IPointMoveData
     );
   }
 
@@ -62,29 +60,22 @@ class Body extends Observer implements IViewElement {
     this.points.max.toggleTooltip();
   }
 
-  updatePosition(isVertical: boolean, points: MinMax<IPoint>) {
+  updatePosition(isVertical: boolean, {min, max}: MinMax<IPoint>) {
     const percents: MinMax<number> = {};
-    if (points.min !== undefined) {
-      this.points.min.updatePosition(isVertical, points.min);
-      percents.min = points.min.percent;
+    if (min !== undefined) {
+      this.points.min.updatePosition(isVertical, min);
+      percents.min = min.percent;
     }
-    if (points.max !== undefined) {
-      this.points.max.updatePosition(isVertical, points.max);
-      percents.max = points.max.percent;
+    if (max !== undefined) {
+      this.points.max.updatePosition(isVertical, max);
+      percents.max = max.percent;
     }
 
     this.range.updatePosition(isVertical, percents, isVertical ? this.element.offsetHeight : undefined);
   }
 
   private handleSliderBodyClick = (event: MouseEvent) => {
-    this.notify(SliderEvent.sliderClick, PositionUtil.calculatePoint(this.element, event));
-  }
-
-  getSize(): IParentSizes {
-    return {
-      width: this.element.offsetWidth,
-      height: this.element.offsetHeight
-    };
+    this.notify(SliderEvent.sliderClick, PositionUtil.calcEventPoint(this.element, event));
   }
 
   toggleOrientation() {

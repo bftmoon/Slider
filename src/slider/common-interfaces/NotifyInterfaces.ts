@@ -1,6 +1,6 @@
 import MinMaxPosition from "../model/MinMaxPosition";
 
-interface IRelativePoint {
+interface IRelativePointPercents {
   x: number;
   y: number;
 }
@@ -10,24 +10,8 @@ interface IAbsolutePoint {
   y: number;
 }
 
-interface IParentData {
-  point: IAbsolutePoint;
-  width: number;
-  height: number;
-}
-
-interface IParentSizes {
-  width: number;
-  height: number;
-}
-
-interface IPointChangeData {
-  sizes: IParentSizes;
-  point: IRelativePoint;
-}
-
-interface IMinMaxPointChangeData extends IPointChangeData {
+interface IPointMoveData extends IRelativePointPercents{
   position: MinMaxPosition;
 }
 
-export {IAbsolutePoint, IParentData, IRelativePoint, IMinMaxPointChangeData, IParentSizes, IPointChangeData};
+export {IAbsolutePoint, IRelativePointPercents, IPointMoveData};

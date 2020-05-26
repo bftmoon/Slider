@@ -54,7 +54,7 @@ class Scale extends Observer implements IViewElement {
   }
 
   private handleScaleClick = (event: MouseEvent) => {
-    this.notify(SliderEvent.sliderClick, PositionUtil.calculatePoint(this.element, event));
+    this.notify(SliderEvent.sliderClick, PositionUtil.calcEventPoint(this.element, event));
   }
 
   toggleOrientation() {

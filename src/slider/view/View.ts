@@ -5,7 +5,7 @@ import SliderEvent from "../observer/SliderEvent";
 import IViewOptions from "../common-interfaces/IViewOptions";
 import MinMax from "../common-interfaces/MinMax";
 import IPoint from "../common-interfaces/IPoint";
-import {IMinMaxPointChangeData, IPointChangeData, IRelativePoint} from "../common-interfaces/NotifyInterfaces";
+import {IPointMoveData, IRelativePointPercents} from "../common-interfaces/NotifyInterfaces";
 import CssClassUtil from "./utils/CssClassUtil";
 
 class View extends Observer {
@@ -51,22 +51,15 @@ class View extends Observer {
     this.body.updatePosition(isVertical, points);
   }
 
-  private handleScaleClick = (data: IRelativePoint) => {
-    this.notifyWithSize(data);
+  private handleScaleClick = (data: IRelativePointPercents) => {
+    this.notify(SliderEvent.sliderClick, data);
   }
-  private handleBodyClick = (data: IRelativePoint) => {
-    this.notifyWithSize(data);
+  private handleBodyClick = (data: IRelativePointPercents) => {
+    this.notify(SliderEvent.sliderClick, data);
   }
 
-  private handlePointMove = (data: IMinMaxPointChangeData) => {
+  private handlePointMove = (data: IPointMoveData) => {
     this.notify(SliderEvent.pointMove, data);
-  }
-
-  private notifyWithSize(data: IRelativePoint) {
-    this.notify(SliderEvent.sliderClick, {
-      point: data,
-      sizes: this.body.getSize()
-    } as IPointChangeData);
   }
 
   toggleRange() {

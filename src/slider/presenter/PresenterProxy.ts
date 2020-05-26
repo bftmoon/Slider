@@ -50,7 +50,7 @@ class PresenterProxy extends Presenter {
     this.model.toggleScale();
     this.view.toggleScale();
     if (this.model.withScale) {
-      this.updateScaleLines(this.model.step);
+      this.updateScaleLines();
       window.addEventListener('resize', this.handleWindowResize);
     } else {
       window.addEventListener('resize', this.handleWindowResize)
@@ -66,12 +66,12 @@ class PresenterProxy extends Presenter {
     this.model.toggleOrientation();
     this.view.toggleOrientation();
     this.view.updatePosition(this.model.isVertical, this.model.getCurrentPoints());
-    if (this.model.withScale) this.view.updateScaleLines(this.model.step, this.model.getBorderSize(), this.model.isVertical);
+    if (this.model.withScale) this.view.updateScaleLines(this.model.step, this.model.getRangeSize(), this.model.isVertical);
   }
 
   setStep(step: any) {
     this.model.setValidStep(step);
-    if (this.model.withScale) this.view.updateScaleLines(this.model.step, this.model.getBorderSize(), this.model.isVertical);
+    if (this.model.withScale) this.view.updateScaleLines(this.model.step, this.model.getRangeSize(), this.model.isVertical);
     this.updatePointByStep(MinMaxPosition.max);
     if (this.model.isRange) {
       this.updatePointByStep(MinMaxPosition.min);
@@ -80,7 +80,7 @@ class PresenterProxy extends Presenter {
 
   private updatePointByStep(position: MinMaxPosition) {
     const current = this.model.getCurrent()[position];
-    const normalizedCurrent = this.model.normalizeByStep(current);
+    const normalizedCurrent = this.model.normalizeByStep(current); //todo: wtf
     if (this.model.isNormalizeByStepRequired(normalizedCurrent, position)) {
       this.updatePosition(normalizedCurrent, position);
     }
@@ -89,11 +89,13 @@ class PresenterProxy extends Presenter {
   setBorderMin(value: any) {
     this.model.setValidBorder(value, MinMaxPosition.min);
     this.normalizePoints(this.model.border.min, current => current < this.model.border.min);
+    this.updateScaleLines();
   }
 
   setBorderMax(value: any) {
     this.model.setValidBorder(value, MinMaxPosition.max);
     this.normalizePoints(this.model.border.max, current => current > this.model.border.max);
+    this.updateScaleLines();
   }
 
   setBorders(borderMin: any, borderMax: any) {
@@ -108,6 +110,7 @@ class PresenterProxy extends Presenter {
       this.model.setCurrent({min: border});
       this.notify(SliderEvent.valueChanged, {value: border, position: MinMaxPosition.min});
     }
+    // todo: update for step change
     if (checkIsOverflow(realCurrent.max)) {
       this.model.setCurrent({max: border});
       this.notify(SliderEvent.valueChanged, {value: border, position: MinMaxPosition.max});

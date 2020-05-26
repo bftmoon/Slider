@@ -2,8 +2,9 @@ import Model from "../model/Model";
 import View from "../view/View";
 import SliderEvent from "../observer/SliderEvent";
 import MinMaxPosition from "../model/MinMaxPosition";
-import {IMinMaxPointChangeData, IPointChangeData} from "../common-interfaces/NotifyInterfaces";
+import {IPointMoveData, IRelativePointPercents} from "../common-interfaces/NotifyInterfaces";
 import Observer from "../observer/Observer";
+import ConvertUtil from "../view/utils/ConvertUtil";
 
 class Presenter extends Observer {
   protected model: Model;
@@ -23,7 +24,7 @@ class Presenter extends Observer {
       this.model.getBoolOptions(),
       this.model.getCurrentPoints(),
       this.model.step,
-      this.model.getBorderSize()
+      this.model.getRangeSize()
     );
     this.view
       .subscribe(SliderEvent.sliderClick, this.handleSliderClick)
@@ -32,15 +33,15 @@ class Presenter extends Observer {
   }
 
   protected handleWindowResize = () => {
-    this.updateScaleLines(this.model.step);
+    this.updateScaleLines();
   }
 
-  protected updateScaleLines(step: number) {
-    this.view.updateScaleLines(step, this.model.getBorderSize(), this.model.isVertical);
+  protected updateScaleLines() {
+    this.view.updateScaleLines(this.model.step, this.model.getRangeSize(), this.model.isVertical);
   }
 
-  private handleSliderClick = (data: IPointChangeData) => {
-    const modelValue = this.calcModelValueWithOrientation(data);
+  private handleSliderClick = ({x, y}: IRelativePointPercents) => {
+    const modelValue = this.model.calcModelValue(this.model.isVertical ? 100-y : x);
     if (this.model.isSameCurrent(modelValue)) return;
     this.updatePosition(modelValue, this.model.selectPosition(modelValue));
   }
@@ -53,27 +54,10 @@ class Presenter extends Observer {
     }
   }
 
-  // todo: common percentage
-  // fix: on negative min anf positive max
-  private calcModelValue(viewValue: number, sliderSize: number): number {
-    if (viewValue <= 0) return this.model.border.min;
-    if (viewValue >= sliderSize) return this.model.border.max;
-
-    const modelSize = this.model.getBorderSize();
-    let modelPosition = modelSize * viewValue / sliderSize + this.model.border.min;
-    return this.model.normalizeByStep(modelPosition);
-  }
-
-  private calcModelValueWithOrientation(data: IPointChangeData) {
-    return this.model.isVertical ?
-      this.calcModelValue(data.sizes.height - data.point.y, data.sizes.height)
-      : this.calcModelValue(data.point.x, data.sizes.width);
-  }
-
-  private handlePointMove = (data: IMinMaxPointChangeData) => {
+  private handlePointMove = ({x, y, position}: IPointMoveData) => {
     this.updatePosition(
-      this.calcModelValueWithOrientation(data),
-      data.position
+      this.model.calcModelValue(this.model.isVertical ? 100 - y : x),
+      position
     );
   }
 }

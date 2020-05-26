@@ -24,6 +24,7 @@ class Point extends Observer implements IViewElement {
 
   private handlePointMouseDown = () => {
     document.documentElement.classList.add('slider-plugin');
+    CssClassUtil.toggleGrab(this);
     this.notify(SliderEvent.pointGrab, {isGrabbed: true});
     document.addEventListener('mouseup', this.handleMouseUp);
     document.addEventListener('mousemove', this.handleMouseMove);
@@ -31,6 +32,7 @@ class Point extends Observer implements IViewElement {
 
   private handleMouseUp = () => {
     document.documentElement.classList.remove('slider-plugin');
+    CssClassUtil.toggleGrab(this);
     document.removeEventListener('mouseup', this.handleMouseUp);
     document.removeEventListener('mousemove', this.handleMouseMove);
   }
