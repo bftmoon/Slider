@@ -1,11 +1,12 @@
-.example-custom {
+.demo {
   &__container {
+    margin: 40px;
     display: flex;
     align-items: stretch;
     justify-items: stretch;
   }
 
-  &__wrapper{
+  &__wrapper {
     display: flex;
     width: 100%;
     height: 100%;
@@ -16,5 +17,6 @@
     display: flex;
     justify-content: center;
     margin: 10px;
+    height: 150px;
   }
 }

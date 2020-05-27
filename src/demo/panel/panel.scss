@@ -6,8 +6,13 @@
   padding: 30px;
 
   &__input-label {
+    margin-top: 5px;
     display: flex;
     flex-direction: column;
+  }
+
+  &__checkbox-label{
+    margin-top: 5px;
   }
 
   &__config{

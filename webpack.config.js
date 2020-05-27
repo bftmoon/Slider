@@ -3,8 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
   entry: {
-    // app: './src/demo/many-sliders.ts',
-    app: './src/demo/customizable-sliders/index.ts'
+    app: './src/demo/index.ts'
   },
   devtool: 'inline-source-map',
   plugins: [
@@ -13,8 +12,7 @@ const config = {
       jQuery: 'jquery'
     }),
     new HtmlWebpackPlugin({
-      // template: './src/demo/many-sliders.pug'
-      template: './src/demo/customizable-sliders/customizable-sliders.pug'
+      template: './src/demo/demo.pug'
     })
   ],
   module: {

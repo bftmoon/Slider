@@ -1,27 +1,35 @@
-import Slider from "../../../slider/Slider";
-import IModel from "../../../slider/model/IModel";
-import MinMax from "../../../slider/common-interfaces/MinMax";
-import MinMaxPosition from "../../../slider/model/MinMaxPosition";
+import {ISliderGroup} from "../../slider/ISlider";
+import MinMax from "../../slider/common-interfaces/MinMax";
+import MinMaxPosition from "../../slider/model/MinMaxPosition";
+import IModel from "../../slider/model/IModel";
+import '../../slider/slider-jquery'
+
 
 class Panel {
-  private slider: Slider;
+  private sliderGroup: ISliderGroup;
   private changeableInputs: MinMax<HTMLInputElement> = {};
 
-  constructor(options?: IModel) {
-    this.slider = new Slider(options);
-    this.slider.addSlideListener(this.handleSliderSlide);
+  constructor(slider: ISliderGroup) {
+    this.sliderGroup = slider;
+  }
+
+  init(panelElement: HTMLElement) {
+    const data = this.sliderGroup.getOptions()[0];
+    panelElement.querySelectorAll('input').forEach((element) => {
+      this.prepareElement(data, element);
+    });
+    this.sliderGroup.addSlideListener(this.handleSliderSlide);
   }
 
   private handleSliderSlide = (data: { value: number, position: MinMaxPosition }) => {
     this.changeableInputs[data.position].value = data.value.toString();
-  }
-
-  init(options: { panelElement: HTMLElement, sliderElement: HTMLElement }) {
-    this.slider.init(options.sliderElement);
-    const data = this.slider.getOptions();
-    options.panelElement.querySelectorAll('input').forEach((element) => {
-      this.prepareElement(data, element);
-    });
+    if (this.sliderGroup.size() > 1){
+      if (data.position === MinMaxPosition.max){
+        this.sliderGroup.setCurrentRangeMax(data.value);
+      } else {
+        this.sliderGroup.setCurrentRangeMin(data.value);
+      }
+    }
   }
 
   private prepareElement(modelData: IModel, element: HTMLInputElement) {
@@ -75,39 +83,39 @@ class Panel {
   }
 
   private handleScaleListener = () => {
-    this.slider.toggleScale();
+    this.sliderGroup.toggleScale();
   }
 
   private handleTooltipListener = () => {
-    this.slider.toggleTooltip();
+    this.sliderGroup.toggleTooltip();
   }
 
   private handleVerticalListener = () => {
-    this.slider.toggleOrientation();
+    this.sliderGroup.toggleOrientation();
   }
 
   private handleRangeListener = () => {
-    this.slider.toggleRange();
+    this.sliderGroup.toggleRange();
   }
 
   private handleCurrentMinInput = (event: InputEvent) => {
-    this.slider.setCurrentRangeMin((event.target as HTMLInputElement).value);
+    this.sliderGroup.setCurrentRangeMin((event.target as HTMLInputElement).value);
   }
 
   private handleCurrentMaxInput = (event: InputEvent) => {
-    this.slider.setCurrentRangeMax((event.target as HTMLInputElement).value);
+    this.sliderGroup.setCurrentRangeMax((event.target as HTMLInputElement).value);
   }
 
   private handleStepInput = (event: InputEvent) => {
-    this.slider.setStep((event.target as HTMLInputElement).value);
+    this.sliderGroup.setStep((event.target as HTMLInputElement).value);
   }
 
   private handleMaxInput = (event: InputEvent) => {
-    this.slider.setBorderMax((event.target as HTMLInputElement).value);
+    this.sliderGroup.setBorderMax((event.target as HTMLInputElement).value);
   }
 
   private handleMinInput = (event: InputEvent) => {
-    this.slider.setBorderMin((event.target as HTMLInputElement).value);
+    this.sliderGroup.setBorderMin((event.target as HTMLInputElement).value);
   }
 }
 

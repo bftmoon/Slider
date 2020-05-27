@@ -1,5 +1,9 @@
 input {
   background: #c2c2c2;
+  border: 1px solid darkgrey{
+    radius: 4px;
+  };
+  padding: 4px;
 }
 
 html {
@@ -9,6 +13,8 @@ html {
 
 body{
   height: 100%;
+  max-width: 1440px;
+  margin: auto;
 }
 
 *{
