@@ -1,8 +1,28 @@
-import Model from "./Model";
-import SliderError from "./SliderError";
-import MinMaxPosition from "./MinMaxPosition";
+import Model from './Model';
+import SliderError from './SliderError';
+import MinMaxPosition from './MinMaxPosition';
+import IModel from './IModel';
 
 class ValidModel extends Model {
+  constructor(options?: IModel) {
+    super();
+    if (options) {
+      this.copyBool(options);
+      if (options.border !== undefined) {
+        this.setValidBorders(
+          options.border.min || this.border.min,
+          options.border.max || this.border.max,
+        );
+      }
+      if (options.current !== undefined) {
+        if (options.current.min !== undefined)this.setValidCurrent(options.current.min, MinMaxPosition.min);
+        if (options.current.max !== undefined)this.setValidCurrent(options.current.max || this.current.max, MinMaxPosition.max);
+      }
+      if (options.step !== undefined) {
+        this.setValidStep(options.step);
+      }
+    }
+  }
 
   setValidCurrent(current: any, position: MinMaxPosition) {
     ValidModel.isValidType(current);
@@ -14,6 +34,7 @@ class ValidModel extends Model {
     } else {
       ValidModel.isPositiveRange(this.getCurrent().min, number);
     }
+    this.isDivideToStepOrBorder(number);
     this.current[position] = number;
   }
 
@@ -26,6 +47,8 @@ class ValidModel extends Model {
     this.isInBorderRange(numberMin);
     this.isInBorderRange(numberMax);
     ValidModel.isPositiveRange(numberMin, numberMax);
+    this.isDivideToStepOrBorder(numberMin);
+    this.isDivideToStepOrBorder(numberMax);
     this.current = {min: numberMin, max: numberMax};
   }
 
@@ -48,8 +71,8 @@ class ValidModel extends Model {
     ValidModel.isValidType(borderMax);
     const min = Number(borderMin);
     const max = Number(borderMax);
-    this.isValidBorders(min, max);
-    this.border = {min, max}
+    ValidModel.isValidBorders(min, max);
+    this.border = {min, max};
   }
 
   static isValidType(value: any) {
@@ -80,26 +103,31 @@ class ValidModel extends Model {
     if (step < 0) {
       throw new SliderError('Too small step size');
     }
-    if (step > (this.border.max - this.border.min)){
+    if (step > (this.border.max - this.border.min)) {
       throw new SliderError('Too big step size');
     }
   }
 
-  isValidBorder(value: number, position: MinMaxPosition) {
-    if (position === MinMaxPosition.min){
-      if (value > this.border.max){
-        throw new SliderError('Negative slider body size');
-      }
-    } else if (value < this.border.min){
-      throw new SliderError('Negative slider body size');
-
+  isDivideToStepOrBorder(current: number) {
+    if ((current - this.border.min) % this.step !== 0
+      && current !== this.border.min
+      && current !== this.border.max
+    ) {
+      throw new SliderError('Not divide on step');
     }
-    // if (position === MinMaxPosition.min && value > this.border.max || position === MinMaxPosition.max && value < this.border.min) {
-    //   throw new SliderError('Negative slider body size');
-    // }
   }
 
-  isValidBorders(borderMin: number, borderMax: number) {
+  isValidBorder(value: number, position: MinMaxPosition) {
+    if (position === MinMaxPosition.min) {
+      if (value > this.border.max) {
+        throw new SliderError('Negative slider body size');
+      }
+    } else if (value < this.border.min) {
+      throw new SliderError('Negative slider body size');
+    }
+  }
+
+  static isValidBorders(borderMin: number, borderMax: number) {
     if (borderMin > borderMax) {
       throw new SliderError('Negative slider body size');
     }
