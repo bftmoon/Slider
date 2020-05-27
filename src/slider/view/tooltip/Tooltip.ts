@@ -1,5 +1,5 @@
-import IViewElement from "../IViewElement";
-import CssClassUtil from "../utils/CssClassUtil";
+import IViewElement from '../IViewElement';
+import CssClassUtil from '../utils/CssClassUtil';
 
 class Tooltip implements IViewElement {
   private element: HTMLElement;
@@ -28,7 +28,7 @@ class Tooltip implements IViewElement {
         this.element.style.left = '0';
       }
       if (rect.right > document.documentElement.offsetWidth) {
-        this.element.style.right = '0'
+        this.element.style.right = '0';
       }
     }
   }

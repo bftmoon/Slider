@@ -1,4 +1,4 @@
-import IViewElement from "../IViewElement";
+import IViewElement from '../IViewElement';
 
 class CssClassUtil {
   static readonly MAIN_PREFIX = 'slider'
@@ -9,32 +9,32 @@ class CssClassUtil {
   }
 
   static initHtmlClass(element: HTMLElement, isVertical: boolean, name?: string) {
-    const cssClass = CssClassUtil.MAIN_PREFIX + (name ? '__' + name : '');
+    const cssClass = CssClassUtil.MAIN_PREFIX + (name ? `__${name}` : '');
     element.classList.add(cssClass, cssClass + (isVertical ? '_vertical' : '_horizontal'));
   }
 
   static toggleOrientation(viewElement: IViewElement) {
     const cssClass = CssClassUtil.getFullName(viewElement);
-    viewElement.getElement().classList.toggle(cssClass + '_vertical')
-    viewElement.getElement().classList.toggle(cssClass + '_horizontal');
+    viewElement.getElement().classList.toggle(`${cssClass}_vertical`);
+    viewElement.getElement().classList.toggle(`${cssClass}_horizontal`);
   }
 
   static toggleHtmlOrientation(element: HTMLElement, name?: string) {
-    const cssClass = CssClassUtil.MAIN_PREFIX + (name ? '__' + name : '');
-    element.classList.toggle(cssClass + '_vertical')
-    element.classList.toggle(cssClass + '_horizontal');
+    const cssClass = CssClassUtil.MAIN_PREFIX + (name ? `__${name}` : '');
+    element.classList.toggle(`${cssClass}_vertical`);
+    element.classList.toggle(`${cssClass}_horizontal`);
   }
 
   static toggleHidden(viewElement: IViewElement) {
-    viewElement.getElement().classList.toggle(CssClassUtil.getFullName(viewElement) + '_hidden');
+    viewElement.getElement().classList.toggle(`${CssClassUtil.getFullName(viewElement)}_hidden`);
   }
 
-  static toggleGrab(viewElement:IViewElement){
-    viewElement.getElement().classList.toggle(CssClassUtil.getFullName(viewElement) + '_grabbed');
+  static toggleGrab(viewElement:IViewElement) {
+    viewElement.getElement().classList.toggle(`${CssClassUtil.getFullName(viewElement)}_grabbed`);
   }
 
   private static getFullName(viewElement: IViewElement) {
-    return CssClassUtil.MAIN_PREFIX + '__' + viewElement.constructor.name.toLowerCase();
+    return `${CssClassUtil.MAIN_PREFIX}__${viewElement.constructor.name.toLowerCase()}`;
   }
 }
 

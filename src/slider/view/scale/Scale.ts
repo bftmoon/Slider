@@ -1,8 +1,9 @@
-import IViewElement from "../IViewElement";
-import CssClassUtil from "../utils/CssClassUtil";
-import Observer from "../../observer/Observer";
-import SliderEvent from "../../observer/SliderEvent";
-import PositionUtil from "../utils/PositionUtil";
+import IViewElement from '../IViewElement';
+import CssClassUtil from '../utils/CssClassUtil';
+import Observer from '../../observer/Observer';
+import SliderEvent from '../../observer/SliderEvent';
+import PositionUtil from '../utils/PositionUtil';
+import ConvertUtil from '../utils/ConvertUtil';
 
 class Scale extends Observer implements IViewElement {
   private element: HTMLElement;
@@ -18,35 +19,42 @@ class Scale extends Observer implements IViewElement {
     return this.element;
   }
 
-  buildLineHtml(isVertical: boolean, index: number, gap: number): HTMLDivElement {
+  static buildLineHtml(isVertical: boolean, index: number, gap: number): HTMLDivElement {
     const line = document.createElement('div');
-    line.style[isVertical ? 'bottom' : 'left'] = gap * index + '%';
+    line.style[isVertical ? 'bottom' : 'left'] = `${gap * index}%`;
     CssClassUtil.initHtmlClass(line, isVertical, 'scale-line');
     return line;
   }
 
   updateLines(step: number, size: number, isVertical: boolean) {
     this.element.innerHTML = '';
-
-    const count = ~~(size / step) - Number(size % step === 0);
+    const count = Math.floor(size / step) - Number(size % step === 0);
     if (count > 0) {
-      const {percentStep, visibleCount} = this.calcGapAndCount(count, this.element[isVertical ? 'offsetHeight' : 'offsetWidth'], step, size);
+      const {percentGap, visibleCount} = Scale.calcGapAndCount(count, this.element[isVertical ? 'offsetHeight' : 'offsetWidth'], step, size);
 
       const fragment = document.createDocumentFragment();
-      for (let i = 0; i < visibleCount; i++) {
-        fragment.append(this.buildLineHtml(isVertical, i + 1, percentStep));
+      for (let i = 0; i < visibleCount; i += 1) {
+        fragment.append(Scale.buildLineHtml(isVertical, i + 1, percentGap));
       }
       this.element.append(fragment);
     }
   }
 
-  calcGapAndCount(childCount: number, elementSize: number, modelStep: number, modelSize: number) {
-    let pxStep = elementSize * modelStep / modelSize;
-    while (pxStep <= 4) {
-      pxStep *= 2;
+  static calcGapAndCount(
+    childCount: number,
+    elementSize: number,
+    modelStep: number,
+    modelSize: number,
+  ) {
+    let pxGap = elementSize * (modelStep / modelSize);
+    while (pxGap <= 4) {
+      pxGap *= 2;
       childCount /= 2;
     }
-    return {percentStep: 100 * pxStep / elementSize, visibleCount: ~~childCount};
+    return {
+      percentGap: ConvertUtil.toPercent(pxGap, elementSize),
+      visibleCount: Math.floor(childCount),
+    };
   }
 
   toggleHidden() {
@@ -61,7 +69,7 @@ class Scale extends Observer implements IViewElement {
     CssClassUtil.toggleOrientation(this);
     this.element.childNodes.forEach((child: ChildNode) => {
       CssClassUtil.toggleHtmlOrientation(child as HTMLElement, 'scale-line');
-    })
+    });
   }
 }
 

@@ -1,4 +1,4 @@
-import MinMaxPosition from "../model/MinMaxPosition";
+import MinMaxPosition from '../model/MinMaxPosition';
 
 interface IRelativePointPercents {
   x: number;
@@ -14,4 +14,4 @@ interface IPointMoveData extends IRelativePointPercents{
   position: MinMaxPosition;
 }
 
-export {IAbsolutePoint, IRelativePointPercents, IPointMoveData};
+export { IAbsolutePoint, IRelativePointPercents, IPointMoveData };

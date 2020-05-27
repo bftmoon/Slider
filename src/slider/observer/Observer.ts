@@ -1,7 +1,7 @@
-import SliderEvent from "./SliderEvent";
+import SliderEvent from './SliderEvent';
 
 class Observer {
-  private events: Map<SliderEvent, ((data?: any) => void)[]> = new Map<SliderEvent, ((data?: any) => void)[]>();
+  private events = new Map<SliderEvent,((data?: any) => void)[]>();
 
   subscribe(event: SliderEvent, callback: (data?: any) => void) {
     if (!this.events.has(event)) {
@@ -13,9 +13,9 @@ class Observer {
 
   notify(event: SliderEvent, data?: any) {
     if (this.events.has(event)) {
-      this.events.get(event).forEach((callback => {
+      this.events.get(event).forEach(((callback) => {
         callback(data);
-      }))
+      }));
     }
   }
 }

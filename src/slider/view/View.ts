@@ -1,16 +1,18 @@
-import Scale from "./scale/Scale";
-import Body from "./body/Body";
-import Observer from "../observer/Observer";
-import SliderEvent from "../observer/SliderEvent";
-import IViewOptions from "../common-interfaces/IViewOptions";
-import MinMax from "../common-interfaces/MinMax";
-import IPoint from "../common-interfaces/IPoint";
-import {IPointMoveData, IRelativePointPercents} from "../common-interfaces/NotifyInterfaces";
-import CssClassUtil from "./utils/CssClassUtil";
+import Scale from './scale/Scale';
+import Body from './body/Body';
+import Observer from '../observer/Observer';
+import SliderEvent from '../observer/SliderEvent';
+import IViewOptions from '../common-interfaces/IViewOptions';
+import MinMax from '../common-interfaces/MinMax';
+import IPoint from '../common-interfaces/IPoint';
+import {IPointMoveData, IRelativePointPercents} from '../common-interfaces/NotifyInterfaces';
+import CssClassUtil from './utils/CssClassUtil';
 
 class View extends Observer {
   element: HTMLElement;
+
   body: Body = new Body();
+
   scale: Scale = new Scale();
 
   render(element: HTMLElement,
@@ -22,21 +24,19 @@ class View extends Observer {
          }: IViewOptions,
          points: MinMax<IPoint>,
          step: number,
-         size: number
-  ) {
+         size: number) {
     this.element = element;
     const fragment = document.createDocumentFragment();
     CssClassUtil.initHtmlClass(this.element, isVertical);
 
     fragment.append(
       this.body.buildHtml(isVertical),
-      this.scale.buildHtml(isVertical)
+      this.scale.buildHtml(isVertical),
     );
 
     this.body
       .subscribe(SliderEvent.sliderClick, this.handleBodyClick)
-      .subscribe(SliderEvent.pointMove, this.handlePointMove)
-    ;
+      .subscribe(SliderEvent.pointMove, this.handlePointMove);
     this.scale.subscribe(SliderEvent.sliderClick, this.handleScaleClick);
 
     if (!withTooltip) this.body.toggleTooltip();
@@ -44,7 +44,8 @@ class View extends Observer {
 
     this.updatePosition(isVertical, points);
     if (!isRange) this.body.toggleRange();
-    withScale ? this.scale.updateLines(step, size, isVertical) : this.scale.toggleHidden();
+    if (withScale) this.scale.updateLines(step, size, isVertical);
+    else this.scale.toggleHidden();
   }
 
   updatePosition(isVertical: boolean, points: MinMax<IPoint>) {
@@ -54,6 +55,7 @@ class View extends Observer {
   private handleScaleClick = (data: IRelativePointPercents) => {
     this.notify(SliderEvent.sliderClick, data);
   }
+
   private handleBodyClick = (data: IRelativePointPercents) => {
     this.notify(SliderEvent.sliderClick, data);
   }

@@ -1,10 +1,10 @@
 class ConvertUtil {
   static toPercent(value: number, size: number) {
-    return 100 * value / size;
+    return 100 * (value / size);
   }
 
   static fromPercent(percent: number, size: number) {
-    return size * percent / 100;
+    return size * (percent / 100);
   }
 
   static toPercentWithDiff(value: number, begin: number, end: number) {
