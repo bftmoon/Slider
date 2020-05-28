@@ -16,7 +16,13 @@
   &__slider {
     display: flex;
     justify-content: center;
-    margin: 10px;
+    margin: auto 50px;
     height: 150px;
+  }
+
+  &__sliders {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 300px));
+    gap: 20px;
   }
 }

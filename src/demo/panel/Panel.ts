@@ -1,13 +1,14 @@
 import {ISliderGroup} from "../../slider/ISlider";
-import MinMax from "../../slider/common-interfaces/MinMax";
-import MinMaxPosition from "../../slider/model/MinMaxPosition";
+import IMinMax from "../../slider/common/IMinMax";
 import IModel from "../../slider/model/IModel";
 import '../../slider/slider-jquery'
+import MinMaxPosition from "../../slider/common/MinMaxPosition";
+import SliderError from "../../slider/SliderError";
 
 
 class Panel {
   private sliderGroup: ISliderGroup;
-  private changeableInputs: MinMax<HTMLInputElement> = {};
+  private changeableInputs: IMinMax<HTMLInputElement> = {};
 
   constructor(slider: ISliderGroup) {
     this.sliderGroup = slider;
@@ -49,8 +50,9 @@ class Panel {
       try {
         listener(event);
         (event.target as HTMLInputElement).setCustomValidity("");
-      } catch (e) {
-        (event.target as HTMLInputElement).setCustomValidity(e);
+      } catch (error) {
+        if (error !instanceof SliderError) throw error;
+        (event.target as HTMLInputElement).setCustomValidity(error.message);
         (event.target as HTMLInputElement).reportValidity();
       }
     }

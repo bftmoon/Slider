@@ -1,4 +1,4 @@
-import IViewElement from '../IViewElement';
+import IViewElement from "../view/IViewElement";
 
 class CssClassUtil {
   static readonly MAIN_PREFIX = 'slider'

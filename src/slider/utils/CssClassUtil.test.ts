@@ -1,5 +1,5 @@
-import IViewElement from '../IViewElement';
 import CssClassUtil from './CssClassUtil';
+import IViewElement from "../view/IViewElement";
 
 describe('Css class selection and update by js class', () => {
   class MockViewElement implements IViewElement {
