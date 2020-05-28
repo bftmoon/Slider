@@ -1,7 +1,7 @@
 import Model from './Model';
-import SliderError from './SliderError';
-import MinMaxPosition from './MinMaxPosition';
 import IModel from './IModel';
+import MinMaxPosition from "../common/MinMaxPosition";
+import SliderError from "../SliderError";
 
 class ValidModel extends Model {
   constructor(options?: IModel) {
@@ -15,8 +15,8 @@ class ValidModel extends Model {
         );
       }
       if (options.current !== undefined) {
-        if (options.current.min !== undefined)this.setValidCurrent(options.current.min, MinMaxPosition.min);
-        if (options.current.max !== undefined)this.setValidCurrent(options.current.max || this.current.max, MinMaxPosition.max);
+        if (options.current.min !== undefined) this.setValidCurrent(options.current.min, MinMaxPosition.min);
+        if (options.current.max !== undefined) this.setValidCurrent(options.current.max || this.current.max, MinMaxPosition.max);
       }
       if (options.step !== undefined) {
         this.setValidStep(options.step);
@@ -76,7 +76,7 @@ class ValidModel extends Model {
   }
 
   static isValidType(value: any) {
-    if (value === undefined || value === '' || isNaN(Number(value))) {
+    if (value === undefined || value === null || value === '' || isNaN(Number(value))) {
       throw new SliderError('Number required');
     }
   }
@@ -100,7 +100,7 @@ class ValidModel extends Model {
   }
 
   isValidStep(step: number) {
-    if (step < 0) {
+    if (step <= 0) {
       throw new SliderError('Too small step size');
     }
     if (step > (this.border.max - this.border.min)) {
@@ -122,14 +122,25 @@ class ValidModel extends Model {
       if (value > this.border.max) {
         throw new SliderError('Negative slider body size');
       }
-    } else if (value < this.border.min) {
-      throw new SliderError('Negative slider body size');
+      if (value === this.border.max) {
+        throw new SliderError('Slider with only one value');
+      }
+    } else {
+      if (value < this.border.min) {
+        throw new SliderError('Negative slider body size');
+      }
+      if (value === this.border.min) {
+        throw new SliderError('Slider with only one value');
+      }
     }
   }
 
   static isValidBorders(borderMin: number, borderMax: number) {
     if (borderMin > borderMax) {
       throw new SliderError('Negative slider body size');
+    }
+    if (borderMin === borderMax) {
+      throw new SliderError('Slider with only one value');
     }
   }
 }

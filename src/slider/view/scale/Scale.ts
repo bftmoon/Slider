@@ -1,9 +1,9 @@
 import IViewElement from '../IViewElement';
-import CssClassUtil from '../utils/CssClassUtil';
 import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
-import PositionUtil from '../utils/PositionUtil';
-import ConvertUtil from '../utils/ConvertUtil';
+import CssClassUtil from "../../utils/CssClassUtil";
+import ConvertUtil from "../../utils/ConvertUtil";
+import PositionUtil from "../../utils/PositionUtil";
 
 class Scale extends Observer implements IViewElement {
   private element: HTMLElement;

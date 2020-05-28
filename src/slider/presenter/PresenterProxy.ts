@@ -103,7 +103,7 @@ class PresenterProxy extends Presenter {
   private updatePointByStep(position: MinMaxPosition) {
     const current = this.model.getCurrent()[position];
     const normalizedCurrent = this.model.normalizeByStep(current);
-    if (this.model.isNormalizeByStepRequired(normalizedCurrent, position)) {
+    if (normalizedCurrent !== current) {
       this.updatePosition(normalizedCurrent, position);
     }
   }

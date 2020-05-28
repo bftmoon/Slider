@@ -2,11 +2,11 @@ import Scale from './scale/Scale';
 import Body from './body/Body';
 import Observer from '../observer/Observer';
 import SliderEvent from '../observer/SliderEvent';
-import IViewOptions from '../common-interfaces/IViewOptions';
-import MinMax from '../common-interfaces/MinMax';
-import IPoint from '../common-interfaces/IPoint';
-import {IPointMoveData, IRelativePointPercents} from '../common-interfaces/NotifyInterfaces';
-import CssClassUtil from './utils/CssClassUtil';
+import IViewOptions from '../common/IViewOptions';
+import IMinMax from '../common/IMinMax';
+import IPoint from '../common/IPoint';
+import {IPointMoveData, IRelativePointPercents} from '../common/NotifyInterfaces';
+import CssClassUtil from "../utils/CssClassUtil";
 
 class View extends Observer {
   element: HTMLElement;
@@ -22,7 +22,7 @@ class View extends Observer {
            withTooltip,
            withScale,
          }: IViewOptions,
-         points: MinMax<IPoint>,
+         points: IMinMax<IPoint>,
          step: number,
          size: number) {
     this.element = element;
@@ -48,7 +48,7 @@ class View extends Observer {
     else this.scale.toggleHidden();
   }
 
-  updatePosition(isVertical: boolean, points: MinMax<IPoint>) {
+  updatePosition(isVertical: boolean, points: IMinMax<IPoint>) {
     this.body.updatePosition(isVertical, points);
   }
 

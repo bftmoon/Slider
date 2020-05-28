@@ -1,4 +1,4 @@
-import MinMaxPosition from '../model/MinMaxPosition';
+import MinMaxPosition from "./MinMaxPosition";
 
 interface IRelativePointPercents {
   x: number;

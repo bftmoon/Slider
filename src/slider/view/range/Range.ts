@@ -1,6 +1,6 @@
 import IViewElement from '../IViewElement';
-import CssClassUtil from '../utils/CssClassUtil';
-import MinMax from '../../common-interfaces/MinMax';
+import IMinMax from '../../common/IMinMax';
+import CssClassUtil from "../../utils/CssClassUtil";
 
 class Range implements IViewElement {
   private element: HTMLDivElement;
@@ -15,7 +15,7 @@ class Range implements IViewElement {
     return this.element;
   }
 
-  updatePosition(isVertical: boolean, percent: MinMax<number>, height?:number) {
+  updatePosition(isVertical: boolean, percent: IMinMax<number>, height?:number) {
     if (isVertical) {
       const heightPart = height / 100;
       if (percent.min !== undefined) this.element.style.marginBottom = `${heightPart * percent.min}px`;

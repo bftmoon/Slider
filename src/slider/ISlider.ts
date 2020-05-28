@@ -1,6 +1,6 @@
 import IModel from "./model/IModel";
 import Slider from "./Slider";
-import MinMaxPosition from "./model/MinMaxPosition";
+import MinMaxPosition from "./common/MinMaxPosition";
 
 interface ISliderCommon{
   toggleRange():void;

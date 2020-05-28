@@ -1,10 +1,10 @@
 import IViewElement from '../IViewElement';
-import CssClassUtil from '../utils/CssClassUtil';
 import Tooltip from '../tooltip/Tooltip';
 import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
-import IPoint from '../../common-interfaces/IPoint';
-import { IAbsolutePoint } from '../../common-interfaces/NotifyInterfaces';
+import IPoint from '../../common/IPoint';
+import { IAbsolutePoint } from '../../common/NotifyInterfaces';
+import CssClassUtil from "../../utils/CssClassUtil";
 
 class Point extends Observer implements IViewElement {
   private element: HTMLDivElement;

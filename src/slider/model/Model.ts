@@ -1,14 +1,14 @@
 import IModel from './IModel';
-import MinMaxPosition from './MinMaxPosition';
-import MinMax from '../common-interfaces/MinMax';
-import IPoint from '../common-interfaces/IPoint';
-import IViewOptions from '../common-interfaces/IViewOptions';
-import ConvertUtil from '../view/utils/ConvertUtil';
+import IMinMax from '../common/IMinMax';
+import IPoint from '../common/IPoint';
+import IViewOptions from '../common/IViewOptions';
+import MinMaxPosition from "../common/MinMaxPosition";
+import ConvertUtil from "../utils/ConvertUtil";
 
 class Model {
-  protected current = { min: 0, max: 80 };
+  protected current = {min: 0, max: 80};
 
-  border = { min: 0, max: 100 };
+  border = {min: 0, max: 100};
 
   step = 1;
 
@@ -22,8 +22,8 @@ class Model {
 
   constructor(options?: IModel) {
     if (options !== undefined) {
-      Model.copyMinMax(this.border, options.border);
-      Model.copyMinMax(this.current, options.current);
+      if (options.border !== undefined) Model.copyMinMax(this.border, options.border);
+      if (options.current !== undefined) Model.copyMinMax(this.current, options.current);
       if (options.step !== undefined) this.step = options.step;
       this.copyBool(options);
     }
@@ -36,21 +36,25 @@ class Model {
     if (options.withScale !== undefined) this.withScale = options.withScale;
   }
 
-  private static copyMinMax(thisOption: MinMax<any>, option: MinMax<any>) {
+  private static copyMinMax(thisOption: IMinMax<any>, option: IMinMax<any>) {
     if (option.max !== undefined) thisOption.max = option.max;
     if (option.min !== undefined) thisOption.min = option.min;
   }
 
-  setCurrent(current: MinMax<number>) {
-    if (current.min !== undefined) this.current.min = current.min;
-    if (current.max !== undefined) this.current.max = current.max;
+  setCurrent(current: IMinMax<number>) {
+    Model.copyMinMax(this.current, current);
   }
 
-  getCurrentPoints(): MinMax<IPoint> {
+  getCurrent(): IMinMax<number> {
+    if (this.isRange) return this.current;
     return {
-      min: this.getPoint(MinMaxPosition.min),
-      max: this.getPoint(MinMaxPosition.max),
+      max: this.current.max,
+      min: this.border.min,
     };
+  }
+
+  getRealCurrent(): IMinMax<number> {
+    return this.current;
   }
 
   getPoint(position: MinMaxPosition): IPoint {
@@ -61,6 +65,25 @@ class Model {
         this.border.max,
       ),
       tooltip: this.getCurrent()[position],
+    };
+  }
+
+  getCurrentPoints(): IMinMax<IPoint> {
+    return {
+      min: this.getPoint(MinMaxPosition.min),
+      max: this.getPoint(MinMaxPosition.max),
+    };
+  }
+
+  getOptions(): IModel {
+    return {
+      current: this.getCurrent(),
+      border: this.border,
+      step: this.step,
+      isVertical: this.isVertical,
+      isRange: this.isRange,
+      withScale: this.withScale,
+      withTooltip: this.withTooltip,
     };
   }
 
@@ -94,6 +117,7 @@ class Model {
 
   normalizeByStep(value: number) {
     const diff = (value - this.border.min) % this.step;
+    if (diff === 0) return value;
     value += this.step / 2 > diff ? -diff : this.step - diff;
     return value > this.border.max ? this.border.max : value;
   }
@@ -110,11 +134,6 @@ class Model {
     return this.getCurrent().max < this.getCurrent().min;
   }
 
-  isNormalizeByStepRequired(normalizedCurrent: number, position: MinMaxPosition): boolean {
-    return normalizedCurrent !== this.current[position]
-      && this.current[position] !== this.border[position];
-  }
-
   isSameCurrent(value: number): boolean {
     return value === this.getCurrent().min || value === this.getCurrent().max;
   }
@@ -127,30 +146,6 @@ class Model {
 
   toggleRange() {
     this.isRange = !this.isRange;
-  }
-
-  getRealCurrent(): MinMax<number> {
-    return this.current;
-  }
-
-  getCurrent(): MinMax<number> {
-    if (this.isRange) return this.current;
-    return {
-      max: this.current.max,
-      min: this.border.min,
-    };
-  }
-
-  getOptions(): IModel {
-    return {
-      current: this.getCurrent(),
-      border: this.border,
-      step: this.step,
-      isVertical: this.isVertical,
-      isRange: this.isRange,
-      withScale: this.withScale,
-      withTooltip: this.withTooltip,
-    };
   }
 
   toggleTooltip() {

@@ -1,5 +1,5 @@
-import IViewElement from "../IViewElement";
-import CssClassUtil from "./CssClassUtil";
+import IViewElement from '../IViewElement';
+import CssClassUtil from './CssClassUtil';
 
 describe('Css class selection and update by js class', () => {
   class MockViewElement implements IViewElement {
@@ -70,7 +70,7 @@ describe('Css class selection and update by name', () => {
     CssClassUtil.initHtmlClass(rootDiv, true);
     expect(rootDiv.classList.toString()).toBe(`${CssClassUtil.MAIN_PREFIX} ${CssClassUtil.MAIN_PREFIX}_vertical`);
 
-    CssClassUtil.toggleHtmlOrientation(rootDiv,);
+    CssClassUtil.toggleHtmlOrientation(rootDiv);
     expect(rootDiv.classList.toString()).toBe(`${CssClassUtil.MAIN_PREFIX} ${CssClassUtil.MAIN_PREFIX}_horizontal`);
   });
 });

@@ -1,8 +1,8 @@
-import MinMax from '../common-interfaces/MinMax';
+import IMinMax from '../common/IMinMax';
 
 interface IModel {
-  border?: MinMax<number>;
-  current?: MinMax<number>;
+  border?: IMinMax<number>;
+  current?: IMinMax<number>;
   step?: number;
 
   isVertical?: boolean;

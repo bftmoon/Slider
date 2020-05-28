@@ -2,7 +2,7 @@ import Model from '../model/Model';
 import View from '../view/View';
 import SliderEvent from '../observer/SliderEvent';
 import MinMaxPosition from '../model/MinMaxPosition';
-import {IPointMoveData, IRelativePointPercents} from '../common-interfaces/NotifyInterfaces';
+import {IPointMoveData, IRelativePointPercents} from '../common/NotifyInterfaces';
 import Observer from '../observer/Observer';
 import SliderError from '../model/SliderError';
 
@@ -32,7 +32,12 @@ class Presenter extends Observer {
   }
 
   protected updateScaleLines() {
-    this.view.updateScaleLines(this.model.step, this.model.getRangeSize(), this.model.isVertical);
+    if (this.model.withScale)
+      this.view.updateScaleLines(
+        this.model.step,
+        this.model.getRangeSize(),
+        this.model.isVertical
+      );
   }
 
   private handleSliderClick = ({x, y}: IRelativePointPercents) => {

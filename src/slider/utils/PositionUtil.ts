@@ -1,4 +1,4 @@
-import { IAbsolutePoint, IRelativePointPercents } from '../../common-interfaces/NotifyInterfaces';
+import { IAbsolutePoint, IRelativePointPercents } from '../../common/NotifyInterfaces';
 import ConvertUtil from './ConvertUtil';
 
 class PositionUtil {

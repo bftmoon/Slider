@@ -1,7 +1,7 @@
 import Slider from "./Slider";
 import IModel from "./model/IModel";
 import {ISliderGroup} from "./ISlider";
-import MinMaxPosition from "./model/MinMaxPosition";
+import MinMaxPosition from "./common/MinMaxPosition";
 
 $.fn.slider = function (options?: IModel): ISliderGroup {
 

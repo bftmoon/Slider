@@ -1,5 +1,5 @@
 import IViewElement from '../IViewElement';
-import CssClassUtil from '../utils/CssClassUtil';
+import CssClassUtil from "../../utils/CssClassUtil";
 
 class Tooltip implements IViewElement {
   private element: HTMLElement;

@@ -1,14 +1,14 @@
-import Point from "./Point";
-import Tooltip from "../tooltip/Tooltip";
-import CssClassUtil from "../utils/CssClassUtil";
-import SliderEvent from "../../observer/SliderEvent";
+import Point from './Point';
+import Tooltip from '../tooltip/Tooltip';
+import CssClassUtil from '../utils/CssClassUtil';
+import SliderEvent from '../../observer/SliderEvent';
 
 describe('Point class', () => {
   let point: Point;
 
   beforeEach(() => {
     point = new Point();
-  })
+  });
 
   test('buildHtml return prepared element', () => {
     const mockTooltip = jest.spyOn(Tooltip.prototype, 'buildHtml');
@@ -22,7 +22,7 @@ describe('Point class', () => {
   describe('functions for built html', () => {
     beforeEach(() => {
       point.buildHtml(false);
-    })
+    });
 
     test('getElement', () => {
       expect(point.getElement()).toBeDefined();
@@ -45,29 +45,29 @@ describe('Point class', () => {
 
     test('handleMouseMove notify about changes', () => {
       point.subscribe(SliderEvent.pointMove, (data) => {
-        expect(data).toEqual({x: 1, y: 2})
+        expect(data).toEqual({ x: 1, y: 2 });
       });
-      const event = new MouseEvent('mousemove', {clientX: 1, clientY: 2});
+      const event = new MouseEvent('mousemove', { clientX: 1, clientY: 2 });
       point.getElement().dispatchEvent(event);
-    })
+    });
 
-    describe('updatePosition', ()=>{
-      beforeEach(()=>{
-        Object.defineProperty(point.getElement(), 'offsetWidth', {value: 10});
+    describe('updatePosition', () => {
+      beforeEach(() => {
+        Object.defineProperty(point.getElement(), 'offsetWidth', { value: 10 });
       });
 
-      test('update vertical without tooltip', ()=>{
+      test('update vertical without tooltip', () => {
         const spy = jest.spyOn(Tooltip.prototype, 'update');
         // point.updatePosition(true, {percent: 10}, {height: 100, width: 10});
         expect(spy).not.toBeCalled();
-        expect(point.getElement().style.bottom).toBe('5%')
+        expect(point.getElement().style.bottom).toBe('5%');
       });
 
-      test('update horizontal and tooltip', ()=>{
+      test('update horizontal and tooltip', () => {
         const spy = jest.spyOn(Tooltip.prototype, 'update'); // not parallel required
         // point.updatePosition(false, {percent: 10, tooltip: 10}, {width: 100, height: 10});
         expect(spy).toBeCalledTimes(1);
-        expect(point.getElement().style.left).toBe('5%')
+        expect(point.getElement().style.left).toBe('5%');
       });
     });
   });

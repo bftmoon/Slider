@@ -1,5 +1,5 @@
-import Observer from "./Observer";
-import SliderEvent from "./SliderEvent";
+import Observer from './Observer';
+import SliderEvent from './SliderEvent';
 
 describe('Observer class', () => {
   let observer: Observer;
@@ -23,4 +23,4 @@ describe('Observer class', () => {
     observer.notify(SliderEvent.valueChanged);
     expect(mockCallback).toBeCalledTimes(3);
   });
-})
+});

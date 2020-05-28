@@ -1,21 +1,21 @@
 import IViewElement from '../IViewElement';
-import CssClassUtil from '../utils/CssClassUtil';
 import Point from '../point/Point';
 import Range from '../range/Range';
 import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
-import MinMaxPosition from '../../model/MinMaxPosition';
-import MinMax from '../../common-interfaces/MinMax';
-import IPoint from '../../common-interfaces/IPoint';
-import { IAbsolutePoint, IPointMoveData } from '../../common-interfaces/NotifyInterfaces';
-import PositionUtil from '../utils/PositionUtil';
+import IMinMax from '../../common/IMinMax';
+import IPoint from '../../common/IPoint';
+import { IAbsolutePoint, IPointMoveData } from '../../common/NotifyInterfaces';
+import CssClassUtil from "../../utils/CssClassUtil";
+import MinMaxPosition from "../../common/MinMaxPosition";
+import PositionUtil from "../../utils/PositionUtil";
 
 class Body extends Observer implements IViewElement {
   private element: HTMLElement;
 
   private range: Range = new Range();
 
-  private points: MinMax<Point> = { min: new Point(), max: new Point() };
+  private points: IMinMax<Point> = { min: new Point(), max: new Point() };
 
   getElement(): HTMLElement {
     return this.element;
@@ -63,8 +63,8 @@ class Body extends Observer implements IViewElement {
     this.points.max.toggleTooltip();
   }
 
-  updatePosition(isVertical: boolean, { min, max }: MinMax<IPoint>) {
-    const percents: MinMax<number> = {};
+  updatePosition(isVertical: boolean, { min, max }: IMinMax<IPoint>) {
+    const percents: IMinMax<number> = {};
     if (min !== undefined) {
       this.points.min.updatePosition(isVertical, min);
       percents.min = min.percent;
