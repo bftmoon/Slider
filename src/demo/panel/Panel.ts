@@ -1,6 +1,6 @@
 import {ISliderGroup} from "../../slider/ISlider";
 import IMinMax from "../../slider/common/IMinMax";
-import IModel from "../../slider/model/IModel";
+import IOptions from "../../slider/model/IOptions";
 import '../../slider/slider-jquery'
 import MinMaxPosition from "../../slider/common/MinMaxPosition";
 import SliderError from "../../slider/SliderError";
@@ -24,16 +24,9 @@ class Panel {
 
   private handleSliderSlide = (data: { value: number, position: MinMaxPosition }) => {
     this.changeableInputs[data.position].value = data.value.toString();
-    if (this.sliderGroup.size() > 1){
-      if (data.position === MinMaxPosition.max){
-        this.sliderGroup.setCurrentRangeMax(data.value);
-      } else {
-        this.sliderGroup.setCurrentRangeMin(data.value);
-      }
-    }
   }
 
-  private prepareElement(modelData: IModel, element: HTMLInputElement) {
+  private prepareElement(modelData: IOptions, element: HTMLInputElement) {
     const mappedData = this.mapData(modelData, element.name);
     if (element.type === 'checkbox') {
       element.checked = mappedData.value as boolean;
@@ -58,7 +51,7 @@ class Panel {
     }
   }
 
-  private mapData(data: IModel, inputName: string): {
+  private mapData(data: IOptions, inputName: string): {
     value: number | boolean,
     listener: (event: InputEvent) => void
   } {

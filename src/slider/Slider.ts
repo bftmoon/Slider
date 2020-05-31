@@ -1,5 +1,5 @@
 import View from './view/View';
-import IModel from './model/IModel';
+import IOptions from './model/IOptions';
 import './slider.scss';
 import PresenterProxy from './presenter/PresenterProxy';
 import ValidModel from './model/ValidModel';
@@ -7,7 +7,7 @@ import {ISlider} from "./ISlider";
 
 
 class Slider extends PresenterProxy implements ISlider{
-  constructor(options?: IModel) {
+  constructor(options?: IOptions) {
     super(new ValidModel(options), new View());
   }
 }

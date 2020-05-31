@@ -1,9 +1,9 @@
 import Slider from "./Slider";
-import IModel from "./model/IModel";
+import IOptions from "./model/IOptions";
 import {ISliderGroup} from "./ISlider";
 import MinMaxPosition from "./common/MinMaxPosition";
 
-$.fn.slider = function (options?: IModel): ISliderGroup {
+$.fn.slider = function (options?: IOptions): ISliderGroup {
 
   const sliders: Slider[] = [];
   const query = this;
@@ -56,7 +56,7 @@ $.fn.slider = function (options?: IModel): ISliderGroup {
     toggleTooltip(): void {
       sliders.forEach(slider => slider.toggleTooltip());
     },
-    getOptions(): IModel[] {
+    getOptions(): IOptions[] {
       return sliders.map((slider) => slider.getOptions());
     },
     getSlider(index: number): Slider {

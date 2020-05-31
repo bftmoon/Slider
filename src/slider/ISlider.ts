@@ -1,4 +1,4 @@
-import IModel from "./model/IModel";
+import IOptions from "./model/IOptions";
 import Slider from "./Slider";
 import MinMaxPosition from "./common/MinMaxPosition";
 
@@ -19,13 +19,13 @@ interface ISliderCommon{
 }
 
 interface ISlider extends ISliderCommon{
-  getOptions():IModel;
+  getOptions():IOptions;
 }
 
 interface ISliderGroup extends  ISliderCommon{
   getSlider(index: number): Slider;
   getElementsQuery(): JQuery;
-  getOptions():IModel[];
+  getOptions():IOptions[];
   size(): number;
 }
 

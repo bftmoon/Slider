@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "jest": {
+    "coverageDirectory": "./dist/coverage"
+  },
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
@@ -11,7 +14,8 @@
     "build": "webpack --mode production",
     "eslint": "eslint . --ext .ts",
     "eslint test": "eslint . --ext .test.ts",
-    "eslint fix": "eslint . --ext .ts --fix"
+    "eslint fix": "eslint . --ext .ts --fix",
+    "deploy": "gh-pages -d dist"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +24,7 @@
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-typescript": "^7.9.0",
     "@types/jest": "^25.2.3",
+    "@types/jquery": "^3.3.38",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
     "babel-jest": "^26.0.1",
@@ -29,8 +34,8 @@
     "eslint-loader": "^4.0.2",
     "eslint-plugin-fsd": "^1.0.1",
     "eslint-plugin-import": "^2.20.2",
-    "@types/jquery": "^3.3.38",
     "eslint-plugin-jest": "^23.13.1",
+    "gh-pages": "^3.0.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
     "jsdom": "^16.2.2",
