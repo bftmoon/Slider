@@ -1,9 +1,13 @@
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
 
 const config = {
   entry: {
     app: './src/demo/index.ts'
+  },
+  output: {
+    path: path.resolve(__dirname, "docs/demo")
   },
   devtool: 'inline-source-map',
   plugins: [
@@ -37,7 +41,7 @@ const config = {
     ]
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   devServer: {
     overlay: true,
@@ -45,9 +49,5 @@ const config = {
 };
 
 module.exports = (env, argv) => {
-  if (argv.mode === 'development') {
-  }
-  if (argv.mode === 'production') {
-  }
   return config;
 }
