@@ -81,7 +81,7 @@ class ValidModel extends Model {
 
   private static isValidType(value: any) {
     // eslint-disable-next-line fsd/split-conditionals
-    if (value === undefined || value === null || value === '' || isNaN(Number(value))) {
+    if (value === undefined || value === null || value === '' || Number.isNaN(Number(value))) {
       throw new SliderError('Number required');
     }
   }

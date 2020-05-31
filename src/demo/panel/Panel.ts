@@ -28,11 +28,12 @@ class Panel {
   }
 
   private prepareElement(modelData: IOptions, element: HTMLInputElement) {
+    const inputElement = element;
     const mappedData = this.mapData(modelData, element.name);
     if (element.type === 'checkbox') {
-      element.checked = mappedData.value as boolean;
+      inputElement.checked = mappedData.value as boolean;
     } else {
-      element.value = mappedData.value.toString();
+      inputElement.value = mappedData.value.toString();
     }
     if (element.name === 'currentMin') this.changeableInputs.min = element;
     if (element.name === 'currentMax') this.changeableInputs.max = element;

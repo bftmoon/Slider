@@ -39,7 +39,9 @@ class Model {
   }
 
   private static copyMinMax(thisOption: IMinMax<any>, { min, max }: IMinMax<any>) {
+    // eslint-disable-next-line no-param-reassign
     if (max !== undefined) thisOption.max = max;
+    // eslint-disable-next-line no-param-reassign
     if (min !== undefined) thisOption.min = min;
   }
 
@@ -118,10 +120,11 @@ class Model {
   }
 
   normalizeByStep(value: number) {
+    let newValue = value;
     const diff = (value - this.border.min) % this.step;
     if (diff === 0) return value;
-    value += this.step / 2 > diff ? -diff : this.step - diff;
-    return value > this.border.max ? this.border.max : value;
+    newValue += this.step / 2 > diff ? -diff : this.step - diff;
+    return value > this.border.max ? this.border.max : newValue;
   }
 
   calcModelValue(percent: number): number {
