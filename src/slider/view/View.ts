@@ -7,8 +7,9 @@ import IMinMax from '../common/IMinMax';
 import IPoint from '../common/IPoint';
 import {IPointMoveData, IRelativePointPercents} from '../common/NotifyInterfaces';
 import CssClassUtil from "../utils/CssClassUtil";
+import IView from "./IView";
 
-class View extends Observer {
+class View extends Observer implements IView{
   element: HTMLElement;
 
   body: Body = new Body();
@@ -24,7 +25,7 @@ class View extends Observer {
          }: IViewOptions,
          points: IMinMax<IPoint>,
          step: number,
-         size: number) {
+         size: number): void {
     this.element = element;
     const fragment = document.createDocumentFragment();
     CssClassUtil.initHtmlClass(this.element, isVertical);
@@ -48,28 +49,16 @@ class View extends Observer {
     else this.scale.toggleHidden();
   }
 
-  updatePosition(isVertical: boolean, points: IMinMax<IPoint>) {
-    this.body.updatePosition(isVertical, points);
-  }
-
-  private handleScaleClick = (data: IRelativePointPercents) => {
-    this.notify(SliderEvent.sliderClick, data);
-  }
-
-  private handleBodyClick = (data: IRelativePointPercents) => {
-    this.notify(SliderEvent.sliderClick, data);
-  }
-
-  private handlePointMove = (data: IPointMoveData) => {
-    this.notify(SliderEvent.pointMove, data);
-  }
-
   toggleRange() {
     this.body.toggleRange();
   }
 
   toggleTooltip() {
     this.body.toggleTooltip();
+  }
+
+  toggleScale() {
+    this.scale.toggleHidden();
   }
 
   toggleOrientation() {
@@ -82,8 +71,20 @@ class View extends Observer {
     this.scale.updateLines(step, size, isVertical);
   }
 
-  toggleScale() {
-    this.scale.toggleHidden();
+  updatePosition(isVertical: boolean, points: IMinMax<IPoint>) {
+    this.body.updatePosition(isVertical, points);
+  }
+
+  private handlePointMove = (data: IPointMoveData) => {
+    this.notify(SliderEvent.pointMove, data);
+  }
+
+  private handleScaleClick = (data: IRelativePointPercents) => {
+    this.notify(SliderEvent.sliderClick, data);
+  }
+
+  private handleBodyClick = (data: IRelativePointPercents) => {
+    this.notify(SliderEvent.sliderClick, data);
   }
 }
 

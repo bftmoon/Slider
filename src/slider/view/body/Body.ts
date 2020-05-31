@@ -37,23 +37,6 @@ class Body extends Observer implements IViewElement {
     return this.element;
   }
 
-  private handleMinPointMove = (data: IAbsolutePoint) => {
-    this.handlePointMove(data);
-  }
-
-  private handleMaxPointMove = (data: IAbsolutePoint) => {
-    this.handlePointMove(data, MinMaxPosition.max);
-  }
-
-  private handlePointMove = (data: IAbsolutePoint, position = MinMaxPosition.min) => {
-    this.notify(
-      SliderEvent.pointMove, {
-        ...PositionUtil.calcPointByParent(this.element, data),
-        position,
-      } as IPointMoveData,
-    );
-  }
-
   toggleRange() {
     this.points.min.toggleHidden();
   }
@@ -61,6 +44,13 @@ class Body extends Observer implements IViewElement {
   toggleTooltip() {
     this.points.min.toggleTooltip();
     this.points.max.toggleTooltip();
+  }
+
+  toggleOrientation() {
+    CssClassUtil.toggleOrientation(this);
+    this.points.min.toggleOrientation();
+    this.points.max.toggleOrientation();
+    this.range.toggleOrientation();
   }
 
   updatePosition(isVertical: boolean, { min, max }: IMinMax<IPoint>) {
@@ -81,15 +71,25 @@ class Body extends Observer implements IViewElement {
     );
   }
 
+  private handleMinPointMove = (data: IAbsolutePoint) => {
+    this.handlePointMove(data);
+  }
+
+  private handleMaxPointMove = (data: IAbsolutePoint) => {
+    this.handlePointMove(data, MinMaxPosition.max);
+  }
+
   private handleSliderBodyClick = (event: MouseEvent) => {
     this.notify(SliderEvent.sliderClick, PositionUtil.calcEventPoint(this.element, event));
   }
 
-  toggleOrientation() {
-    CssClassUtil.toggleOrientation(this);
-    this.points.min.toggleOrientation();
-    this.points.max.toggleOrientation();
-    this.range.toggleOrientation();
+  private handlePointMove = (data: IAbsolutePoint, position = MinMaxPosition.min) => {
+    this.notify(
+      SliderEvent.pointMove, {
+        ...PositionUtil.calcPointByParent(this.element, data),
+        position,
+      } as IPointMoveData,
+    );
   }
 }
 
