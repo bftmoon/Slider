@@ -1,4 +1,4 @@
-import ClassNames from "./ClassNames";
+import ClassNames from './ClassNames';
 
 class CssClassUtil {
   static readonly MAIN_PREFIX = 'slider'
@@ -23,10 +23,9 @@ class CssClassUtil {
   }
 
   private static getFullName(name?: ClassNames) {
-    return name !== undefined ? `${CssClassUtil.MAIN_PREFIX}__${ ClassNames[name]}` : CssClassUtil.MAIN_PREFIX;
+    return name !== undefined ? `${CssClassUtil.MAIN_PREFIX}__${ClassNames[name]}` : CssClassUtil.MAIN_PREFIX;
   }
 }
-
 
 
 export default CssClassUtil;

@@ -1,5 +1,5 @@
 import Range from './Range';
-import CssClassUtil from "../../utils/CssClassUtil";
+import CssClassUtil from '../../utils/CssClassUtil';
 
 describe('Range class', () => {
   let range: Range;
@@ -13,7 +13,7 @@ describe('Range class', () => {
       expect(range.getElement()).toBeDefined();
       expect(mockUtil).toBeCalled();
     });
-  })
+  });
 
   describe('functions for built html', () => {
     beforeEach(() => {
@@ -29,17 +29,17 @@ describe('Range class', () => {
         range.toggleOrientation();
         expect(range.getElement().style.length).toBe(0);
       });
-    })
+    });
 
     describe('updatePosition', () => {
       test('use percent for positioning on horizontal', () => {
-        range.updatePosition(false, {min: 10, max: 90});
+        range.updatePosition(false, { min: 10, max: 90 });
         expect(range.getElement().style.marginLeft).toBe('10%');
         expect(range.getElement().style.marginRight).toBe('10%');
       });
 
       test('use pixels for positioning on vertical', () => {
-        range.updatePosition(true, {min: 10, max: 90}, 100);
+        range.updatePosition(true, { min: 10, max: 90 }, 100);
         expect(range.getElement().style.marginBottom).toBe('10px');
         expect(range.getElement().style.marginTop).toBe('10px');
       });

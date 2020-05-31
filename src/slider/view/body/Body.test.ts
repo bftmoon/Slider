@@ -1,7 +1,7 @@
-import Body from "../body/Body";
-import CssClassUtil from "../../utils/CssClassUtil";
-import Point from "../point/Point";
-import Range from "../range/Range";
+import Body from '../body/Body';
+import CssClassUtil from '../../utils/CssClassUtil';
+import Point from '../point/Point';
+import Range from '../range/Range';
 
 describe('Body class', () => {
   let body: Body;
@@ -29,33 +29,32 @@ describe('Body class', () => {
     });
     test('toggleOrientation', () => {
       const spyClass = jest.spyOn(CssClassUtil, 'toggleOrientation');
-      const spyPoint = jest.spyOn(Point.prototype, "toggleOrientation");
-      const spyRange = jest.spyOn(Range.prototype, "toggleOrientation");
+      const spyPoint = jest.spyOn(Point.prototype, 'toggleOrientation');
+      const spyRange = jest.spyOn(Range.prototype, 'toggleOrientation');
       body.toggleOrientation();
       expect(spyRange).toBeCalledTimes(1);
       expect(spyPoint).toBeCalledTimes(2);
       expect(spyClass).toBeCalled();
     });
     test('toggleTooltip', () => {
-      const spyPoint = jest.spyOn(Point.prototype, "toggleTooltip");
+      const spyPoint = jest.spyOn(Point.prototype, 'toggleTooltip');
       body.toggleTooltip();
       expect(spyPoint).toBeCalledTimes(2);
     });
     test('toggleRange', () => {
-      const spyPoint = jest.spyOn(Point.prototype, "toggleHidden");
+      const spyPoint = jest.spyOn(Point.prototype, 'toggleHidden');
       body.toggleRange();
       expect(spyPoint).toBeCalledTimes(1);
-    })
+    });
     test('updatePosition', () => {
-      const spyPoint = jest.spyOn(Point.prototype, "updatePosition");
-      const spyRange = jest.spyOn(Range.prototype, "updatePosition");
-      body.updatePosition(true, {min: {percent: 10}});
-      expect(spyPoint).toBeCalledTimes(1)
-      expect(spyRange).toBeCalledTimes(1)
-      body.updatePosition(true, {min: {percent: 2}, max: {percent: 20}});
+      const spyPoint = jest.spyOn(Point.prototype, 'updatePosition');
+      const spyRange = jest.spyOn(Range.prototype, 'updatePosition');
+      body.updatePosition(true, { min: { percent: 10 } });
+      expect(spyPoint).toBeCalledTimes(1);
+      expect(spyRange).toBeCalledTimes(1);
+      body.updatePosition(true, { min: { percent: 2 }, max: { percent: 20 } });
       expect(spyRange).toBeCalledTimes(2);
       expect(spyPoint).toBeCalledTimes(3);
-    })
-  })
-})
-
+    });
+  });
+});

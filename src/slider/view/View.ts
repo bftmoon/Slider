@@ -5,11 +5,11 @@ import SliderEvent from '../observer/SliderEvent';
 import IViewOptions from '../common/IViewOptions';
 import IMinMax from '../common/IMinMax';
 import IPoint from '../common/IPoint';
-import {IPointMoveData, IRelativePointPercents} from '../common/NotifyInterfaces';
-import CssClassUtil from "../utils/CssClassUtil";
-import IView from "./IView";
+import { IPointMoveData, IRelativePointPercents } from '../common/NotifyInterfaces';
+import CssClassUtil from '../utils/CssClassUtil';
+import IView from './IView';
 
-class View extends Observer implements IView{
+class View extends Observer implements IView {
   element: HTMLElement;
 
   body: Body = new Body();
@@ -17,15 +17,15 @@ class View extends Observer implements IView{
   scale: Scale = new Scale();
 
   render(element: HTMLElement,
-         {
-           isVertical,
-           isRange,
-           withTooltip,
-           withScale,
-         }: IViewOptions,
-         points: IMinMax<IPoint>,
-         step: number,
-         size: number): void {
+    {
+      isVertical,
+      isRange,
+      withTooltip,
+      withScale,
+    }: IViewOptions,
+    points: IMinMax<IPoint>,
+    step: number,
+    size: number): void {
     this.element = element;
     const fragment = document.createDocumentFragment();
     CssClassUtil.initClass(this.element, isVertical);

@@ -1,6 +1,6 @@
-import IOptions from "./model/IOptions";
-import Slider from "./Slider";
-import MinMaxPosition from "./common/MinMaxPosition";
+import IOptions from './model/IOptions';
+import Slider from './Slider';
+import MinMaxPosition from './common/MinMaxPosition';
 
 interface ISliderCommon{
   toggleRange():void;
@@ -22,11 +22,11 @@ interface ISlider extends ISliderCommon{
   getOptions():IOptions;
 }
 
-interface ISliderGroup extends  ISliderCommon{
+interface ISliderGroup extends ISliderCommon{
   getSlider(index: number): Slider;
   getElementsQuery(): JQuery;
   getOptions():IOptions[];
   size(): number;
 }
 
-export {ISlider, ISliderGroup};
+export { ISlider, ISliderGroup };

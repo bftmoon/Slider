@@ -1,8 +1,9 @@
 import SliderEvent from './SliderEvent';
-import IObserver from "./IObserver";
+import IObserver from './IObserver';
 
 class Observer implements IObserver {
-  private events = new Map<SliderEvent, ((data?: any) => void)[]>();
+  // eslint-disable-next-line comma-spacing
+  private events = new Map<SliderEvent,((data?: any) => void)[]>();
 
   subscribe(event: SliderEvent, callback: (data?: any) => void):Observer {
     if (!this.events.has(event)) {

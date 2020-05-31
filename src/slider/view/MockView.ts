@@ -1,12 +1,19 @@
-import IView from "./IView";
-import IViewOptions from "../common/IViewOptions";
-import IMinMax from "../common/IMinMax";
-import IPoint from "../common/IPoint";
-import Observer from "../observer/Observer";
+/* eslint-disable no-unused-vars */
+/* eslint-disable class-methods-use-this */
+import IView from './IView';
+import IViewOptions from '../common/IViewOptions';
+import IMinMax from '../common/IMinMax';
+import IPoint from '../common/IPoint';
+import Observer from '../observer/Observer';
 
 class MockView extends Observer implements IView {
-
-  render(element: HTMLElement, options: IViewOptions, points: IMinMax<IPoint>, step: number, size: number): void {
+  render(
+    element: HTMLElement,
+    options: IViewOptions,
+    points: IMinMax<IPoint>,
+    step: number,
+    size: number,
+  ): void {
   }
 
   toggleOrientation(): void {
@@ -26,6 +33,5 @@ class MockView extends Observer implements IView {
 
   updateScaleLines(step: number, size: number, isVertical: boolean): void {
   }
-
 }
 export default MockView;

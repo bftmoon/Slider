@@ -1,7 +1,7 @@
 import Model from './Model';
 import IOptions from './IOptions';
-import MinMaxPosition from "../common/MinMaxPosition";
-import SliderError from "../SliderError";
+import MinMaxPosition from '../common/MinMaxPosition';
+import SliderError from '../SliderError';
 
 class ValidModel extends Model {
   constructor(options?: IOptions) {
@@ -15,8 +15,12 @@ class ValidModel extends Model {
         );
       }
       if (options.current !== undefined) {
-        if (options.current.min !== undefined) this.setValidCurrent(options.current.min, MinMaxPosition.min);
-        if (options.current.max !== undefined) this.setValidCurrent(options.current.max || this.current.max, MinMaxPosition.max);
+        if (options.current.min !== undefined) {
+          this.setValidCurrent(options.current.min, MinMaxPosition.min);
+        }
+        if (options.current.max !== undefined) {
+          this.setValidCurrent(options.current.max || this.current.max, MinMaxPosition.max);
+        }
       }
       if (options.step !== undefined) {
         this.setValidStep(options.step);
@@ -49,7 +53,7 @@ class ValidModel extends Model {
     ValidModel.isPositiveRange(numberMin, numberMax);
     this.isDivideToStepOrBorder(numberMin);
     this.isDivideToStepOrBorder(numberMax);
-    this.current = {min: numberMin, max: numberMax};
+    this.current = { min: numberMin, max: numberMax };
   }
 
   setValidStep(step: any) {
@@ -72,10 +76,11 @@ class ValidModel extends Model {
     const min = Number(borderMin);
     const max = Number(borderMax);
     ValidModel.isValidBorders(min, max);
-    this.border = {min, max};
+    this.border = { min, max };
   }
 
   private static isValidType(value: any) {
+    // eslint-disable-next-line fsd/split-conditionals
     if (value === undefined || value === null || value === '' || isNaN(Number(value))) {
       throw new SliderError('Number required');
     }
@@ -109,6 +114,7 @@ class ValidModel extends Model {
   }
 
   private isDivideToStepOrBorder(current: number) {
+    // eslint-disable-next-line fsd/split-conditionals
     if ((current - this.border.min) % this.step !== 0
       && current !== this.border.min
       && current !== this.border.max

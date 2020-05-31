@@ -1,10 +1,9 @@
-import Slider from "./Slider";
-import IOptions from "./model/IOptions";
-import {ISliderGroup} from "./ISlider";
-import MinMaxPosition from "./common/MinMaxPosition";
+import Slider from './Slider';
+import IOptions from './model/IOptions';
+import { ISliderGroup } from './ISlider';
+import MinMaxPosition from './common/MinMaxPosition';
 
-$.fn.slider = function (options?: IOptions): ISliderGroup {
-
+$.fn.slider = function querySlider(options?: IOptions): ISliderGroup {
   const sliders: Slider[] = [];
   const query = this;
 
@@ -16,45 +15,44 @@ $.fn.slider = function (options?: IOptions): ISliderGroup {
 
   return {
     addSlideListener(callback: (
-      data: { value: number; position: MinMaxPosition }) => void
-    ): void {
-      sliders.forEach(slider => slider.addSlideListener(callback));
+      data: { value: number; position: MinMaxPosition }) => void): void {
+      sliders.forEach((slider) => slider.addSlideListener(callback));
     },
     setCurrentRange(valueMin: any, valueMax: any): void {
-      sliders.forEach(slider => slider.setCurrentRange(valueMin, valueMax));
+      sliders.forEach((slider) => slider.setCurrentRange(valueMin, valueMax));
     },
     setBorderMax(value: any): void {
-      sliders.forEach(slider => slider.setBorderMax(value));
+      sliders.forEach((slider) => slider.setBorderMax(value));
     },
     setBorderMin(value: any): void {
-      sliders.forEach(slider => slider.setBorderMin(value));
+      sliders.forEach((slider) => slider.setBorderMin(value));
     },
     setBorders(borderMin: any, borderMax: any): void {
-      sliders.forEach(slider => slider.setBorders(borderMin, borderMax));
+      sliders.forEach((slider) => slider.setBorders(borderMin, borderMax));
     },
     setCurrent(value: any): void {
-      sliders.forEach(slider => slider.setCurrent(value));
+      sliders.forEach((slider) => slider.setCurrent(value));
     },
     setCurrentRangeMax(value: any): void {
-      sliders.forEach(slider => slider.setCurrentRangeMax(value));
+      sliders.forEach((slider) => slider.setCurrentRangeMax(value));
     },
     setCurrentRangeMin(value: any): void {
-      sliders.forEach(slider => slider.setCurrentRangeMin(value));
+      sliders.forEach((slider) => slider.setCurrentRangeMin(value));
     },
     setStep(step: any): void {
-      sliders.forEach(slider => slider.setStep(step));
+      sliders.forEach((slider) => slider.setStep(step));
     },
     toggleOrientation(): void {
-      sliders.forEach(slider => slider.toggleOrientation());
+      sliders.forEach((slider) => slider.toggleOrientation());
     },
     toggleRange(): void {
-      sliders.forEach(slider => slider.toggleRange());
+      sliders.forEach((slider) => slider.toggleRange());
     },
     toggleScale(): void {
-      sliders.forEach(slider => slider.toggleScale());
+      sliders.forEach((slider) => slider.toggleScale());
     },
     toggleTooltip(): void {
-      sliders.forEach(slider => slider.toggleTooltip());
+      sliders.forEach((slider) => slider.toggleTooltip());
     },
     getOptions(): IOptions[] {
       return sliders.map((slider) => slider.getOptions());
@@ -67,7 +65,6 @@ $.fn.slider = function (options?: IOptions): ISliderGroup {
     },
     size(): number {
       return sliders.length;
-    }
+    },
   };
-}
-
+};

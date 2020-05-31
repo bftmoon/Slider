@@ -1,57 +1,57 @@
 import Model from './Model';
-import MinMaxPosition from "../common/MinMaxPosition";
+import MinMaxPosition from '../common/MinMaxPosition';
 
 describe('Model class', () => {
   describe('constructor, getOptions', () => {
     test('Use default options when options undefined', () => {
       const model = new Model();
       expect(model.getOptions()).toEqual({
-        current: {min: 0, max: 80},
-        border: {min: 0, max: 100},
+        current: { min: 0, max: 80 },
+        border: { min: 0, max: 100 },
         step: 1,
         isRange: true,
         isVertical: false,
         withTooltip: true,
-        withScale: true
-      })
+        withScale: true,
+      });
     });
 
     test('Use defined options instead default', () => {
       const model = new Model({
-        current: {min: 30},
-        withScale: false
+        current: { min: 30 },
+        withScale: false,
       });
       expect(model.getOptions()).toEqual({
-        current: {min: 30, max: 80},
-        border: {min: 0, max: 100},
+        current: { min: 30, max: 80 },
+        border: { min: 0, max: 100 },
         step: 1,
         isRange: true,
         isVertical: false,
         withTooltip: true,
-        withScale: false
-      })
-    })
+        withScale: false,
+      });
+    });
   });
 
   describe('setCurrent', () => {
     test('Set min and max', () => {
       const model = new Model();
-      model.setCurrent({min: 50, max: 60});
-      expect(model.getRealCurrent()).toEqual({min: 50, max: 60})
+      model.setCurrent({ min: 50, max: 60 });
+      expect(model.getRealCurrent()).toEqual({ min: 50, max: 60 });
     });
     test('Set one value', () => {
       const model = new Model();
-      model.setCurrent({max: 60});
-      expect(model.getRealCurrent()).toEqual({min: 0, max: 60})
-    })
-  })
+      model.setCurrent({ max: 60 });
+      expect(model.getRealCurrent()).toEqual({ min: 0, max: 60 });
+    });
+  });
 
 
   describe('getCurrent', () => {
     test('Current min equals border min when range on', () => {
       const model = new Model({
-        border: {min: 20},
-        current: {min: 40},
+        border: { min: 20 },
+        current: { min: 40 },
         isRange: false,
       });
       expect(model.getCurrent().min).toBe(20);
@@ -59,8 +59,8 @@ describe('Model class', () => {
 
     test('Real current min when range off', () => {
       const model = new Model({
-        border: {min: 20},
-        current: {min: 40},
+        border: { min: 20 },
+        current: { min: 40 },
         isRange: true,
       });
       expect(model.getCurrent().min).toBe(40);
@@ -70,74 +70,76 @@ describe('Model class', () => {
   describe('getRealCurrent', () => {
     test('Real current independent or range', () => {
       const model = new Model({
-        current: {min: 20},
-        isRange: true
+        current: { min: 20 },
+        isRange: true,
       });
       expect(model.getRealCurrent().min).toBe(20);
-    })
-  })
+    });
+  });
 
 
   describe('getPoint', () => {
     test('Calculate percents', () => {
       const model = new Model({
-        current: {min: 10, max: 15},
-        border: {min: 0, max: 100},
+        current: { min: 10, max: 15 },
+        border: { min: 0, max: 100 },
       });
       expect(model.getPoint(MinMaxPosition.min).percent).toBe(10);
       expect(model.getPoint(MinMaxPosition.max).percent).toBe(15);
 
-      model.setCurrent({min: 10, max: 15});
-      model.border = {min: 10, max: 30};
+      model.setCurrent({ min: 10, max: 15 });
+      model.border = { min: 10, max: 30 };
       expect(model.getPoint(MinMaxPosition.max).percent).toBe(25);
       expect(model.getPoint(MinMaxPosition.min).percent).toBe(0);
     });
 
     test('Used fake min when range off', () => {
       const model = new Model({
-        current: {min: 10, max: 15},
-        border: {min: 0, max: 100},
+        current: { min: 10, max: 15 },
+        border: { min: 0, max: 100 },
         isRange: false,
       });
       expect(model.getPoint(MinMaxPosition.min).percent).toBe(0);
     });
-  })
+  });
 
   describe('getCurrentPoints', () => {
     test('Equals to min and max for getPoint', () => {
       const model = new Model();
       expect(model.getCurrentPoints()).toEqual({
         min: model.getPoint(MinMaxPosition.min),
-        max: model.getPoint(MinMaxPosition.max)
-      })
-    })
+        max: model.getPoint(MinMaxPosition.max),
+      });
+    });
   });
 
   describe('getBoolOptions', () => {
     test('Return bool options', () => {
-      const options = {isVertical: true, isRange: false, withScale: true, withTooltip: false}
+      const options = {
+        isVertical: true, isRange: false, withScale: true, withTooltip: false,
+      };
       const model = new Model(options);
       expect(model.getBoolOptions()).toEqual(options);
-    })
+    });
   });
 
   describe('getRangeSize', () => {
     test('Return diff between min and max border', () => {
       const model = new Model();
       expect(model.getRangeSize()).toBe(model.border.max - model.border.min);
-    })
-  })
+    });
+  });
 
   describe('selectPosition', () => {
     test('Always max when range off', () => {
-      const model = new Model({isRange: false, current: {min: 33, max: 66}});
+      const model = new Model({ isRange: false, current: { min: 33, max: 66 } });
       expect(model.selectPosition(32)).toBe(MinMaxPosition.max);
       expect(model.selectPosition(33)).toBe(MinMaxPosition.max);
       expect(model.selectPosition(50)).toBe(MinMaxPosition.max);
     });
 
     test('Position with less diff when range off', () => {
-      const model = new Model({current: {min: 5, max: 10}});
+      const model = new Model({ current: { min: 5, max: 10 } });
       expect(model.selectPosition(1)).toBe(MinMaxPosition.min);
       expect(model.selectPosition(7)).toBe(MinMaxPosition.min);
       expect(model.selectPosition(8)).toBe(MinMaxPosition.max);
@@ -147,22 +149,22 @@ describe('Model class', () => {
 
   describe('normalizeCurrentOrder', () => {
     test('Swap current min and max', () => {
-      const model = new Model({current: {min: 20, max: 10}});
+      const model = new Model({ current: { min: 20, max: 10 } });
       model.normalizeCurrentOrder();
-      expect(model.getCurrent()).toEqual({min: 10, max: 20});
+      expect(model.getCurrent()).toEqual({ min: 10, max: 20 });
       model.normalizeCurrentOrder();
-      expect(model.getCurrent()).toEqual({min: 20, max: 10});
-    })
-  })
+      expect(model.getCurrent()).toEqual({ min: 20, max: 10 });
+    });
+  });
 
   describe('normalizeByStep', () => {
     test('Round current by step to close-in', () => {
-      const model = new Model({step: 7});
+      const model = new Model({ step: 7 });
       expect(model.normalizeByStep(8)).toBe(7);
       expect(model.normalizeByStep(6)).toBe(7);
-    })
+    });
     test('Can choose borders', () => {
-      const model = new Model({step: 4, border: {min: 0, max: 7}});
+      const model = new Model({ step: 4, border: { min: 0, max: 7 } });
       expect(model.normalizeByStep(1)).toBe(0);
       expect(model.normalizeByStep(6)).toBe(7);
     });
@@ -170,33 +172,33 @@ describe('Model class', () => {
 
   describe('calcModelValue', () => {
     test('Return border when percent not in range 0-100', () => {
-      const model = new Model({border: {min: 0, max: 9}})
+      const model = new Model({ border: { min: 0, max: 9 } });
       expect(model.calcModelValue(-4)).toBe(0);
       expect(model.calcModelValue(0)).toBe(0);
       expect(model.calcModelValue(120)).toBe(9);
       expect(model.calcModelValue(100)).toBe(9);
-    })
+    });
 
     test('Calc value from percent', () => {
-      const model = new Model({border: {min: 0, max: 200}})
+      const model = new Model({ border: { min: 0, max: 200 } });
       expect(model.calcModelValue(50)).toBe(100);
-    })
-  })
+    });
+  });
 
   describe('isOrderNormalizeRequired', () => {
     test('Return true when real current max < min', () => {
-      const model = new Model({current: {min: 66, max: 33}});
+      const model = new Model({ current: { min: 66, max: 33 } });
       expect(model.isOrderNormalizeRequired()).toBeTruthy();
-      model.setCurrent({min: 33});
+      model.setCurrent({ min: 33 });
       expect(model.isOrderNormalizeRequired()).toBeFalsy();
-      model.setCurrent({min: 3});
+      model.setCurrent({ min: 3 });
       expect(model.isOrderNormalizeRequired()).toBeFalsy();
     });
   });
 
   describe('isSameCurrent', () => {
     test('Return true when new current equal old', () => {
-      const model = new Model({current: {min: 66, max: 76}});
+      const model = new Model({ current: { min: 66, max: 76 } });
       expect(model.isSameCurrent(66)).toBeTruthy();
       expect(model.isSameCurrent(76)).toBeTruthy();
       expect(model.isSameCurrent(56)).toBeFalsy();
@@ -205,7 +207,7 @@ describe('Model class', () => {
 
   describe('willCurrentCollapse', () => {
     test('Return true when min > max', () => {
-      const model = new Model({current: {min: 33, max: 66}});
+      const model = new Model({ current: { min: 33, max: 66 } });
 
       expect(model.willCurrentCollapse(MinMaxPosition.min, 77)).toBeTruthy();
       expect(model.willCurrentCollapse(MinMaxPosition.min, 66)).toBeFalsy();
@@ -218,7 +220,9 @@ describe('Model class', () => {
   });
 
   describe('toggles', () => {
-    const model = new Model({isRange: true, isVertical: true, withTooltip: true, withScale: true});
+    const model = new Model({
+      isRange: true, isVertical: true, withTooltip: true, withScale: true,
+    });
 
     test('toggleRange', () => {
       expect(model.toggleRange()).toBeFalsy();
@@ -235,5 +239,5 @@ describe('Model class', () => {
     test('toggleTooltip', () => {
       expect(model.toggleTooltip()).toBeFalsy();
     });
-  })
+  });
 });

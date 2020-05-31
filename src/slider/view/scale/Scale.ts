@@ -1,10 +1,10 @@
 import IViewElement from '../IViewElement';
 import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
-import CssClassUtil from "../../utils/CssClassUtil";
-import ConvertUtil from "../../utils/ConvertUtil";
-import PositionUtil from "../../utils/PositionUtil";
-import ClassNames from "../../utils/ClassNames";
+import CssClassUtil from '../../utils/CssClassUtil';
+import ConvertUtil from '../../utils/ConvertUtil';
+import PositionUtil from '../../utils/PositionUtil';
+import ClassNames from '../../utils/ClassNames';
 
 class Scale extends Observer implements IViewElement {
   private element: HTMLElement;
@@ -35,7 +35,7 @@ class Scale extends Observer implements IViewElement {
     this.element.innerHTML = '';
     const count = Math.floor(size / step) - Number(size % step === 0);
     if (count > 0) {
-      const {percentGap, visibleCount} = Scale.calcGapAndCount(count, this.element[isVertical ? 'offsetHeight' : 'offsetWidth'], step, size);
+      const { percentGap, visibleCount } = Scale.calcGapAndCount(count, this.element[isVertical ? 'offsetHeight' : 'offsetWidth'], step, size);
 
       const fragment = document.createDocumentFragment();
       for (let i = 0; i < visibleCount; i += 1) {

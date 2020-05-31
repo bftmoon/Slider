@@ -2,13 +2,13 @@ import IOptions from './IOptions';
 import IMinMax from '../common/IMinMax';
 import IPoint from '../common/IPoint';
 import IViewOptions from '../common/IViewOptions';
-import MinMaxPosition from "../common/MinMaxPosition";
-import ConvertUtil from "../utils/ConvertUtil";
+import MinMaxPosition from '../common/MinMaxPosition';
+import ConvertUtil from '../utils/ConvertUtil';
 
 class Model {
-  protected current = {min: 0, max: 80};
+  protected current = { min: 0, max: 80 };
 
-  border = {min: 0, max: 100};
+  border = { min: 0, max: 100 };
 
   step = 1;
 
@@ -29,14 +29,16 @@ class Model {
     }
   }
 
-  protected copyBool({isVertical, isRange, withScale, withTooltip}: IOptions) {
+  protected copyBool({
+    isVertical, isRange, withScale, withTooltip,
+  }: IOptions) {
     if (isRange !== undefined) this.isRange = isRange;
     if (isVertical !== undefined) this.isVertical = isVertical;
     if (withTooltip !== undefined) this.withTooltip = withTooltip;
     if (withScale !== undefined) this.withScale = withScale;
   }
 
-  private static copyMinMax(thisOption: IMinMax<any>, {min, max}: IMinMax<any>) {
+  private static copyMinMax(thisOption: IMinMax<any>, { min, max }: IMinMax<any>) {
     if (max !== undefined) thisOption.max = max;
     if (min !== undefined) thisOption.min = min;
   }

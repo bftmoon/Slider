@@ -1,4 +1,4 @@
-import SliderEvent from "./SliderEvent";
+import SliderEvent from './SliderEvent';
 
 interface IObserver {
   subscribe(event: SliderEvent, callback: (data?: any) => void): IObserver;

@@ -1,13 +1,14 @@
-import {ISliderGroup} from "../../slider/ISlider";
-import IMinMax from "../../slider/common/IMinMax";
-import IOptions from "../../slider/model/IOptions";
-import '../../slider/slider-jquery'
-import MinMaxPosition from "../../slider/common/MinMaxPosition";
-import SliderError from "../../slider/SliderError";
+import { ISliderGroup } from '../../slider/ISlider';
+import IMinMax from '../../slider/common/IMinMax';
+import IOptions from '../../slider/model/IOptions';
+import '../../slider/slider-jquery';
+import MinMaxPosition from '../../slider/common/MinMaxPosition';
+import SliderError from '../../slider/SliderError';
 
 
 class Panel {
   private sliderGroup: ISliderGroup;
+
   private changeableInputs: IMinMax<HTMLInputElement> = {};
 
   constructor(slider: ISliderGroup) {
@@ -35,19 +36,18 @@ class Panel {
     }
     if (element.name === 'currentMin') this.changeableInputs.min = element;
     if (element.name === 'currentMax') this.changeableInputs.max = element;
-    element.addEventListener('input', this.wrapListener(mappedData.listener));
+    element.addEventListener('input', this.makeWrappedListener(mappedData.listener));
   }
 
-  private wrapListener(listener: (event: InputEvent) => void): ((event: InputEvent) => void) {
-    return (event: InputEvent) => {
-      try {
-        listener(event);
-        (event.target as HTMLInputElement).setCustomValidity("");
-      } catch (error) {
-        if (error !instanceof SliderError) throw error;
-        (event.target as HTMLInputElement).setCustomValidity(error.message);
-        (event.target as HTMLInputElement).reportValidity();
-      }
+  private makeWrappedListener = (listener: (event: InputEvent) => void):
+  ((event: InputEvent) => void) => (event: InputEvent) => {
+    try {
+      listener(event);
+      (event.target as HTMLInputElement).setCustomValidity('');
+    } catch (error) {
+      if (error! instanceof SliderError) throw error;
+      (event.target as HTMLInputElement).setCustomValidity(error.message);
+      (event.target as HTMLInputElement).reportValidity();
     }
   }
 
@@ -57,23 +57,25 @@ class Panel {
   } {
     switch (inputName) {
       case 'min':
-        return {value: data.border.min, listener: this.handleMinInput};
+        return { value: data.border.min, listener: this.handleMinInput };
       case 'max':
-        return {value: data.border.max, listener: this.handleMaxInput};
+        return { value: data.border.max, listener: this.handleMaxInput };
       case 'step':
-        return {value: data.step, listener: this.handleStepInput};
+        return { value: data.step, listener: this.handleStepInput };
       case 'currentMax':
-        return {value: data.current.max, listener: this.handleCurrentMaxInput};
+        return { value: data.current.max, listener: this.handleCurrentMaxInput };
       case 'currentMin':
-        return {value: data.current.min, listener: this.handleCurrentMinInput};
+        return { value: data.current.min, listener: this.handleCurrentMinInput };
       case 'isRange':
-        return {value: data.isRange, listener: this.handleRangeListener};
+        return { value: data.isRange, listener: this.handleRangeListener };
       case 'isVertical':
-        return {value: data.isVertical, listener: this.handleVerticalListener};
+        return { value: data.isVertical, listener: this.handleVerticalListener };
       case 'withTooltip':
-        return {value: data.withTooltip, listener: this.handleTooltipListener};
+        return { value: data.withTooltip, listener: this.handleTooltipListener };
       case 'withScale':
-        return {value: data.withScale, listener: this.handleScaleListener};
+        return { value: data.withScale, listener: this.handleScaleListener };
+      default:
+        throw Error('unknown input');
     }
   }
 

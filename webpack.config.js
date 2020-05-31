@@ -1,29 +1,29 @@
-const webpack = require('webpack')
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path')
+const path = require('path');
 
 const config = {
   entry: {
-    app: './src/demo/index.ts'
+    app: './src/demo/index.ts',
   },
   output: {
-    path: path.resolve(__dirname, "docs/demo")
+    path: path.resolve(__dirname, 'docs/demo'),
   },
   devtool: 'inline-source-map',
   plugins: [
     new webpack.ProvidePlugin({
       $: 'jquery',
-      jQuery: 'jquery'
+      jQuery: 'jquery',
     }),
     new HtmlWebpackPlugin({
-      template: './src/demo/demo.pug'
-    })
+      template: './src/demo/demo.pug',
+    }),
   ],
   module: {
     rules: [
       {
         test: /\.pug$/,
-        use: ['pug-loader']
+        use: ['pug-loader'],
       },
       {
         test: /\.scss$/i,
@@ -38,7 +38,7 @@ const config = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
-    ]
+    ],
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
@@ -49,5 +49,14 @@ const config = {
 };
 
 module.exports = (env, argv) => {
+  if (argv.eslint) {
+    config.module.rules.push(
+      {
+
+        test: /\.ts$/,
+        use: 'eslint-loader',
+        exclude: /node_modules/,
+      })
+  }
   return config;
-}
+};

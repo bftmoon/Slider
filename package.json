@@ -10,6 +10,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "run dev": "webpack-dev-server --open --mode development",
+    "run eslint": "webpack-dev-server --open --mode development --eslint",
     "run prod": "webpack-dev-server --open --mode production",
     "build": "webpack --mode production",
     "eslint": "eslint . --ext .ts",

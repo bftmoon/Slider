@@ -1,7 +1,7 @@
 import IViewElement from '../IViewElement';
 import IMinMax from '../../common/IMinMax';
-import CssClassUtil from "../../utils/CssClassUtil";
-import ClassNames from "../../utils/ClassNames";
+import CssClassUtil from '../../utils/CssClassUtil';
+import ClassNames from '../../utils/ClassNames';
 
 class Range implements IViewElement {
   private element: HTMLDivElement;

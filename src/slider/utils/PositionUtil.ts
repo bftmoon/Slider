@@ -1,5 +1,5 @@
 import ConvertUtil from './ConvertUtil';
-import {IAbsolutePoint, IRelativePointPercents} from "../common/NotifyInterfaces";
+import { IAbsolutePoint, IRelativePointPercents } from '../common/NotifyInterfaces';
 
 class PositionUtil {
   static calcEventPoint(element: HTMLElement, event: MouseEvent): IRelativePointPercents {

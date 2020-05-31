@@ -5,11 +5,11 @@ import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
 import IMinMax from '../../common/IMinMax';
 import IPoint from '../../common/IPoint';
-import {IAbsolutePoint, IPointMoveData} from '../../common/NotifyInterfaces';
-import CssClassUtil from "../../utils/CssClassUtil";
-import MinMaxPosition from "../../common/MinMaxPosition";
-import PositionUtil from "../../utils/PositionUtil";
-import ClassNames from "../../utils/ClassNames";
+import { IAbsolutePoint, IPointMoveData } from '../../common/NotifyInterfaces';
+import CssClassUtil from '../../utils/CssClassUtil';
+import MinMaxPosition from '../../common/MinMaxPosition';
+import PositionUtil from '../../utils/PositionUtil';
+import ClassNames from '../../utils/ClassNames';
 
 class Body extends Observer implements IViewElement {
   private element: HTMLElement;
