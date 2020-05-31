@@ -1,17 +1,17 @@
 import Model from '../model/Model';
-import View from '../view/View';
 import SliderEvent from '../observer/SliderEvent';
-import MinMaxPosition from '../model/MinMaxPosition';
 import {IPointMoveData, IRelativePointPercents} from '../common/NotifyInterfaces';
 import Observer from '../observer/Observer';
-import SliderError from '../model/SliderError';
+import MinMaxPosition from "../common/MinMaxPosition";
+import SliderError from "../SliderError";
+import IView from "../view/IView";
 
 class Presenter extends Observer {
   protected model: Model;
 
-  protected view: View;
+  protected view: IView;
 
-  constructor(model: Model, view: View) {
+  constructor(model: Model, view: IView) {
     super();
     this.model = model;
     this.view = view;
@@ -31,21 +31,6 @@ class Presenter extends Observer {
       .subscribe(SliderEvent.pointMove, this.handlePointMove);
   }
 
-  protected updateScaleLines() {
-    if (this.model.withScale)
-      this.view.updateScaleLines(
-        this.model.step,
-        this.model.getRangeSize(),
-        this.model.isVertical
-      );
-  }
-
-  private handleSliderClick = ({x, y}: IRelativePointPercents) => {
-    const modelValue = this.model.calcModelValue(this.model.isVertical ? 100 - y : x);
-    if (this.model.isSameCurrent(modelValue)) return;
-    this.updatePosition(modelValue, this.model.selectPosition(modelValue));
-  }
-
   protected updatePosition(modelValue: number, position: MinMaxPosition) {
     if (!this.model.willCurrentCollapse(position, modelValue)) {
       this.model.setCurrent({[position]: modelValue});
@@ -55,6 +40,12 @@ class Presenter extends Observer {
       );
       this.notify(SliderEvent.valueChanged, {value: modelValue, position});
     }
+  }
+
+  private handleSliderClick = ({x, y}: IRelativePointPercents) => {
+    const modelValue = this.model.calcModelValue(this.model.isVertical ? 100 - y : x);
+    if (this.model.isSameCurrent(modelValue)) return;
+    this.updatePosition(modelValue, this.model.selectPosition(modelValue));
   }
 
   private handlePointMove = ({x, y, position}: IPointMoveData) => {
