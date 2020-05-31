@@ -24,7 +24,9 @@ module.exports = {
     'jest'
   ],
   rules: {
-    // 'import/no-unresolved':'off',
-    // 'import/extensions':'off',
+    'import/no-unresolved':'off',
+    'import/extensions':'off',
+    'no-unused-vars':'warn',
+    'no-undef':'warn',
   },
 };

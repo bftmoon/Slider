@@ -58,14 +58,15 @@ class Scale extends Observer implements IViewElement {
     modelStep: number,
     modelSize: number,
   ) {
+    let count = childCount;
     let pxGap = elementSize * (modelStep / modelSize);
     while (pxGap <= 4) {
       pxGap *= 2;
-      childCount /= 2;
+      count /= 2;
     }
     return {
       percentGap: ConvertUtil.toPercent(pxGap, elementSize),
-      visibleCount: Math.floor(childCount),
+      visibleCount: Math.floor(count),
     };
   }
 
