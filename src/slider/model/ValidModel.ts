@@ -1,10 +1,10 @@
 import Model from './Model';
-import IModel from './IModel';
+import IOptions from './IOptions';
 import MinMaxPosition from "../common/MinMaxPosition";
 import SliderError from "../SliderError";
 
 class ValidModel extends Model {
-  constructor(options?: IModel) {
+  constructor(options?: IOptions) {
     super();
     if (options) {
       this.copyBool(options);
@@ -75,31 +75,31 @@ class ValidModel extends Model {
     this.border = {min, max};
   }
 
-  static isValidType(value: any) {
+  private static isValidType(value: any) {
     if (value === undefined || value === null || value === '' || isNaN(Number(value))) {
       throw new SliderError('Number required');
     }
   }
 
-  static isPositiveRange(min: number, max: number) {
+  private static isPositiveRange(min: number, max: number) {
     if (max < min) {
       throw new SliderError('Negative range');
     }
   }
 
-  isInBorderRange(current: number) {
+  private isInBorderRange(current: number) {
     if (current < this.border.min || current > this.border.max) {
       throw new SliderError('Not in range');
     }
   }
 
-  isRangeActive() {
+  private isRangeActive() {
     if (!this.isRange) {
       throw new SliderError('Setting ranged value for not ranged slider');
     }
   }
 
-  isValidStep(step: number) {
+  private isValidStep(step: number) {
     if (step <= 0) {
       throw new SliderError('Too small step size');
     }
@@ -108,7 +108,7 @@ class ValidModel extends Model {
     }
   }
 
-  isDivideToStepOrBorder(current: number) {
+  private isDivideToStepOrBorder(current: number) {
     if ((current - this.border.min) % this.step !== 0
       && current !== this.border.min
       && current !== this.border.max
@@ -117,7 +117,7 @@ class ValidModel extends Model {
     }
   }
 
-  isValidBorder(value: number, position: MinMaxPosition) {
+  private isValidBorder(value: number, position: MinMaxPosition) {
     if (position === MinMaxPosition.min) {
       if (value > this.border.max) {
         throw new SliderError('Negative slider body size');
@@ -135,7 +135,7 @@ class ValidModel extends Model {
     }
   }
 
-  static isValidBorders(borderMin: number, borderMax: number) {
+  private static isValidBorders(borderMin: number, borderMax: number) {
     if (borderMin > borderMax) {
       throw new SliderError('Negative slider body size');
     }

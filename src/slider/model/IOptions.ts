@@ -1,6 +1,6 @@
 import IMinMax from '../common/IMinMax';
 
-interface IModel {
+interface IOptions {
   border?: IMinMax<number>;
   current?: IMinMax<number>;
   step?: number;
@@ -13,4 +13,4 @@ interface IModel {
   [index: string]: any;
 }
 
-export default IModel;
+export default IOptions;

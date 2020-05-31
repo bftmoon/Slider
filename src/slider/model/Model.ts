@@ -1,4 +1,4 @@
-import IModel from './IModel';
+import IOptions from './IOptions';
 import IMinMax from '../common/IMinMax';
 import IPoint from '../common/IPoint';
 import IViewOptions from '../common/IViewOptions';
@@ -20,7 +20,7 @@ class Model {
 
   withScale = true;
 
-  constructor(options?: IModel) {
+  constructor(options?: IOptions) {
     if (options !== undefined) {
       if (options.border !== undefined) Model.copyMinMax(this.border, options.border);
       if (options.current !== undefined) Model.copyMinMax(this.current, options.current);
@@ -29,16 +29,16 @@ class Model {
     }
   }
 
-  protected copyBool(options: IModel) {
-    if (options.isRange !== undefined) this.isRange = options.isRange;
-    if (options.isVertical !== undefined) this.isVertical = options.isVertical;
-    if (options.withTooltip !== undefined) this.withTooltip = options.withTooltip;
-    if (options.withScale !== undefined) this.withScale = options.withScale;
+  protected copyBool({isVertical, isRange, withScale, withTooltip}: IOptions) {
+    if (isRange !== undefined) this.isRange = isRange;
+    if (isVertical !== undefined) this.isVertical = isVertical;
+    if (withTooltip !== undefined) this.withTooltip = withTooltip;
+    if (withScale !== undefined) this.withScale = withScale;
   }
 
-  private static copyMinMax(thisOption: IMinMax<any>, option: IMinMax<any>) {
-    if (option.max !== undefined) thisOption.max = option.max;
-    if (option.min !== undefined) thisOption.min = option.min;
+  private static copyMinMax(thisOption: IMinMax<any>, {min, max}: IMinMax<any>) {
+    if (max !== undefined) thisOption.max = max;
+    if (min !== undefined) thisOption.min = min;
   }
 
   setCurrent(current: IMinMax<number>) {
@@ -75,7 +75,7 @@ class Model {
     };
   }
 
-  getOptions(): IModel {
+  getOptions(): IOptions {
     return {
       current: this.getCurrent(),
       border: this.border,
