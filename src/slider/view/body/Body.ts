@@ -5,10 +5,11 @@ import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
 import IMinMax from '../../common/IMinMax';
 import IPoint from '../../common/IPoint';
-import { IAbsolutePoint, IPointMoveData } from '../../common/NotifyInterfaces';
+import {IAbsolutePoint, IPointMoveData} from '../../common/NotifyInterfaces';
 import CssClassUtil from "../../utils/CssClassUtil";
 import MinMaxPosition from "../../common/MinMaxPosition";
 import PositionUtil from "../../utils/PositionUtil";
+import ClassNames from "../../utils/ClassNames";
 
 class Body extends Observer implements IViewElement {
   private element: HTMLElement;
@@ -23,7 +24,7 @@ class Body extends Observer implements IViewElement {
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
-    CssClassUtil.initClass(this, isVertical);
+    CssClassUtil.initClass(this.element, isVertical, ClassNames.body);
 
     this.element.addEventListener('click', this.handleSliderBodyClick);
     this.element.append(
@@ -47,7 +48,7 @@ class Body extends Observer implements IViewElement {
   }
 
   toggleOrientation() {
-    CssClassUtil.toggleOrientation(this);
+    CssClassUtil.toggleOrientation(this.element, ClassNames.body);
     this.points.min.toggleOrientation();
     this.points.max.toggleOrientation();
     this.range.toggleOrientation();

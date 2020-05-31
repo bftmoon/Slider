@@ -1,5 +1,6 @@
 import IViewElement from '../IViewElement';
 import CssClassUtil from "../../utils/CssClassUtil";
+import ClassNames from "../../utils/ClassNames";
 
 class Tooltip implements IViewElement {
   private element: HTMLElement;
@@ -10,12 +11,12 @@ class Tooltip implements IViewElement {
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
-    CssClassUtil.initClass(this, isVertical);
+    CssClassUtil.initClass(this.element, isVertical, ClassNames.tooltip);
     return this.element;
   }
 
   toggleHidden() {
-    CssClassUtil.toggleHidden(this);
+    CssClassUtil.toggleHidden(this.element, ClassNames.tooltip);
   }
 
   update(text: any, isVertical: boolean) {
@@ -34,7 +35,7 @@ class Tooltip implements IViewElement {
   }
 
   toggleOrientation() {
-    CssClassUtil.toggleOrientation(this);
+    CssClassUtil.toggleOrientation(this.element, ClassNames.tooltip);
   }
 }
 

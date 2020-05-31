@@ -28,7 +28,7 @@ class View extends Observer implements IView{
          size: number): void {
     this.element = element;
     const fragment = document.createDocumentFragment();
-    CssClassUtil.initHtmlClass(this.element, isVertical);
+    CssClassUtil.initClass(this.element, isVertical);
 
     fragment.append(
       this.body.buildHtml(isVertical),
@@ -62,7 +62,7 @@ class View extends Observer implements IView{
   }
 
   toggleOrientation() {
-    CssClassUtil.toggleHtmlOrientation(this.element);
+    CssClassUtil.toggleOrientation(this.element);
     this.body.toggleOrientation();
     this.scale.toggleOrientation();
   }

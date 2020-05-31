@@ -1,41 +1,32 @@
-import IViewElement from "../view/IViewElement";
+import ClassNames from "./ClassNames";
 
 class CssClassUtil {
   static readonly MAIN_PREFIX = 'slider'
 
-  static initClass(viewElement: IViewElement, isVertical: boolean) {
-    const cssClass = CssClassUtil.getFullName(viewElement);
-    viewElement.getElement().classList.add(cssClass, cssClass + (isVertical ? '_vertical' : '_horizontal'));
-  }
-
-  static initHtmlClass(element: HTMLElement, isVertical: boolean, name?: string) {
-    const cssClass = CssClassUtil.MAIN_PREFIX + (name ? `__${name}` : '');
+  static initClass(element: HTMLElement, isVertical: boolean, name?: ClassNames) {
+    const cssClass = CssClassUtil.getFullName(name);
     element.classList.add(cssClass, cssClass + (isVertical ? '_vertical' : '_horizontal'));
   }
 
-  static toggleOrientation(viewElement: IViewElement) {
-    const cssClass = CssClassUtil.getFullName(viewElement);
-    viewElement.getElement().classList.toggle(`${cssClass}_vertical`);
-    viewElement.getElement().classList.toggle(`${cssClass}_horizontal`);
-  }
-
-  static toggleHtmlOrientation(element: HTMLElement, name?: string) {
-    const cssClass = CssClassUtil.MAIN_PREFIX + (name ? `__${name}` : '');
+  static toggleOrientation(element: HTMLElement, name?: ClassNames) {
+    const cssClass = CssClassUtil.getFullName(name);
     element.classList.toggle(`${cssClass}_vertical`);
     element.classList.toggle(`${cssClass}_horizontal`);
   }
 
-  static toggleHidden(viewElement: IViewElement) {
-    viewElement.getElement().classList.toggle(`${CssClassUtil.getFullName(viewElement)}_hidden`);
+  static toggleHidden(element: HTMLElement, name?: ClassNames) {
+    element.classList.toggle(`${CssClassUtil.getFullName(name)}_hidden`);
   }
 
-  static toggleGrab(viewElement:IViewElement) {
-    viewElement.getElement().classList.toggle(`${CssClassUtil.getFullName(viewElement)}_grabbed`);
+  static toggleGrab(element: HTMLElement, name?: ClassNames) {
+    element.classList.toggle(`${CssClassUtil.getFullName(name)}_grabbed`);
   }
 
-  private static getFullName(viewElement: IViewElement) {
-    return `${CssClassUtil.MAIN_PREFIX}__${viewElement.constructor.name.toLowerCase()}`;
+  private static getFullName(name?: ClassNames) {
+    return name !== undefined ? `${CssClassUtil.MAIN_PREFIX}__${ ClassNames[name]}` : CssClassUtil.MAIN_PREFIX;
   }
 }
+
+
 
 export default CssClassUtil;

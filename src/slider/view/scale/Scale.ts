@@ -4,13 +4,14 @@ import SliderEvent from '../../observer/SliderEvent';
 import CssClassUtil from "../../utils/CssClassUtil";
 import ConvertUtil from "../../utils/ConvertUtil";
 import PositionUtil from "../../utils/PositionUtil";
+import ClassNames from "../../utils/ClassNames";
 
 class Scale extends Observer implements IViewElement {
   private element: HTMLElement;
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
-    CssClassUtil.initClass(this, isVertical);
+    CssClassUtil.initClass(this.element, isVertical, ClassNames.scale);
     this.element.addEventListener('click', this.handleScaleClick);
     return this.element;
   }
@@ -20,13 +21,13 @@ class Scale extends Observer implements IViewElement {
   }
 
   toggleHidden() {
-    CssClassUtil.toggleHidden(this);
+    CssClassUtil.toggleHidden(this.element, ClassNames.scale);
   }
 
   toggleOrientation() {
-    CssClassUtil.toggleOrientation(this);
+    CssClassUtil.toggleOrientation(this.element, ClassNames.scale);
     this.element.childNodes.forEach((child: ChildNode) => {
-      CssClassUtil.toggleHtmlOrientation(child as HTMLElement, 'scale-line');
+      CssClassUtil.toggleOrientation(child as HTMLElement, ClassNames.line);
     });
   }
 
@@ -47,7 +48,7 @@ class Scale extends Observer implements IViewElement {
   private static buildLineHtml(isVertical: boolean, index: number, gap: number): HTMLDivElement {
     const line = document.createElement('div');
     line.style[isVertical ? 'bottom' : 'left'] = `${gap * index}%`;
-    CssClassUtil.initHtmlClass(line, isVertical, 'scale-line');
+    CssClassUtil.initClass(line, isVertical, ClassNames.line);
     return line;
   }
 

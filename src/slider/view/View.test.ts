@@ -30,7 +30,7 @@ describe('View class', () => {
     })
 
     test('init components', () => {
-      const spyClass = jest.spyOn(CssClassUtil, "initHtmlClass");
+      const spyClass = jest.spyOn(CssClassUtil, "initClass");
       const spyBody = jest.spyOn(Body.prototype, "buildHtml");
       const spyScale = jest.spyOn(Scale.prototype, "buildHtml");
       const spyScaleLines = jest.spyOn(Scale.prototype, "updateLines")
@@ -89,7 +89,7 @@ describe('View class', () => {
       expect(spy).toBeCalled();
     })
     test('toggleOrientation', () => {
-      const spyClass = jest.spyOn(CssClassUtil, "toggleHtmlOrientation");
+      const spyClass = jest.spyOn(CssClassUtil, "toggleOrientation");
       const spyBody = jest.spyOn(Body.prototype, "toggleOrientation");
       const spyScale = jest.spyOn(Scale.prototype, "toggleOrientation");
       view.toggleOrientation();
