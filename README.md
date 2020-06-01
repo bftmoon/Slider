@@ -31,10 +31,19 @@ $("selector").slider().getSlider("put index here");
 ```
 #### Understand architecture
 
-Using full generated project diagram
+Using full generated slider class diagram
 
-![uml](./docs/imgs/uml.png)
+![uml](./docs/imgs/uml.svg)
 
 Or with "MVP with Passive View" overview
 
 ![overview](./docs/imgs/overview.png)      
+
+And classes brief:
+* Slider - main plugin class for connecting MVP components
+* Presenter - connect Model and View and call required methods for events
+  * PresenterProxy - extends Presenter,  contains functions for outer data update
+* Model - contain data, provides it according to condition
+  * ValidModel - extends Model, contains functions for outer updates validation
+* View - render slider components and notify about points move and slider click
+* Observer - simplify work with events and callbacks

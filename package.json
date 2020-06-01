@@ -14,7 +14,9 @@
     "run prod": "webpack-dev-server --open --mode production",
     "build": "webpack --mode production",
     "eslint": "eslint . --ext .ts",
-    "eslint fix": "eslint . --ext .ts --fix"
+    "eslint fix": "eslint . --ext .ts --fix",
+    "generate uml puml": "tplant --input src/slider/*.ts -o docs/uml.puml",
+    "generate uml svg": "tplant --input src/slider/*.ts -o docs/imgs/uml.svg"
   },
   "author": "",
   "license": "ISC",
@@ -43,6 +45,7 @@
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.1",
+    "tplant": "^2.3.3",
     "ts-jest": "^26.0.0",
     "ts-loader": "^7.0.4",
     "typescript": "^3.9.2",

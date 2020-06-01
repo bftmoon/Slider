@@ -4,6 +4,8 @@ import './panel/panel.scss';
 import '../slider/slider.scss';
 import Panel from './panel/Panel';
 import '../slider/slider-jquery';
+import Model from "../slider/model/Model";
+import Slider from "../slider/Slider";
 
 $('.js-demo__container').each(((index, element) => {
   new Panel($(element).find('.js-demo__slider').slider({
@@ -13,3 +15,5 @@ $('.js-demo__container').each(((index, element) => {
     isVertical: index === 2,
   })).init(element.firstElementChild as HTMLElement);
 }));
+
+console.log(Object.getPrototypeOf(Slider))
