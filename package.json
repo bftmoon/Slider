@@ -14,7 +14,6 @@
     "run prod": "webpack-dev-server --open --mode production",
     "build": "webpack --mode production",
     "eslint": "eslint . --ext .ts",
-    "eslint test": "eslint . --ext .test.ts",
     "eslint fix": "eslint . --ext .ts --fix"
   },
   "author": "",
