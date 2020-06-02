@@ -34,6 +34,18 @@ const config = {
         ],
       },
       {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'imgs/',
+            },
+          },
+        ],
+      },
+      {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
@@ -52,7 +64,6 @@ module.exports = (env, argv) => {
   if (argv.eslint) {
     config.module.rules.push(
       {
-
         test: /\.ts$/,
         use: 'eslint-loader',
         exclude: /node_modules/,

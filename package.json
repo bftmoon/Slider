@@ -36,6 +36,7 @@
     "eslint-plugin-fsd": "^1.0.1",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.13.1",
+    "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
     "jsdom": "^16.2.2",

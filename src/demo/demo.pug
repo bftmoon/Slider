@@ -1,15 +1,21 @@
 doctype html
-head
-  title Slider Demo
-  include ./panel/panel
-body.demo
-  .demo__container.js-demo__container
-    +panel
-    .demo__slider.js-demo__slider
-  .demo__container.js-demo__container
-    +panel
-    .demo__slider.js-demo__slider
-  .demo__container.js-demo__container
-    +panel
-    .demo__slider.js-demo__slider
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="initial-scale=1.0, width=device-width")
+    meta(name="keywords" content="slider plugin demo mvp")
+    meta(name="description" content="Study project with MVP architecture")
+    link(rel="icon" type="image/svg" href=require("./images/logo.svg").default)
+    title Slider Demo
+    include ./panel/panel
+  body.demo
+    .demo__container.js-demo__container
+      +panel
+      .demo__slider.js-demo__slider
+    .demo__container.js-demo__container
+      +panel
+      .demo__slider.js-demo__slider
+    .demo__container.js-demo__container
+      +panel
+      .demo__slider.js-demo__slider
 
