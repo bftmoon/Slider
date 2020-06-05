@@ -4,22 +4,19 @@
   "description": "",
   "main": "index.js",
   "jest": {
-    "coverageDirectory": "./coverage"
+    "coverageDirectory": "./dist/coverage"
   },
   "scripts": {
     "run dev": "webpack-dev-server --open --mode development",
     "run prod": "webpack-dev-server --open --mode production",
     "test": "jest",
-
     "build": "webpack --mode production",
     "coverage": "jest --coverage",
     "gh-pages": "gh-pages -d dist coverage",
-
     "eslint": "eslint . --ext .ts",
     "eslint fix": "eslint . --ext .ts --fix",
-
-    "generate uml puml": "tplant --input src/slider/*.ts -o docs/uml.puml",
-    "generate uml svg": "tplant --input src/slider/*.ts -o docs/imgs/uml.svg"
+    "generate uml puml": "tplant --input src/slider/*.ts -o uml/uml.puml",
+    "generate uml svg": "tplant --input src/slider/*.ts -o uml/uml.svg"
   },
   "author": "",
   "license": "ISC",
@@ -32,6 +29,7 @@
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
     "babel-jest": "^26.0.1",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.5.3",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
@@ -44,12 +42,14 @@
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
     "jsdom": "^16.2.2",
+    "mini-css-extract-plugin": "^0.9.0",
     "path": "^0.12.7",
     "pug": "^2.0.4",
     "pug-loader": "^2.4.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.1",
+    "terser-webpack-plugin": "^3.0.3",
     "tplant": "^2.3.3",
     "ts-jest": "^26.0.0",
     "ts-loader": "^7.0.4",
