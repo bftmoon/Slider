@@ -1,16 +1,16 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 
 const config = {
   entry: {
-    demo: path.resolve(__dirname, 'src/demo/index.ts'),
-    slider: path.resolve(__dirname, 'src/slider/Slider.ts'),
-    jqslider: path.resolve(__dirname, 'src/slider/slider-jquery.ts'),
-    panel: path.resolve(__dirname, 'src/demo/panel/Panel.ts')
+    demo: './src/demo/index.ts',
+    jqslider: './src/slider/slider-jquery.ts',
+    slider: './src/slider/Slider.ts',
+    panel: './src/demo/panel/Panel.ts',
   },
   devtool: 'inline-source-map',
   plugins: [
@@ -26,7 +26,7 @@ const config = {
     }),
     new HtmlWebpackPlugin({
       template: './src/demo/demo.pug',
-      chunks:['demo', 'jqslider', 'panel']
+      chunks: ['demo', 'jqslider', 'panel', 'query']
     }),
   ],
   module: {
@@ -77,16 +77,17 @@ module.exports = (env, argv) => {
       minimizer: [new TerserPlugin()],
       moduleIds: 'hashed',
       splitChunks: {
-        chunks: 'all',
         maxInitialRequests: Infinity,
         minSize: 0,
         cacheGroups: {
           vendor: {
+            chunks: 'all',
             test: /[\\/]node_modules[\\/]/,
             name(module) {
               const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
               return `npm.${packageName.replace('@', '')}`;
             },
+            enforce: true
           },
         },
       },
