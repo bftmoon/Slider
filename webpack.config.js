@@ -6,9 +6,6 @@ const config = {
   entry: {
     app: './src/demo/index.ts',
   },
-  output: {
-    path: path.resolve(__dirname, 'docs/demo'),
-  },
   devtool: 'inline-source-map',
   plugins: [
     new webpack.ProvidePlugin({

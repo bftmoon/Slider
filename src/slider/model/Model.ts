@@ -124,7 +124,7 @@ class Model {
     const diff = (value - this.border.min) % this.step;
     if (diff === 0) return value;
     newValue += this.step / 2 > diff ? -diff : this.step - diff;
-    return value > this.border.max ? this.border.max : newValue;
+    return newValue > this.border.max ? this.border.max : newValue;
   }
 
   calcModelValue(percent: number): number {

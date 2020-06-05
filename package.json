@@ -4,17 +4,20 @@
   "description": "",
   "main": "index.js",
   "jest": {
-    "coverageDirectory": "./docs/coverage"
+    "coverageDirectory": "./coverage"
   },
   "scripts": {
-    "test": "jest",
-    "coverage": "jest --coverage",
     "run dev": "webpack-dev-server --open --mode development",
-    "run eslint": "webpack-dev-server --open --mode development --eslint",
     "run prod": "webpack-dev-server --open --mode production",
+    "test": "jest",
+
     "build": "webpack --mode production",
+    "coverage": "jest --coverage",
+    "gh-pages": "gh-pages -d dist coverage",
+
     "eslint": "eslint . --ext .ts",
     "eslint fix": "eslint . --ext .ts --fix",
+
     "generate uml puml": "tplant --input src/slider/*.ts -o docs/uml.puml",
     "generate uml svg": "tplant --input src/slider/*.ts -o docs/imgs/uml.svg"
   },
@@ -37,6 +40,7 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.13.1",
     "file-loader": "^6.0.0",
+    "gh-pages": "^3.0.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
     "jsdom": "^16.2.2",
