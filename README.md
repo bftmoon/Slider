@@ -1,7 +1,7 @@
 # Slider plugin
 Slider plugin with optional jQuery interface for FSD
 
-[Demo](https://bigfatmoon.github.io/Slider/demo/index.html)  
+[Demo](https://bigfatmoon.github.io/Slider/index.html)  
 [Coverage](https://bigfatmoon.github.io/Slider/coverage/lcov-report/index.html)
 
 ### How to:
@@ -33,11 +33,11 @@ $("selector").slider().getSlider("put index here");
 
 Using full generated slider class diagram
 
-![uml](./docs/imgs/uml.svg)
+![uml](./uml/uml.svg)
 
 Or with "MVP with Passive View" overview
 
-![overview](./docs/imgs/overview.png)      
+![overview](./uml/overview.png)      
 
 And classes brief:
 * Slider - main plugin class for connecting MVP components
