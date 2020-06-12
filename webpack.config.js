@@ -12,12 +12,11 @@ const config = {
     slider: './src/slider/Slider.ts',
     panel: './src/demo/panel/Panel.ts',
   },
-  devtool: 'inline-source-map',
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css',
-      chunkFilename: '[id].[contenthash].css',
+      filename: '[name].css',
+      chunkFilename: '[id].css',
       ignoreOrder: true,
     }),
     new webpack.ProvidePlugin({
@@ -87,11 +86,12 @@ module.exports = (env, argv) => {
               const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
               return `npm.${packageName.replace('@', '')}`;
             },
-            enforce: true
           },
         },
       },
     };
+  } else {
+    config.devtool = 'source-map';
   }
   return config;
 };
