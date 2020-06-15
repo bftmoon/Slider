@@ -7,13 +7,13 @@ $scale_border: 1px solid rgba(0, 0, 0, 0.5);
   user-select: none;
 
   &_horizontal {
-    padding: 30px $pointer_size/2;
+    margin: 30px 0;
     width: 100%;
     flex-direction: column;
   }
 
   &_vertical {
-    padding: $pointer_size/2 30px;
+    margin: $pointer_size/2 30px;
   }
 
   &__body {

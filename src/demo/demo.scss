@@ -13,10 +13,14 @@
     min-height: 100%;
   }
 
+  &__slider-container {
+    margin: auto 50px;
+    width: 100%;
+  }
+
   &__slider {
     display: flex;
     justify-content: center;
-    margin: auto 50px;
     height: 300px;
   }
 
