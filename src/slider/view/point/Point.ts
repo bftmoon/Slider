@@ -44,7 +44,7 @@ class Point extends Observer implements IViewElement {
   }
 
   updatePosition(isVertical: boolean, point: IPoint) {
-    const radius = this.element.offsetHeight / 2;
+    const radius = this.element.offsetWidth / 2;
     this.element.style[isVertical ? 'bottom' : 'left'] = `calc(${point.percent}% - ${radius}px)`;
     if (point.tooltip !== undefined) this.tooltip.update(point.tooltip, isVertical);
   }
