@@ -3,7 +3,6 @@ Slider plugin with optional jQuery interface for FSD
 
 [Demo](https://bigfatmoon.github.io/Slider/index.html)  
 [Coverage](https://bigfatmoon.github.io/Slider/coverage/lcov-report/index.html)
-ink
 
 ### How to:
 ##### Install and run project
