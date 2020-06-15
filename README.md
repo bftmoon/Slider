@@ -29,6 +29,7 @@ $("selector").slider().getElementsQuery().anyQueryFunc();
 $("selector").slider().size();
 $("selector").slider().getSlider("put index here");
 ```
+Simple example of plugin injection can be found in [the-simplest-demo dir](./the-simplest-demo)
 #### Understand architecture
 
 Using full generated slider class diagram
