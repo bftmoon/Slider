@@ -12,16 +12,15 @@ const config = {
     slider: './src/slider/Slider.ts',
     panel: './src/demo/panel/Panel.ts',
   },
+  externals: {
+    jquery: '$'
+  },
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css',
       ignoreOrder: true,
-    }),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
     }),
     new HtmlWebpackPlugin({
       template: './src/demo/demo.pug',
