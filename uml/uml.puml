@@ -161,8 +161,8 @@ class View extends Observer implements IView {
     -handleBodyClick: (data: IRelativePointPercents) => void
 }
 class Model {
-    #current: { min: number; max: number; }
-    +border: { min: number; max: number; }
+    #current: IMinMax<number>
+    +border: IMinMax<number>
     +step: number
     +isRange: boolean
     +isVertical: boolean
@@ -261,4 +261,59 @@ interface ISliderGroup extends ISliderCommon {
     +getOptions(): IOptions[]
     +size(): number
 }
+
+Slider o-- ValidModel
+Slider o-- View
+View o-- Body
+View o-- Scale
+Body o-- Point
+Body o-- IMinMax
+Body o-- Range
+Point o-- Tooltip
+
+IObserver ..> SliderEvent
+Observer ..> SliderEvent
+
+Range ..> IMinMax
+Point ..> IPoint
+Body ..> MinMaxPosition
+Body ..> IAbsolutePoint
+
+ISliderCommon ..>MinMaxPosition
+
+Presenter ..> MinMaxPosition
+Presenter ..> IPointMoveData
+Presenter ..> IRelativePointPercents
+PresenterProxy ..> MinMaxPosition
+PresenterProxy..>SliderError
+
+Model..>IMinMax
+Model..>IOptions
+Model..>IViewOptions
+Model..>MinMaxPosition
+ValidModel..>MinMaxPosition
+ValidModel..>SliderError
+
+PositionUtil..>IAbsolutePoint
+PositionUtil..>IRelativePointPercents
+
+PositionUtil..>ConvertUtil
+Scale..>ConvertUtil
+Model..>ConvertUtil
+
+View..>CssClassUtil
+Body..>CssClassUtil
+Range..>CssClassUtil
+Scale..>CssClassUtil
+Tooltip..>CssClassUtil
+
+CssClassUtil..>ClassNames
+View..>ClassNames
+Body..>ClassNames
+Range..>ClassNames
+Scale..>ClassNames
+Tooltip..>ClassNames
+
+Scale..>PositionUtil
+Body..>PositionUtil
 @enduml
