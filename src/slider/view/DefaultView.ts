@@ -2,10 +2,10 @@ import Scale from './scale/Scale';
 import Body from './body/Body';
 import Observer from '../observer/Observer';
 import SliderEvent from '../observer/SliderEvent';
-import ViewOptions from '../common/ViewOptions';
-import MinMax from '../common/MinMax';
-import PointData from '../common/PointData';
-import { PointMoveData, RelativePointPercents } from '../common/NotifyInterfaces';
+import ViewBoolOptions from '../types/ViewBoolOptions';
+import MinMax from '../types/MinMax';
+import PointData from '../types/PointData';
+import { PointMoveData, RelativePointPercents } from '../types/PointPosition';
 import CssClassUtil from '../utils/CssClassUtil';
 import View from './View';
 
@@ -22,7 +22,7 @@ class DefaultView extends Observer implements View {
       isRange,
       withTooltip,
       withScale,
-    }: ViewOptions,
+    }: ViewBoolOptions,
     points: MinMax<PointData>,
     step: number,
     size: number): void {
@@ -36,9 +36,9 @@ class DefaultView extends Observer implements View {
     );
 
     this.body
-      .subscribe(SliderEvent.sliderClick, this.handleBodyClick)
-      .subscribe(SliderEvent.pointMove, this.handlePointMove);
-    this.scale.subscribe(SliderEvent.sliderClick, this.handleScaleClick);
+      .subscribe(SliderEvent.SliderClick, this.handleBodyClick)
+      .subscribe(SliderEvent.PointMove, this.handlePointMove);
+    this.scale.subscribe(SliderEvent.SliderClick, this.handleScaleClick);
 
     if (!withTooltip) this.body.toggleTooltip();
     element.append(fragment);
@@ -76,15 +76,15 @@ class DefaultView extends Observer implements View {
   }
 
   private handlePointMove = (data: PointMoveData) => {
-    this.notify(SliderEvent.pointMove, data);
+    this.notify(SliderEvent.PointMove, data);
   }
 
   private handleScaleClick = (data: RelativePointPercents) => {
-    this.notify(SliderEvent.sliderClick, data);
+    this.notify(SliderEvent.SliderClick, data);
   }
 
   private handleBodyClick = (data: RelativePointPercents) => {
-    this.notify(SliderEvent.sliderClick, data);
+    this.notify(SliderEvent.SliderClick, data);
   }
 }
 

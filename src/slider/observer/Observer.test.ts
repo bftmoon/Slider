@@ -10,17 +10,17 @@ describe('Observer class', () => {
 
   test('One subscriber call', () => {
     const mockCallback = jest.fn();
-    observer.subscribe(SliderEvent.valueChanged, mockCallback);
-    observer.notify(SliderEvent.valueChanged);
+    observer.subscribe(SliderEvent.ValueChanged, mockCallback);
+    observer.notify(SliderEvent.ValueChanged);
     expect(mockCallback).toBeCalled();
   });
 
   test('Many subscriber call', () => {
     const mockCallback = jest.fn();
-    observer.subscribe(SliderEvent.valueChanged, mockCallback);
-    observer.subscribe(SliderEvent.valueChanged, mockCallback);
-    observer.subscribe(SliderEvent.valueChanged, mockCallback);
-    observer.notify(SliderEvent.valueChanged);
+    observer.subscribe(SliderEvent.ValueChanged, mockCallback);
+    observer.subscribe(SliderEvent.ValueChanged, mockCallback);
+    observer.subscribe(SliderEvent.ValueChanged, mockCallback);
+    observer.notify(SliderEvent.ValueChanged);
     expect(mockCallback).toBeCalledTimes(3);
   });
 });

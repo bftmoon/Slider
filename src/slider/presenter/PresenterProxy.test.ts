@@ -1,13 +1,13 @@
-import Options from '../model/Options';
 import MockView from '../view/MockView';
 import DefaultValidModel from '../model/DefaultValidModel';
 import PresenterProxy from './PresenterProxy';
 import SliderEvent from '../observer/SliderEvent';
-import MinMaxPosition from '../common/MinMaxPosition';
+import MinMaxPosition from '../types/MinMaxPosition';
+import SliderOptions from "../types/SliderOptions";
 
 describe('PresenterProxy class', () => {
   let presenter: PresenterProxy;
-  const options: Options = {
+  const options: SliderOptions = {
     border: { min: 0, max: 100 },
     current: { min: 10, max: 80 },
     step: 2,
@@ -33,7 +33,7 @@ describe('PresenterProxy class', () => {
       const spy = jest.spyOn(PresenterProxy.prototype, 'subscribe');
       const callback = () => {};
       presenter.addSlideListener(callback);
-      expect(spy).toBeCalledWith(SliderEvent.valueChanged, callback);
+      expect(spy).toBeCalledWith(SliderEvent.ValueChanged, callback);
     });
   });
   describe('current setters', () => {
@@ -48,14 +48,14 @@ describe('PresenterProxy class', () => {
       const spyModel = jest.spyOn(DefaultValidModel.prototype, 'setValidCurrent');
       const spyView = jest.spyOn(MockView.prototype, 'updatePosition');
       presenter.setCurrentRangeMin(2);
-      expect(spyModel).toBeCalledWith(2, MinMaxPosition.min);
+      expect(spyModel).toBeCalledWith(2, MinMaxPosition.Min);
       expect(spyView).toBeCalled();
     });
     test('setCurrentRangeMax', () => {
       const spyModel = jest.spyOn(DefaultValidModel.prototype, 'setValidCurrent');
       const spyView = jest.spyOn(MockView.prototype, 'updatePosition');
       presenter.setCurrentRangeMax(12);
-      expect(spyModel).toBeCalledWith(12, MinMaxPosition.max);
+      expect(spyModel).toBeCalledWith(12, MinMaxPosition.Max);
       expect(spyView).toBeCalled();
     });
     test('setCurrent', () => {
@@ -95,7 +95,7 @@ describe('PresenterProxy class', () => {
       const spyScale = jest.spyOn(MockView.prototype, 'updateScaleLines');
       const spyPoints = jest.spyOn(MockView.prototype, 'updatePosition');
       presenter.setBorderMin(6);
-      expect(spyValid).toBeCalledWith(6, MinMaxPosition.min);
+      expect(spyValid).toBeCalledWith(6, MinMaxPosition.Min);
       expect(spyScale).toBeCalled();
       expect(spyPoints).toBeCalled();
     });
@@ -104,7 +104,7 @@ describe('PresenterProxy class', () => {
       const spyScale = jest.spyOn(MockView.prototype, 'updateScaleLines');
       const spyPoints = jest.spyOn(MockView.prototype, 'updatePosition');
       presenter.setBorderMax(26);
-      expect(spyValid).toBeCalledWith(26, MinMaxPosition.max);
+      expect(spyValid).toBeCalledWith(26, MinMaxPosition.Max);
       expect(spyScale).toBeCalled();
       expect(spyPoints).toBeCalled();
     });

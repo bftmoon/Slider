@@ -1,5 +1,5 @@
 import ViewElement from '../ViewElement';
-import MinMax from '../../common/MinMax';
+import MinMax from '../../types/MinMax';
 import CssClassUtil from '../../utils/CssClassUtil';
 import ClassNames from '../../utils/ClassNames';
 
@@ -12,7 +12,7 @@ class Range implements ViewElement {
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
-    CssClassUtil.initClass(this.element, isVertical, ClassNames.range);
+    CssClassUtil.initClass(this.element, isVertical, ClassNames.Range);
     return this.element;
   }
 

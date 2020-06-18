@@ -8,11 +8,11 @@ describe('CssClassUtil class', () => {
   });
   describe('initClass', () => {
     test('vertical', () => {
-      CssClassUtil.initClass(element, true, ClassNames.point);
+      CssClassUtil.initClass(element, true, ClassNames.Point);
       expect(element.classList.toString()).toBe(`${CssClassUtil.MAIN_PREFIX}__point ${CssClassUtil.MAIN_PREFIX}__point_vertical`);
     });
     test('horizontal', () => {
-      CssClassUtil.initClass(element, false, ClassNames.point);
+      CssClassUtil.initClass(element, false, ClassNames.Point);
       expect(element.classList.toString()).toBe(`${CssClassUtil.MAIN_PREFIX}__point ${CssClassUtil.MAIN_PREFIX}__point_horizontal`);
     });
     test('without name', () => {
@@ -23,26 +23,26 @@ describe('CssClassUtil class', () => {
 
   describe('modifications', () => {
     beforeEach(() => {
-      CssClassUtil.initClass(element, true, ClassNames.point);
+      CssClassUtil.initClass(element, true, ClassNames.Point);
     });
     test('toggleHidden', () => {
-      CssClassUtil.toggleHidden(element, ClassNames.point);
+      CssClassUtil.toggleHidden(element, ClassNames.Point);
       expect(element.classList).toContain(`${CssClassUtil.MAIN_PREFIX}__point_hidden`);
-      CssClassUtil.toggleHidden(element, ClassNames.point);
+      CssClassUtil.toggleHidden(element, ClassNames.Point);
       expect(element.classList).not.toContain(`${CssClassUtil.MAIN_PREFIX}__point_hidden`);
     });
     test('toggleOrientation', () => {
-      CssClassUtil.toggleOrientation(element, ClassNames.point);
+      CssClassUtil.toggleOrientation(element, ClassNames.Point);
       expect(element.classList).toContain(`${CssClassUtil.MAIN_PREFIX}__point_horizontal`);
       expect(element.classList).not.toContain(`${CssClassUtil.MAIN_PREFIX}__point_vertical`);
-      CssClassUtil.toggleOrientation(element, ClassNames.point);
+      CssClassUtil.toggleOrientation(element, ClassNames.Point);
       expect(element.classList).not.toContain(`${CssClassUtil.MAIN_PREFIX}__point_horizontal`);
       expect(element.classList).toContain(`${CssClassUtil.MAIN_PREFIX}__point_vertical`);
     });
     test('toggleGrab', () => {
-      CssClassUtil.toggleGrab(element, ClassNames.point);
+      CssClassUtil.toggleGrab(element, ClassNames.Point);
       expect(element.classList).toContain(`${CssClassUtil.MAIN_PREFIX}__point_grabbed`);
-      CssClassUtil.toggleGrab(element, ClassNames.point);
+      CssClassUtil.toggleGrab(element, ClassNames.Point);
       expect(element.classList).not.toContain(`${CssClassUtil.MAIN_PREFIX}__point_grabbed`);
     });
   });

@@ -1,9 +1,9 @@
 enum ClassNames {
-  point,
-  scale,
-  tooltip,
-  range,
-  body,
-  line
+  Point,
+  Scale,
+  Tooltip,
+  Range,
+  Body,
+  Line
 }
 export default ClassNames;

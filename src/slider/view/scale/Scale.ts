@@ -11,7 +11,7 @@ class Scale extends Observer implements ViewElement {
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
-    CssClassUtil.initClass(this.element, isVertical, ClassNames.scale);
+    CssClassUtil.initClass(this.element, isVertical, ClassNames.Scale);
     this.element.addEventListener('click', this.handleScaleClick);
     return this.element;
   }
@@ -21,13 +21,13 @@ class Scale extends Observer implements ViewElement {
   }
 
   toggleHidden() {
-    CssClassUtil.toggleHidden(this.element, ClassNames.scale);
+    CssClassUtil.toggleHidden(this.element, ClassNames.Scale);
   }
 
   toggleOrientation() {
-    CssClassUtil.toggleOrientation(this.element, ClassNames.scale);
+    CssClassUtil.toggleOrientation(this.element, ClassNames.Scale);
     this.element.childNodes.forEach((child: ChildNode) => {
-      CssClassUtil.toggleOrientation(child as HTMLElement, ClassNames.line);
+      CssClassUtil.toggleOrientation(child as HTMLElement, ClassNames.Line);
     });
   }
 
@@ -48,7 +48,7 @@ class Scale extends Observer implements ViewElement {
   private static buildLineHtml(isVertical: boolean, index: number, gap: number): HTMLDivElement {
     const line = document.createElement('div');
     line.style[isVertical ? 'bottom' : 'left'] = `${gap * index}%`;
-    CssClassUtil.initClass(line, isVertical, ClassNames.line);
+    CssClassUtil.initClass(line, isVertical, ClassNames.Line);
     return line;
   }
 
@@ -71,7 +71,7 @@ class Scale extends Observer implements ViewElement {
   }
 
   private handleScaleClick = (event: MouseEvent) => {
-    this.notify(SliderEvent.sliderClick, PositionUtil.calcEventPoint(this.element, event));
+    this.notify(SliderEvent.SliderClick, PositionUtil.calcEventPoint(this.element, event));
   }
 }
 

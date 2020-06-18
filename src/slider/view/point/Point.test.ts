@@ -53,7 +53,7 @@ describe('Point class', () => {
     });
     describe('subscribe', () => {
       test('handleMouseMove notify about changes', () => {
-        point.subscribe(SliderEvent.pointMove, (data) => {
+        point.subscribe(SliderEvent.PointMove, (data) => {
           expect(data).toEqual({ x: 1, y: 2 });
         });
         const event = new MouseEvent('mousemove', { clientX: 1, clientY: 2 });

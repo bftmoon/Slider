@@ -1,10 +1,10 @@
 import DefaultModel from './DefaultModel';
-import Options from './Options';
-import MinMaxPosition from '../common/MinMaxPosition';
+import MinMaxPosition from '../types/MinMaxPosition';
 import SliderError from '../SliderError';
+import SliderOptions from "../types/SliderOptions";
 
 class DefaultValidModel extends DefaultModel {
-  constructor(options?: Options) {
+  constructor(options?: SliderOptions) {
     super();
     if (options) {
       this.copyBool(options);
@@ -16,10 +16,10 @@ class DefaultValidModel extends DefaultModel {
       }
       if (options.current !== undefined) {
         if (options.current.min !== undefined) {
-          this.setValidCurrent(options.current.min, MinMaxPosition.min);
+          this.setValidCurrent(options.current.min, MinMaxPosition.Min);
         }
         if (options.current.max !== undefined) {
-          this.setValidCurrent(options.current.max || this.current.max, MinMaxPosition.max);
+          this.setValidCurrent(options.current.max || this.current.max, MinMaxPosition.Max);
         }
       }
       if (options.step !== undefined) {
@@ -32,7 +32,7 @@ class DefaultValidModel extends DefaultModel {
     DefaultValidModel.isValidType(current);
     const number = Number(current);
     this.isInBorderRange(number);
-    if (position === MinMaxPosition.min) {
+    if (position === MinMaxPosition.Min) {
       this.isRangeActive();
       DefaultValidModel.isPositiveRange(number, this.getCurrent().max);
     } else {
@@ -124,7 +124,7 @@ class DefaultValidModel extends DefaultModel {
   }
 
   private isValidBorder(value: number, position: MinMaxPosition) {
-    if (position === MinMaxPosition.min) {
+    if (position === MinMaxPosition.Min) {
       if (value > this.border.max) {
         throw new SliderError('Negative slider body size');
       }

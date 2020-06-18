@@ -1,12 +1,12 @@
-import ViewOptions from '../common/ViewOptions';
-import MinMax from '../common/MinMax';
-import PointData from '../common/PointData';
+import ViewBoolOptions from '../types/ViewBoolOptions';
+import MinMax from '../types/MinMax';
+import PointData from '../types/PointData';
 import Observable from '../observer/Observable';
 
 interface View extends Observable {
   render(
     element: HTMLElement,
-    options: ViewOptions,
+    options: ViewBoolOptions,
     points: MinMax<PointData>,
     step: number,
     size: number

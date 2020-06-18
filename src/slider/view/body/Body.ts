@@ -3,11 +3,11 @@ import Point from '../point/Point';
 import Range from '../range/Range';
 import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
-import MinMax from '../../common/MinMax';
-import PointData from '../../common/PointData';
-import { AbsolutePoint, PointMoveData } from '../../common/NotifyInterfaces';
+import MinMax from '../../types/MinMax';
+import PointData from '../../types/PointData';
+import { AbsolutePoint, PointMoveData } from '../../types/PointPosition';
 import CssClassUtil from '../../utils/CssClassUtil';
-import MinMaxPosition from '../../common/MinMaxPosition';
+import MinMaxPosition from '../../types/MinMaxPosition';
 import PositionUtil from '../../utils/PositionUtil';
 import ClassNames from '../../utils/ClassNames';
 
@@ -24,7 +24,7 @@ class Body extends Observer implements ViewElement {
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
-    CssClassUtil.initClass(this.element, isVertical, ClassNames.body);
+    CssClassUtil.initClass(this.element, isVertical, ClassNames.Body);
 
     this.element.addEventListener('click', this.handleSliderBodyClick);
     this.element.append(
@@ -33,8 +33,8 @@ class Body extends Observer implements ViewElement {
       this.range.buildHtml(isVertical),
     );
 
-    this.points.min.subscribe(SliderEvent.pointMove, this.handleMinPointMove);
-    this.points.max.subscribe(SliderEvent.pointMove, this.handleMaxPointMove);
+    this.points.min.subscribe(SliderEvent.PointMove, this.handleMinPointMove);
+    this.points.max.subscribe(SliderEvent.PointMove, this.handleMaxPointMove);
     return this.element;
   }
 
@@ -48,7 +48,7 @@ class Body extends Observer implements ViewElement {
   }
 
   toggleOrientation() {
-    CssClassUtil.toggleOrientation(this.element, ClassNames.body);
+    CssClassUtil.toggleOrientation(this.element, ClassNames.Body);
     this.points.min.toggleOrientation();
     this.points.max.toggleOrientation();
     this.range.toggleOrientation();
@@ -77,16 +77,16 @@ class Body extends Observer implements ViewElement {
   }
 
   private handleMaxPointMove = (data: AbsolutePoint) => {
-    this.handlePointMove(data, MinMaxPosition.max);
+    this.handlePointMove(data, MinMaxPosition.Max);
   }
 
   private handleSliderBodyClick = (event: MouseEvent) => {
-    this.notify(SliderEvent.sliderClick, PositionUtil.calcEventPoint(this.element, event));
+    this.notify(SliderEvent.SliderClick, PositionUtil.calcEventPoint(this.element, event));
   }
 
-  private handlePointMove = (data: AbsolutePoint, position = MinMaxPosition.min) => {
+  private handlePointMove = (data: AbsolutePoint, position = MinMaxPosition.Min) => {
     this.notify(
-      SliderEvent.pointMove, {
+      SliderEvent.PointMove, {
         ...PositionUtil.calcPointByParent(this.element, data),
         position,
       } as PointMoveData,

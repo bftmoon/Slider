@@ -1,6 +1,6 @@
 enum MinMaxPosition {
-  min = 'min',
-  max = 'max',
+  Min = 'min',
+  Max = 'max',
 }
 
 export default MinMaxPosition;

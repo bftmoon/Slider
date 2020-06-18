@@ -1,6 +1,6 @@
-import MinMax from '../common/MinMax';
+import MinMax from './/MinMax';
 
-type Options = {
+type SliderOptions = {
   border?: MinMax<number>;
   current?: MinMax<number>;
   step?: number;
@@ -13,4 +13,4 @@ type Options = {
   [index: string]: any;
 }
 
-export default Options;
+export default SliderOptions;

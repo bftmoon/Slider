@@ -1,8 +1,8 @@
-import Options from './model/Options';
 import SliderPlugin from './SliderPlugin';
-import MinMaxPosition from './common/MinMaxPosition';
+import MinMaxPosition from './types/MinMaxPosition';
+import SliderOptions from "./types/SliderOptions";
 
-interface SliderCommon{
+interface SliderCommon {
   toggleRange():void;
   toggleScale():void;
   toggleTooltip():void;
@@ -18,14 +18,14 @@ interface SliderCommon{
   setBorders(borderMin: any, borderMax: any): void;
 }
 
-interface Slider extends SliderCommon{
-  getOptions():Options;
+interface Slider extends SliderCommon {
+  getOptions():SliderOptions;
 }
 
-interface SliderGroup extends SliderCommon{
+interface SliderGroup extends SliderCommon {
   getSlider(index: number): SliderPlugin;
   getElementsQuery(): JQuery;
-  getOptions():Options[];
+  getOptions():SliderOptions[];
   size(): number;
 }
 

@@ -1,9 +1,9 @@
 import SliderPlugin from './SliderPlugin';
-import Options from './model/Options';
 import {SliderGroup} from './Slider';
-import MinMaxPosition from './common/MinMaxPosition';
+import MinMaxPosition from './types/MinMaxPosition';
+import SliderOptions from "./types/SliderOptions";
 
-$.fn.slider = function querySlider(options?: Options): SliderGroup {
+$.fn.slider = function querySlider(options?: SliderOptions): SliderGroup {
   const sliders: SliderPlugin[] = [];
   const query = this;
 
@@ -54,7 +54,7 @@ $.fn.slider = function querySlider(options?: Options): SliderGroup {
     toggleTooltip(): void {
       sliders.forEach((slider) => slider.toggleTooltip());
     },
-    getOptions(): Options[] {
+    getOptions(): SliderOptions[] {
       return sliders.map((slider) => slider.getOptions());
     },
     getSlider(index: number): SliderPlugin {

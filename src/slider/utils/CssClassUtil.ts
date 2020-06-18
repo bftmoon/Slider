@@ -23,7 +23,7 @@ class CssClassUtil {
   }
 
   private static getFullName(name?: ClassNames) {
-    return name !== undefined ? `${CssClassUtil.MAIN_PREFIX}__${ClassNames[name]}` : CssClassUtil.MAIN_PREFIX;
+    return name !== undefined ? `${CssClassUtil.MAIN_PREFIX}__${ClassNames[name].toLowerCase()}` : CssClassUtil.MAIN_PREFIX;
   }
 }
 

@@ -11,12 +11,12 @@ class Tooltip implements ViewElement {
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
-    CssClassUtil.initClass(this.element, isVertical, ClassNames.tooltip);
+    CssClassUtil.initClass(this.element, isVertical, ClassNames.Tooltip);
     return this.element;
   }
 
   toggleHidden() {
-    CssClassUtil.toggleHidden(this.element, ClassNames.tooltip);
+    CssClassUtil.toggleHidden(this.element, ClassNames.Tooltip);
   }
 
   update(text: any, isVertical: boolean) {
@@ -35,7 +35,7 @@ class Tooltip implements ViewElement {
   }
 
   toggleOrientation() {
-    CssClassUtil.toggleOrientation(this.element, ClassNames.tooltip);
+    CssClassUtil.toggleOrientation(this.element, ClassNames.Tooltip);
   }
 }
 

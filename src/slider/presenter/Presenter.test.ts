@@ -3,7 +3,7 @@ import DefaultModel from '../model/DefaultModel';
 import SliderError from '../SliderError';
 import MockView from '../view/MockView';
 import SliderEvent from '../observer/SliderEvent';
-import MinMaxPosition from '../common/MinMaxPosition';
+import MinMaxPosition from '../types/MinMaxPosition';
 
 describe('Presenter class', () => {
   describe('init', () => {
@@ -47,7 +47,7 @@ describe('Presenter class', () => {
         const spyCalc = jest.spyOn(DefaultModel.prototype, 'calcModelValue');
         const spyCompare = jest.spyOn(DefaultModel.prototype, 'isSameCurrent');
         const spyUpdate = jest.spyOn(DefaultModel.prototype, 'selectPosition');
-        mockView.notify(SliderEvent.sliderClick, { x: 10, y: 50 });
+        mockView.notify(SliderEvent.SliderClick, { x: 10, y: 50 });
         expect(spyCalc).toBeCalled();
         expect(spyCompare).toBeCalled();
         expect(spyUpdate).not.toBeCalled();
@@ -56,7 +56,7 @@ describe('Presenter class', () => {
         const spyCalc = jest.spyOn(DefaultModel.prototype, 'calcModelValue');
         const spyCompare = jest.spyOn(DefaultModel.prototype, 'isSameCurrent');
         const spyUpdate = jest.spyOn(DefaultModel.prototype, 'selectPosition');
-        mockView.notify(SliderEvent.sliderClick, { x: 40, y: 50 });
+        mockView.notify(SliderEvent.SliderClick, { x: 40, y: 50 });
         expect(spyCalc).toBeCalled();
         expect(spyCompare).toBeCalled();
         expect(spyUpdate).toBeCalled();
@@ -67,7 +67,7 @@ describe('Presenter class', () => {
         model.withScale = false;
         const spyCalc = jest.spyOn(DefaultModel.prototype, 'calcModelValue');
         const spyScale = jest.spyOn(MockView.prototype, 'updateScaleLines');
-        mockView.notify(SliderEvent.pointMove, { x: 20, y: 30, position: MinMaxPosition.min });
+        mockView.notify(SliderEvent.PointMove, { x: 20, y: 30, position: MinMaxPosition.Min });
         expect(spyCalc).toBeCalled();
         expect(spyScale).not.toBeCalled();
       });

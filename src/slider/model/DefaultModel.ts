@@ -1,9 +1,9 @@
-import Options from './Options';
-import MinMax from '../common/MinMax';
-import PointData from '../common/PointData';
-import ViewOptions from '../common/ViewOptions';
-import MinMaxPosition from '../common/MinMaxPosition';
+import MinMax from '../types/MinMax';
+import PointData from '../types/PointData';
+import ViewBoolOptions from '../types/ViewBoolOptions';
+import MinMaxPosition from '../types/MinMaxPosition';
 import ConvertUtil from '../utils/ConvertUtil';
+import SliderOptions from "../types/SliderOptions";
 
 class DefaultModel {
   protected current: MinMax<number> = {min: 0, max: 80};
@@ -20,7 +20,7 @@ class DefaultModel {
 
   withScale = true;
 
-  constructor(options?: Options) {
+  constructor(options?: SliderOptions) {
     if (options !== undefined) {
       if (options.border !== undefined) DefaultModel.copyMinMax(this.border, options.border);
       if (options.current !== undefined) DefaultModel.copyMinMax(this.current, options.current);
@@ -31,7 +31,7 @@ class DefaultModel {
 
   protected copyBool({
                        isVertical, isRange, withScale, withTooltip,
-                     }: Options) {
+                     }: SliderOptions) {
     if (isRange !== undefined) this.isRange = isRange;
     if (isVertical !== undefined) this.isVertical = isVertical;
     if (withTooltip !== undefined) this.withTooltip = withTooltip;
@@ -74,12 +74,12 @@ class DefaultModel {
 
   getCurrentPoints(): MinMax<PointData> {
     return {
-      min: this.getPoint(MinMaxPosition.min),
-      max: this.getPoint(MinMaxPosition.max),
+      min: this.getPoint(MinMaxPosition.Min),
+      max: this.getPoint(MinMaxPosition.Max),
     };
   }
 
-  getOptions(): Options {
+  getOptions(): SliderOptions {
     return {
       current: this.getCurrent(),
       border: this.border,
@@ -91,7 +91,7 @@ class DefaultModel {
     };
   }
 
-  getBoolOptions(): ViewOptions {
+  getBoolOptions(): ViewBoolOptions {
     return {
       isVertical: this.isVertical,
       isRange: this.isRange,
@@ -105,12 +105,12 @@ class DefaultModel {
   }
 
   selectPosition(value: number): MinMaxPosition {
-    if (!this.isRange) return MinMaxPosition.max;
-    if (value <= this.current.min) return MinMaxPosition.min;
-    if (value >= this.current.max) return MinMaxPosition.max;
+    if (!this.isRange) return MinMaxPosition.Max;
+    if (value <= this.current.min) return MinMaxPosition.Min;
+    if (value >= this.current.max) return MinMaxPosition.Max;
 
     const middle = this.current.min + (this.current.max - this.current.min) / 2;
-    return value < middle ? MinMaxPosition.min : MinMaxPosition.max;
+    return value < middle ? MinMaxPosition.Min : MinMaxPosition.Max;
   }
 
   normalizeCurrentOrder() {
@@ -145,8 +145,8 @@ class DefaultModel {
 
   willCurrentCollapse(position: MinMaxPosition, value: number): boolean {
     const current = this.getCurrent();
-    return (position === MinMaxPosition.min && value > current.max)
-      || (position === MinMaxPosition.max && value < current.min);
+    return (position === MinMaxPosition.Min && value > current.max)
+      || (position === MinMaxPosition.Max && value < current.min);
   }
 
   toggleRange() {

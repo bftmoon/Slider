@@ -1,15 +1,13 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable class-methods-use-this */
 import View from './View';
-import ViewOptions from '../common/ViewOptions';
-import MinMax from '../common/MinMax';
-import PointData from '../common/PointData';
+import ViewBoolOptions from '../types/ViewBoolOptions';
+import MinMax from '../types/MinMax';
+import PointData from '../types/PointData';
 import Observer from '../observer/Observer';
 
 class MockView extends Observer implements View {
   render(
     element: HTMLElement,
-    options: ViewOptions,
+    options: ViewBoolOptions,
     points: MinMax<PointData>,
     step: number,
     size: number,

@@ -3,7 +3,7 @@ import CssClassUtil from '../utils/CssClassUtil';
 import Body from './body/Body';
 import Scale from './scale/Scale';
 import Observer from '../observer/Observer';
-import ViewOptions from '../common/ViewOptions';
+import ViewBoolOptions from '../types/ViewBoolOptions';
 
 jest.mock('./scale/Scale');
 
@@ -14,7 +14,7 @@ describe('DefaultView class', () => {
   });
   describe('render', () => {
     let html: HTMLElement;
-    let boolOptions: ViewOptions;
+    let boolOptions: ViewBoolOptions;
     const points = {
       max: { percent: 20, tooltip: 30 },
       min: { percent: 10, tooltip: 20 },

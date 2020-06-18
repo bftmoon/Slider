@@ -1,8 +1,8 @@
 import DefaultModel from '../model/DefaultModel';
 import SliderEvent from '../observer/SliderEvent';
-import { PointMoveData, RelativePointPercents } from '../common/NotifyInterfaces';
+import { PointMoveData, RelativePointPercents } from '../types/PointPosition';
 import Observer from '../observer/Observer';
-import MinMaxPosition from '../common/MinMaxPosition';
+import MinMaxPosition from '../types/MinMaxPosition';
 import SliderError from '../SliderError';
 import View from '../view/View';
 
@@ -27,8 +27,8 @@ class Presenter extends Observer {
       this.model.getRangeSize(),
     );
     this.view
-      .subscribe(SliderEvent.sliderClick, this.handleSliderClick)
-      .subscribe(SliderEvent.pointMove, this.handlePointMove);
+      .subscribe(SliderEvent.SliderClick, this.handleSliderClick)
+      .subscribe(SliderEvent.PointMove, this.handlePointMove);
   }
 
   protected updatePosition(modelValue: number, position: MinMaxPosition) {
@@ -38,7 +38,7 @@ class Presenter extends Observer {
         this.model.isVertical,
         { [position]: this.model.getPoint(position) },
       );
-      this.notify(SliderEvent.valueChanged, { value: modelValue, position });
+      this.notify(SliderEvent.ValueChanged, { value: modelValue, position });
     }
   }
 

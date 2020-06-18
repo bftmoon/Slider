@@ -1,8 +1,8 @@
 enum SliderEvent {
-  sliderClick,
-  pointMove,
-  pointGrab,
-  valueChanged,
+  SliderClick,
+  PointMove,
+  PointGrab,
+  ValueChanged,
 }
 
 export default SliderEvent;

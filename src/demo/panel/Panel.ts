@@ -1,9 +1,9 @@
 import { SliderGroup } from '../../slider/Slider';
 import '../../slider/slider-jquery';
-import MinMaxPosition from '../../slider/common/MinMaxPosition';
+import MinMaxPosition from '../../slider/types/MinMaxPosition';
 import SliderError from '../../slider/SliderError';
-import MinMax from "../../slider/common/MinMax";
-import Options from "../../slider/model/Options";
+import MinMax from "../../slider/types/MinMax";
+import SliderOptions from "../../slider/types/SliderOptions";
 
 
 class Panel {
@@ -27,7 +27,7 @@ class Panel {
     this.changeableInputs[data.position].value = data.value.toString();
   }
 
-  private prepareElement(modelData: Options, element: HTMLInputElement) {
+  private prepareElement(modelData: SliderOptions, element: HTMLInputElement) {
     const inputElement = element;
     const mappedData = this.mapData(modelData, element.name);
     if (element.type === 'checkbox') {
@@ -52,7 +52,7 @@ class Panel {
     }
   }
 
-  private mapData(data: Options, inputName: string): {
+  private mapData(data: SliderOptions, inputName: string): {
     value: number | boolean,
     listener: (event: InputEvent) => void
   } {
