@@ -70,7 +70,7 @@ describe('Point class', () => {
         const spy = jest.spyOn(Tooltip.prototype, 'update');
         point.updatePosition(true, { percent: 10 });
         expect(spy).not.toBeCalled();
-        expect(point.getElement().style.bottom).toBe('calc(10% - 0px)');
+        expect(point.getElement().style.bottom).toBe('calc(10% - 5px)');
         spy.mockReset();
       });
 
@@ -78,7 +78,7 @@ describe('Point class', () => {
         const spy = jest.spyOn(Tooltip.prototype, 'update');
         point.updatePosition(false, { percent: 10, tooltip: 10 });
         expect(spy).toBeCalledTimes(1);
-        expect(point.getElement().style.left).toBe('calc(10% - 0px)');
+        expect(point.getElement().style.left).toBe('calc(10% - 5px)');
         spy.mockReset();
       });
     });
