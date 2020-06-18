@@ -149,6 +149,11 @@ class DefaultModel {
       || (position === MinMaxPosition.Max && value < current.min);
   }
 
+  areCurrentEqual(): boolean {
+    const current = this.getCurrent();
+    return current.min === current.max;
+  }
+
   toggleRange() {
     this.isRange = !this.isRange;
   }

@@ -1,6 +1,6 @@
 import DefaultModel from '../model/DefaultModel';
 import SliderEvent from '../observer/SliderEvent';
-import { PointMoveData, RelativePointPercents } from '../types/PointPosition';
+import {PointMoveData, RelativePointPercents} from '../types/PointPosition';
 import Observer from '../observer/Observer';
 import MinMaxPosition from '../types/MinMaxPosition';
 import SliderError from '../SliderError';
@@ -33,13 +33,22 @@ class Presenter extends Observer {
 
   protected updatePosition(modelValue: number, position: MinMaxPosition) {
     if (!this.model.willCurrentCollapse(position, modelValue)) {
-      this.model.setCurrent({ [position]: modelValue });
-      this.view.updatePosition(
-        this.model.isVertical,
-        { [position]: this.model.getPoint(position) },
-      );
-      this.notify(SliderEvent.ValueChanged, { value: modelValue, position });
+      this.updateModelAndViewCurrent(modelValue, position);
+    } else {
+      if (!this.model.areCurrentEqual()){
+        const current = this.model.getCurrent()[position === MinMaxPosition.Max? MinMaxPosition.Min: MinMaxPosition.Max];
+        this.updateModelAndViewCurrent(current, position)
+      }
     }
+  }
+
+  private updateModelAndViewCurrent(modelValue: number, position: MinMaxPosition){
+    this.model.setCurrent({ [position]: modelValue });
+    this.view.updatePosition(
+      this.model.isVertical,
+      { [position]: this.model.getPoint(position) },
+    );
+    this.notify(SliderEvent.ValueChanged, { value: modelValue, position });
   }
 
   private handleSliderClick = ({ x, y }: RelativePointPercents) => {
