@@ -1,17 +1,17 @@
-import Model from '../model/Model';
+import DefaultModel from '../model/DefaultModel';
 import SliderEvent from '../observer/SliderEvent';
-import { IPointMoveData, IRelativePointPercents } from '../common/NotifyInterfaces';
+import { PointMoveData, RelativePointPercents } from '../common/NotifyInterfaces';
 import Observer from '../observer/Observer';
 import MinMaxPosition from '../common/MinMaxPosition';
 import SliderError from '../SliderError';
-import IView from '../view/IView';
+import View from '../view/View';
 
 class Presenter extends Observer {
-  protected model: Model;
+  protected model: DefaultModel;
 
-  protected view: IView;
+  protected view: View;
 
-  constructor(model: Model, view: IView) {
+  constructor(model: DefaultModel, view: View) {
     super();
     this.model = model;
     this.view = view;
@@ -42,13 +42,13 @@ class Presenter extends Observer {
     }
   }
 
-  private handleSliderClick = ({ x, y }: IRelativePointPercents) => {
+  private handleSliderClick = ({ x, y }: RelativePointPercents) => {
     const modelValue = this.model.calcModelValue(this.model.isVertical ? 100 - y : x);
     if (this.model.isSameCurrent(modelValue)) return;
     this.updatePosition(modelValue, this.model.selectPosition(modelValue));
   }
 
-  private handlePointMove = ({ x, y, position }: IPointMoveData) => {
+  private handlePointMove = ({ x, y, position }: PointMoveData) => {
     this.updatePosition(
       this.model.calcModelValue(this.model.isVertical ? 100 - y : x),
       position,

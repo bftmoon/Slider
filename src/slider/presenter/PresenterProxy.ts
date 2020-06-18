@@ -1,13 +1,13 @@
 import Presenter from './Presenter';
-import IOptions from '../model/IOptions';
+import Options from '../model/Options';
 import SliderEvent from '../observer/SliderEvent';
-import ValidModel from '../model/ValidModel';
+import DefaultValidModel from '../model/DefaultValidModel';
 import MinMaxPosition from '../common/MinMaxPosition';
 
 class PresenterProxy extends Presenter {
-  protected model: ValidModel;
+  protected model: DefaultValidModel;
 
-  getOptions(): IOptions {
+  getOptions(): Options {
     return this.model.getOptions();
   }
 

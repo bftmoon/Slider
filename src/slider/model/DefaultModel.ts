@@ -1,14 +1,14 @@
-import IOptions from './IOptions';
-import IMinMax from '../common/IMinMax';
-import IPoint from '../common/IPoint';
-import IViewOptions from '../common/IViewOptions';
+import Options from './Options';
+import MinMax from '../common/MinMax';
+import PointData from '../common/PointData';
+import ViewOptions from '../common/ViewOptions';
 import MinMaxPosition from '../common/MinMaxPosition';
 import ConvertUtil from '../utils/ConvertUtil';
 
-class Model {
-  protected current: IMinMax<number> = {min: 0, max: 80};
+class DefaultModel {
+  protected current: MinMax<number> = {min: 0, max: 80};
 
-  border: IMinMax<number> = {min: 0, max: 100};
+  border: MinMax<number> = {min: 0, max: 100};
 
   step = 1;
 
@@ -20,10 +20,10 @@ class Model {
 
   withScale = true;
 
-  constructor(options?: IOptions) {
+  constructor(options?: Options) {
     if (options !== undefined) {
-      if (options.border !== undefined) Model.copyMinMax(this.border, options.border);
-      if (options.current !== undefined) Model.copyMinMax(this.current, options.current);
+      if (options.border !== undefined) DefaultModel.copyMinMax(this.border, options.border);
+      if (options.current !== undefined) DefaultModel.copyMinMax(this.current, options.current);
       if (options.step !== undefined) this.step = options.step;
       this.copyBool(options);
     }
@@ -31,25 +31,25 @@ class Model {
 
   protected copyBool({
                        isVertical, isRange, withScale, withTooltip,
-                     }: IOptions) {
+                     }: Options) {
     if (isRange !== undefined) this.isRange = isRange;
     if (isVertical !== undefined) this.isVertical = isVertical;
     if (withTooltip !== undefined) this.withTooltip = withTooltip;
     if (withScale !== undefined) this.withScale = withScale;
   }
 
-  private static copyMinMax(thisOption: IMinMax<any>, {min, max}: IMinMax<any>) {
+  private static copyMinMax(thisOption: MinMax<any>, {min, max}: MinMax<any>) {
     // eslint-disable-next-line no-param-reassign
     if (max !== undefined) thisOption.max = max;
     // eslint-disable-next-line no-param-reassign
     if (min !== undefined) thisOption.min = min;
   }
 
-  setCurrent(current: IMinMax<number>) {
-    Model.copyMinMax(this.current, current);
+  setCurrent(current: MinMax<number>) {
+    DefaultModel.copyMinMax(this.current, current);
   }
 
-  getCurrent(): IMinMax<number> {
+  getCurrent(): MinMax<number> {
     if (this.isRange) return this.current;
     return {
       max: this.current.max,
@@ -57,11 +57,11 @@ class Model {
     };
   }
 
-  getRealCurrent(): IMinMax<number> {
+  getRealCurrent(): MinMax<number> {
     return this.current;
   }
 
-  getPoint(position: MinMaxPosition): IPoint {
+  getPoint(position: MinMaxPosition): PointData {
     return {
       percent: ConvertUtil.toPercentWithDiff(
         this.getCurrent()[position],
@@ -72,14 +72,14 @@ class Model {
     };
   }
 
-  getCurrentPoints(): IMinMax<IPoint> {
+  getCurrentPoints(): MinMax<PointData> {
     return {
       min: this.getPoint(MinMaxPosition.min),
       max: this.getPoint(MinMaxPosition.max),
     };
   }
 
-  getOptions(): IOptions {
+  getOptions(): Options {
     return {
       current: this.getCurrent(),
       border: this.border,
@@ -91,7 +91,7 @@ class Model {
     };
   }
 
-  getBoolOptions(): IViewOptions {
+  getBoolOptions(): ViewOptions {
     return {
       isVertical: this.isVertical,
       isRange: this.isRange,
@@ -166,4 +166,4 @@ class Model {
   }
 }
 
-export default Model;
+export default DefaultModel;

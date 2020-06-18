@@ -1,14 +1,14 @@
-import Slider from './Slider';
-import IOptions from './model/IOptions';
-import {ISliderGroup} from './ISlider';
+import SliderPlugin from './SliderPlugin';
+import Options from './model/Options';
+import {SliderGroup} from './Slider';
 import MinMaxPosition from './common/MinMaxPosition';
 
-$.fn.slider = function querySlider(options?: IOptions): ISliderGroup {
-  const sliders: Slider[] = [];
+$.fn.slider = function querySlider(options?: Options): SliderGroup {
+  const sliders: SliderPlugin[] = [];
   const query = this;
 
   this.each((index: number, element: HTMLElement) => {
-    const slider = new Slider(options);
+    const slider = new SliderPlugin(options);
     sliders.push(slider);
     slider.init(element);
   });
@@ -54,10 +54,10 @@ $.fn.slider = function querySlider(options?: IOptions): ISliderGroup {
     toggleTooltip(): void {
       sliders.forEach((slider) => slider.toggleTooltip());
     },
-    getOptions(): IOptions[] {
+    getOptions(): Options[] {
       return sliders.map((slider) => slider.getOptions());
     },
-    getSlider(index: number): Slider {
+    getSlider(index: number): SliderPlugin {
       return sliders[index];
     },
     getElementsQuery(): JQuery {

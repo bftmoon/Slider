@@ -1,7 +1,7 @@
 import SliderEvent from './SliderEvent';
-import IObserver from './IObserver';
+import Observable from './Observable';
 
-class Observer implements IObserver {
+class Observer implements Observable {
   // eslint-disable-next-line comma-spacing
   private events = new Map<SliderEvent,((data?: any) => void)[]>();
 

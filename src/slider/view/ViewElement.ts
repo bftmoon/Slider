@@ -1,6 +1,6 @@
-interface IViewElement {
+interface ViewElement {
   getElement(): HTMLElement;
   buildHtml(isVertical: boolean, ...args: any[]): HTMLElement;
 }
 
-export default IViewElement;
+export default ViewElement;

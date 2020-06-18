@@ -1,8 +1,8 @@
 import ConvertUtil from './ConvertUtil';
-import { IAbsolutePoint, IRelativePointPercents } from '../common/NotifyInterfaces';
+import { AbsolutePoint, RelativePointPercents } from '../common/NotifyInterfaces';
 
 class PositionUtil {
-  static calcEventPoint(element: HTMLElement, event: MouseEvent): IRelativePointPercents {
+  static calcEventPoint(element: HTMLElement, event: MouseEvent): RelativePointPercents {
     if (element === event.target) {
       return {
         x: ConvertUtil.toPercent(
@@ -21,7 +21,7 @@ class PositionUtil {
     );
   }
 
-  static calcPointByParent(parent: HTMLElement, { x, y }: IAbsolutePoint): IRelativePointPercents {
+  static calcPointByParent(parent: HTMLElement, { x, y }: AbsolutePoint): RelativePointPercents {
     const {
       left, top, width, height,
     } = parent.getBoundingClientRect();

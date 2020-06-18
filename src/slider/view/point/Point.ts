@@ -1,13 +1,13 @@
-import IViewElement from '../IViewElement';
+import ViewElement from '../ViewElement';
 import Tooltip from '../tooltip/Tooltip';
 import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
-import IPoint from '../../common/IPoint';
-import { IAbsolutePoint } from '../../common/NotifyInterfaces';
+import PointData from '../../common/PointData';
+import { AbsolutePoint } from '../../common/NotifyInterfaces';
 import CssClassUtil from '../../utils/CssClassUtil';
 import ClassNames from '../../utils/ClassNames';
 
-class Point extends Observer implements IViewElement {
+class Point extends Observer implements ViewElement {
   private element: HTMLDivElement;
 
   private tooltip = new Tooltip();
@@ -40,10 +40,10 @@ class Point extends Observer implements IViewElement {
   }
 
   private handleMouseMove = (event: MouseEvent) => {
-    this.notify(SliderEvent.pointMove, { x: event.clientX, y: event.clientY } as IAbsolutePoint);
+    this.notify(SliderEvent.pointMove, { x: event.clientX, y: event.clientY } as AbsolutePoint);
   }
 
-  updatePosition(isVertical: boolean, point: IPoint) {
+  updatePosition(isVertical: boolean, point: PointData) {
     const radius = this.element.offsetWidth / 2;
     this.element.style[isVertical ? 'bottom' : 'left'] = `calc(${point.percent}% - ${radius}px)`;
     if (point.tooltip !== undefined) this.tooltip.update(point.tooltip, isVertical);

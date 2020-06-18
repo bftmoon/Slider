@@ -1,4 +1,4 @@
-import IViewElement from '../IViewElement';
+import ViewElement from '../ViewElement';
 import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
 import CssClassUtil from '../../utils/CssClassUtil';
@@ -6,7 +6,7 @@ import ConvertUtil from '../../utils/ConvertUtil';
 import PositionUtil from '../../utils/PositionUtil';
 import ClassNames from '../../utils/ClassNames';
 
-class Scale extends Observer implements IViewElement {
+class Scale extends Observer implements ViewElement {
   private element: HTMLElement;
 
   buildHtml(isVertical: boolean): HTMLElement {

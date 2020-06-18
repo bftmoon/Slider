@@ -145,7 +145,7 @@ interface IView extends IObserver {
     +updateScaleLines(step: number, size: number, isVertical: boolean): void
     +updatePosition(isVertical: boolean, points: IMinMax<IPoint>): void
 }
-class View extends Observer implements IView {
+class DefaultView extends Observer implements IView {
     +element: HTMLElement
     +body: Body
     +scale: Scale
@@ -160,7 +160,7 @@ class View extends Observer implements IView {
     -handleScaleClick: (data: IRelativePointPercents) => void
     -handleBodyClick: (data: IRelativePointPercents) => void
 }
-class Model {
+class DefaultModel {
     #current: IMinMax<number>
     +border: IMinMax<number>
     +step: number
@@ -194,14 +194,14 @@ class SliderError extends Error {
     +name: string
 }
 class Presenter extends Observer {
-    #model: Model
+    #model: DefaultModel
     #view: IView
     +init(parent: HTMLElement): void
     #updatePosition(modelValue: number, position: MinMaxPosition): void
     -handleSliderClick: ({ x, y }: IRelativePointPercents) => void
     -handlePointMove: ({ x, y, position }: IPointMoveData) => void
 }
-class ValidModel extends Model {
+class DefaultValidModel extends DefaultModel {
     +setValidCurrent(current: any, position: MinMaxPosition): void
     +setValidCurrents(currentMin: any, currentMax: any): void
     +setValidStep(step: any): void
@@ -217,7 +217,7 @@ class ValidModel extends Model {
     -{static} isValidBorders(borderMin: number, borderMax: number): void
 }
 class PresenterProxy extends Presenter {
-    #model: ValidModel
+    #model: DefaultValidModel
     +getOptions(): IOptions
     +addSlideListener(callback: (data: { value: number; position: MinMaxPosition; }) => void): void
     +setCurrentRange(valueMin: any, valueMax: any): void
@@ -262,10 +262,10 @@ interface ISliderGroup extends ISliderCommon {
     +size(): number
 }
 
-Slider o-- ValidModel
-Slider o-- View
-View o-- Body
-View o-- Scale
+Slider o-- DefaultValidModel
+Slider o-- DefaultView
+DefaultView o-- Body
+DefaultView o-- Scale
 Body o-- Point
 Body o-- IMinMax
 Body o-- Range
@@ -287,28 +287,28 @@ Presenter ..> IRelativePointPercents
 PresenterProxy ..> MinMaxPosition
 PresenterProxy..>SliderError
 
-Model..>IMinMax
-Model..>IOptions
-Model..>IViewOptions
-Model..>MinMaxPosition
-ValidModel..>MinMaxPosition
-ValidModel..>SliderError
+DefaultModel..>IMinMax
+DefaultModel..>IOptions
+DefaultModel..>IViewOptions
+DefaultModel..>MinMaxPosition
+DefaultValidModel..>MinMaxPosition
+DefaultValidModel..>SliderError
 
 PositionUtil..>IAbsolutePoint
 PositionUtil..>IRelativePointPercents
 
 PositionUtil..>ConvertUtil
 Scale..>ConvertUtil
-Model..>ConvertUtil
+DefaultModel..>ConvertUtil
 
-View..>CssClassUtil
+DefaultView..>CssClassUtil
 Body..>CssClassUtil
 Range..>CssClassUtil
 Scale..>CssClassUtil
 Tooltip..>CssClassUtil
 
 CssClassUtil..>ClassNames
-View..>ClassNames
+DefaultView..>ClassNames
 Body..>ClassNames
 Range..>ClassNames
 Scale..>ClassNames

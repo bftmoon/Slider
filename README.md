@@ -15,13 +15,13 @@ You can also use any other script in [package.json](./package.json) instead "run
 
 ##### Create slider
 ```javascript
-let slider = new Slider("put options here");
+let slider = new SliderPlugin("put options here");
 slider.init("put element here")
 // or
 let slider = $("element").slider("options");
 ```
-All options can be found in [IOptions.ts](./src/slider/model/IOptions.ts)  
-All supported methods can be found in [ISlider.ts](./src/slider/ISlider.ts)
+All options can be found in [IOptions.ts](src/slider/model/Options.ts)  
+All supported methods can be found in [ISlider.ts](src/slider/Slider.ts)
 
 JQuery support multiple slider and more methods like:
 ```javascript
@@ -36,15 +36,15 @@ Using full generated slider class diagram
 
 ![uml](./uml/uml.svg)
 
-Or with "MVP with Passive View" overview
+Or with "MVP with Passive DefaultView" overview
 
 ![overview](./uml/overview.png)      
 
 And classes brief:
 * Slider - main plugin class for connecting MVP components
-* Presenter - connect Model and View and call required methods for events
+* Presenter - connect DefaultModel and DefaultView and call required methods for events
   * PresenterProxy - extends Presenter,  contains functions for outer data update
-* Model - contain data, provides it according to condition
-  * ValidModel - extends Model, contains functions for outer updates validation
-* View - render slider components and notify about points move and slider click
+* DefaultModel - contain data, provides it according to condition
+  * DefaultValidModel - extends DefaultModel, contains functions for outer updates validation
+* DefaultView - render slider components and notify about points move and slider click
 * Observer - simplify work with events and callbacks

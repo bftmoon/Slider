@@ -1,10 +1,10 @@
-import Model from './Model';
-import IOptions from './IOptions';
+import DefaultModel from './DefaultModel';
+import Options from './Options';
 import MinMaxPosition from '../common/MinMaxPosition';
 import SliderError from '../SliderError';
 
-class ValidModel extends Model {
-  constructor(options?: IOptions) {
+class DefaultValidModel extends DefaultModel {
+  constructor(options?: Options) {
     super();
     if (options) {
       this.copyBool(options);
@@ -29,14 +29,14 @@ class ValidModel extends Model {
   }
 
   setValidCurrent(current: any, position: MinMaxPosition) {
-    ValidModel.isValidType(current);
+    DefaultValidModel.isValidType(current);
     const number = Number(current);
     this.isInBorderRange(number);
     if (position === MinMaxPosition.min) {
       this.isRangeActive();
-      ValidModel.isPositiveRange(number, this.getCurrent().max);
+      DefaultValidModel.isPositiveRange(number, this.getCurrent().max);
     } else {
-      ValidModel.isPositiveRange(this.getCurrent().min, number);
+      DefaultValidModel.isPositiveRange(this.getCurrent().min, number);
     }
     this.isDivideToStepOrBorder(number);
     this.current[position] = number;
@@ -44,38 +44,38 @@ class ValidModel extends Model {
 
   setValidCurrents(currentMin: any, currentMax: any) {
     this.isRangeActive();
-    ValidModel.isValidType(currentMin);
-    ValidModel.isValidType(currentMax);
+    DefaultValidModel.isValidType(currentMin);
+    DefaultValidModel.isValidType(currentMax);
     const numberMin = Number(currentMin);
     const numberMax = Number(currentMax);
     this.isInBorderRange(numberMin);
     this.isInBorderRange(numberMax);
-    ValidModel.isPositiveRange(numberMin, numberMax);
+    DefaultValidModel.isPositiveRange(numberMin, numberMax);
     this.isDivideToStepOrBorder(numberMin);
     this.isDivideToStepOrBorder(numberMax);
     this.current = { min: numberMin, max: numberMax };
   }
 
   setValidStep(step: any) {
-    ValidModel.isValidType(step);
+    DefaultValidModel.isValidType(step);
     const number = Number(step);
     this.isValidStep(number);
     this.step = number;
   }
 
   setValidBorder(value: any, position: MinMaxPosition) {
-    ValidModel.isValidType(value);
+    DefaultValidModel.isValidType(value);
     const number = Number(value);
     this.isValidBorder(number, position);
     this.border[position] = number;
   }
 
   setValidBorders(borderMin: any, borderMax: any) {
-    ValidModel.isValidType(borderMin);
-    ValidModel.isValidType(borderMax);
+    DefaultValidModel.isValidType(borderMin);
+    DefaultValidModel.isValidType(borderMax);
     const min = Number(borderMin);
     const max = Number(borderMax);
-    ValidModel.isValidBorders(min, max);
+    DefaultValidModel.isValidBorders(min, max);
     this.border = { min, max };
   }
 
@@ -151,4 +151,4 @@ class ValidModel extends Model {
   }
 }
 
-export default ValidModel;
+export default DefaultValidModel;

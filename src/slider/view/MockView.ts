@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable class-methods-use-this */
-import IView from './IView';
-import IViewOptions from '../common/IViewOptions';
-import IMinMax from '../common/IMinMax';
-import IPoint from '../common/IPoint';
+import View from './View';
+import ViewOptions from '../common/ViewOptions';
+import MinMax from '../common/MinMax';
+import PointData from '../common/PointData';
 import Observer from '../observer/Observer';
 
-class MockView extends Observer implements IView {
+class MockView extends Observer implements View {
   render(
     element: HTMLElement,
-    options: IViewOptions,
-    points: IMinMax<IPoint>,
+    options: ViewOptions,
+    points: MinMax<PointData>,
     step: number,
     size: number,
   ): void {
@@ -28,7 +28,7 @@ class MockView extends Observer implements IView {
   toggleTooltip(): void {
   }
 
-  updatePosition(isVertical: boolean, points: IMinMax<IPoint>): void {
+  updatePosition(isVertical: boolean, points: MinMax<PointData>): void {
   }
 
   updateScaleLines(step: number, size: number, isVertical: boolean): void {

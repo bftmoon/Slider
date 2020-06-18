@@ -1,17 +1,15 @@
 import MinMaxPosition from './MinMaxPosition';
 
-interface IRelativePointPercents {
+type RelativePointPercents = {
   x: number;
   y: number;
 }
 
-interface IAbsolutePoint {
+type AbsolutePoint = {
   x: number;
   y: number;
 }
 
-interface IPointMoveData extends IRelativePointPercents{
-  position: MinMaxPosition;
-}
+type PointMoveData = RelativePointPercents & { position: MinMaxPosition; }
 
-export { IAbsolutePoint, IRelativePointPercents, IPointMoveData };
+export {AbsolutePoint, RelativePointPercents, PointMoveData};

@@ -1,8 +1,8 @@
-interface IMinMax <T>{
+type MinMax <T> = {
   min?: T;
   max?:T;
 
   [index: string]: T;
 }
 
-export default IMinMax;
+export default MinMax;
