@@ -3,12 +3,13 @@ import Tooltip from '../tooltip/Tooltip';
 import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
 import PointData from '../../types/PointData';
-import { AbsolutePoint } from '../../types/PointPosition';
+import {AbsolutePoint, RelativePoint} from '../../types/PointPosition';
 import CssClassUtil from '../../utils/CssClassUtil';
 import ClassNames from '../../utils/ClassNames';
 
 class Point extends Observer implements ViewElement {
   private element: HTMLDivElement;
+  private moveDiff: RelativePoint = null;
 
   private tooltip = new Tooltip();
 
@@ -24,12 +25,17 @@ class Point extends Observer implements ViewElement {
     return this.element;
   }
 
-  private handlePointMouseDown = () => {
+  private handlePointMouseDown = (event: MouseEvent) => {
     document.documentElement.classList.add('slider-plugin');
+    this.updateMoveDiff(event.clientX, event.clientY);
     CssClassUtil.toggleGrab(this.element, ClassNames.Point);
-    this.notify(SliderEvent.PointGrab, { isGrabbed: true });
     document.addEventListener('mouseup', this.handleMouseUp);
     document.addEventListener('mousemove', this.handleMouseMove);
+  }
+
+  private updateMoveDiff(clientX: number, clientY: number) {
+    const {x, y, width, height} = this.element.getBoundingClientRect();
+    this.moveDiff = {x: x + width / 2 - clientX, y: y + height / 2 - clientY};
   }
 
   private handleMouseUp = () => {
@@ -40,7 +46,10 @@ class Point extends Observer implements ViewElement {
   }
 
   private handleMouseMove = (event: MouseEvent) => {
-    this.notify(SliderEvent.PointMove, { x: event.clientX, y: event.clientY } as AbsolutePoint);
+    this.notify(SliderEvent.PointMove, {
+      x: event.clientX + this.moveDiff.x,
+      y: event.clientY + this.moveDiff.y
+    } as AbsolutePoint);
   }
 
   updatePosition(isVertical: boolean, point: PointData) {

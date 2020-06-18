@@ -10,6 +10,11 @@ type AbsolutePoint = {
   y: number;
 }
 
+type RelativePoint = {
+  x: number;
+  y: number;
+}
+
 type PointMoveData = RelativePointPercents & { position: MinMaxPosition; }
 
-export {AbsolutePoint, RelativePointPercents, PointMoveData};
+export {AbsolutePoint, RelativePoint, RelativePointPercents, PointMoveData};
