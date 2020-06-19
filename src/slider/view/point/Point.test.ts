@@ -85,10 +85,8 @@ describe('Point class', () => {
     describe('handlers', () => {
       describe('handleMouseDown', () => {
         test('add point and body class and notify', () => {
-          const spyNotify = jest.spyOn(Point.prototype, 'notify');
           const spyClass = jest.spyOn(CssClassUtil, 'toggleGrab');
           point.getElement().dispatchEvent(new MouseEvent('mousedown'));
-          expect(spyNotify).toBeCalled();
           expect(spyClass).toBeCalled();
           expect(document.documentElement.classList).toContain('slider-plugin');
         });

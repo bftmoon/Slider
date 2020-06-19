@@ -2,6 +2,7 @@ import Body from '../body/Body';
 import CssClassUtil from '../../utils/CssClassUtil';
 import Point from '../point/Point';
 import Range from '../range/Range';
+import MinMaxPosition from "../../types/MinMaxPosition";
 
 describe('Body class', () => {
   let body: Body;
@@ -56,5 +57,17 @@ describe('Body class', () => {
       expect(spyRange).toBeCalledTimes(2);
       expect(spyPoint).toBeCalledTimes(3);
     });
+    test('selectNeighbourPoint', ()=>{
+      const spyPoint = jest.spyOn(Point.prototype, "calcClientCenterCoordinate");
+      expect(body.selectNeighbourPoint({isVertical: true, coordinate: 5})).toEqual(MinMaxPosition.Min);
+      expect(body.selectNeighbourPoint({isVertical: true, coordinate: -9})).toEqual(MinMaxPosition.Min);
+      body.cleanCachedPoint();
+      expect(body.selectNeighbourPoint({isVertical: true, coordinate: -9})).toEqual(MinMaxPosition.Max);
+      body.cleanCachedPoint();
+      expect(body.selectNeighbourPoint({isVertical: false, coordinate: -9})).toEqual(MinMaxPosition.Min);
+      body.cleanCachedPoint();
+      expect(body.selectNeighbourPoint({isVertical: false, coordinate: 5})).toEqual(MinMaxPosition.Max);
+      expect(spyPoint).toBeCalled();
+    })
   });
 });

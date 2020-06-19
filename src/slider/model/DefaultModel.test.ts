@@ -170,18 +170,18 @@ describe('DefaultModel class', () => {
     });
   });
 
-  describe('calcModelValue', () => {
-    test('Return border when percent not in range 0-100', () => {
+  describe('calcValue', () => {
+    test('Return border when ratio not in range 0-100', () => {
       const model = new DefaultModel({ border: { min: 0, max: 9 } });
-      expect(model.calcModelValue(-4)).toBe(0);
-      expect(model.calcModelValue(0)).toBe(0);
-      expect(model.calcModelValue(120)).toBe(9);
-      expect(model.calcModelValue(100)).toBe(9);
+      expect(model.calcValue(-4)).toBe(0);
+      expect(model.calcValue(0)).toBe(0);
+      expect(model.calcValue(120)).toBe(9);
+      expect(model.calcValue(1)).toBe(9);
     });
 
-    test('Calc value from percent', () => {
+    test('Calc value from ratio', () => {
       const model = new DefaultModel({ border: { min: 0, max: 200 } });
-      expect(model.calcModelValue(50)).toBe(100);
+      expect(model.calcValue(0.5)).toBe(100);
     });
   });
 

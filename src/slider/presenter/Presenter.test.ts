@@ -32,8 +32,8 @@ describe('Presenter class', () => {
     let presenter: Presenter;
     let mockView: MockView;
     const model = new DefaultModel({
-      border: { min: 0, max: 100 },
-      current: { min: 10, max: 20 },
+      border: {min: 0, max: 100},
+      current: {min: 10, max: 20},
       isVertical: false,
     });
     beforeEach(() => {
@@ -44,19 +44,19 @@ describe('Presenter class', () => {
     });
     describe('handleSliderClick', () => {
       test('not update if equal', () => {
-        const spyCalc = jest.spyOn(DefaultModel.prototype, 'calcModelValue');
+        const spyCalc = jest.spyOn(DefaultModel.prototype, 'calcValue');
         const spyCompare = jest.spyOn(DefaultModel.prototype, 'isSameCurrent');
         const spyUpdate = jest.spyOn(DefaultModel.prototype, 'selectPosition');
-        mockView.notify(SliderEvent.SliderClick, { x: 10, y: 50 });
+        mockView.notify(SliderEvent.SliderClick, () => 0.10);
         expect(spyCalc).toBeCalled();
         expect(spyCompare).toBeCalled();
         expect(spyUpdate).not.toBeCalled();
       });
       test('update if not equal', () => {
-        const spyCalc = jest.spyOn(DefaultModel.prototype, 'calcModelValue');
+        const spyCalc = jest.spyOn(DefaultModel.prototype, 'calcValue');
         const spyCompare = jest.spyOn(DefaultModel.prototype, 'isSameCurrent');
         const spyUpdate = jest.spyOn(DefaultModel.prototype, 'selectPosition');
-        mockView.notify(SliderEvent.SliderClick, { x: 40, y: 50 });
+        mockView.notify(SliderEvent.SliderClick, () => 1);
         expect(spyCalc).toBeCalled();
         expect(spyCompare).toBeCalled();
         expect(spyUpdate).toBeCalled();
@@ -65,9 +65,11 @@ describe('Presenter class', () => {
     describe('handlePointMove', () => {
       test('start update', () => {
         model.withScale = false;
-        const spyCalc = jest.spyOn(DefaultModel.prototype, 'calcModelValue');
+        const spyCalc = jest.spyOn(DefaultModel.prototype, 'calcValue');
         const spyScale = jest.spyOn(MockView.prototype, 'updateScaleLines');
-        mockView.notify(SliderEvent.PointMove, { x: 20, y: 30, position: MinMaxPosition.Min });
+        mockView.notify(SliderEvent.PointMove, () => {
+          return {ratio: 0.2, position: MinMaxPosition.Min}
+        });
         expect(spyCalc).toBeCalled();
         expect(spyScale).not.toBeCalled();
       });
