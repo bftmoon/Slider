@@ -5,9 +5,10 @@ import MinMaxPosition from '../types/MinMaxPosition';
 import SliderError from '../SliderError';
 import View from '../view/View';
 import {CalcPoint, CalcPositionWithDiff, CalcRatio} from "../types/NotifyData";
+import Model from "../model/Model";
 
 class Presenter extends Observer {
-  protected model: DefaultModel;
+  protected model: Model;
 
   protected view: View;
 

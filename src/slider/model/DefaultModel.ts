@@ -3,8 +3,9 @@ import PointData from '../types/PointData';
 import ViewBoolOptions from '../types/ViewBoolOptions';
 import MinMaxPosition from '../types/MinMaxPosition';
 import SliderOptions from "../types/SliderOptions";
+import Model from "./Model";
 
-class DefaultModel {
+class DefaultModel implements Model {
   protected current: MinMax<number> = {min: 0, max: 80};
 
   border: MinMax<number> = {min: 0, max: 100};
@@ -28,9 +29,7 @@ class DefaultModel {
     }
   }
 
-  protected copyBool({
-                       isVertical, isRange, withScale, withTooltip,
-                     }: SliderOptions) {
+  protected copyBool({isVertical, isRange, withScale, withTooltip}: SliderOptions) {
     if (isRange !== undefined) this.isRange = isRange;
     if (isVertical !== undefined) this.isVertical = isVertical;
     if (withTooltip !== undefined) this.withTooltip = withTooltip;
@@ -114,7 +113,7 @@ class DefaultModel {
     this.current.max = temp;
   }
 
-  normalizeByStep(value: number) {
+  normalizeByStep(value: number): number {
     let newValue = value;
     const diff = (value - this.border.min) % this.step;
     if (diff === 0) return value;
