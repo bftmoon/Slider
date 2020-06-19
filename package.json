@@ -15,8 +15,8 @@
     "gh-pages": "gh-pages -d dist coverage",
     "eslint": "eslint . --ext .ts",
     "eslint fix": "eslint . --ext .ts --fix",
-    "generate uml puml": "tplant --input src/slider/*.ts -o uml/uml.puml",
-    "generate uml svg": "tplant --input src/slider/*.ts -o uml/uml.svg"
+    "generate uml puml": "tplant --input src/slider/*.ts -o diagrams/uml.puml",
+    "generate uml svg": "tplant --input src/slider/*.ts -o diagrams/uml.svg"
   },
   "author": "",
   "license": "ISC",

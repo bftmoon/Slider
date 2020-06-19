@@ -34,11 +34,11 @@ Simple example of plugin injection can be found in [the-simplest-demo dir](./the
 
 Using full generated slider class diagram
 
-![uml](./uml/uml.svg)
+![uml](diagrams/uml.svg)
 
 Or with "MVP with Passive DefaultView" overview
 
-![overview](./uml/overview.png)      
+![overview](diagrams/overview.png)      
 
 And classes brief:
 * Slider - main plugin class for connecting MVP components
