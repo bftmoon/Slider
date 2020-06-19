@@ -7,8 +7,8 @@
     "coverageDirectory": "./dist/coverage"
   },
   "scripts": {
-    "run dev": "webpack-dev-server --open --mode development",
-    "run prod": "webpack-dev-server --open --mode production",
+    "dev": "webpack-dev-server --open --mode development",
+    "prod": "webpack-dev-server --open --mode production",
     "test": "jest",
     "build": "webpack --mode production",
     "coverage": "jest --coverage",

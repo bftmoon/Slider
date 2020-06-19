@@ -9,9 +9,9 @@ Slider plugin with optional jQuery interface for FSD
 ```
 git clone https://github.com/bigfatmoon/Slider.git
 npm install
-npm run "run prod"
+npm run prod
 ``` 
-You can also use any other script in [package.json](./package.json) instead "run prod"
+You can also use any other script in [package.json](./package.json) instead "prod"
 
 ##### Create slider
 ```javascript
@@ -20,7 +20,7 @@ slider.init("put element here")
 // or
 let slider = $("element").slider("options");
 ```
-All options can be found in [IOptions.ts](src/slider/model/Options.ts)  
+All options can be found in [SliderOptions.ts](src/slider/types/SliderOptions.ts)  
 All supported methods can be found in [ISlider.ts](src/slider/Slider.ts)
 
 JQuery support multiple slider and more methods like:
