@@ -276,8 +276,8 @@ Presenter o-- Model
 Presenter o-- View
 PresenterProxy o-- ValidModel
 
-Slider ..> DefaultValidModel
-Slider ..> DefaultView
+SliderPlugin ..> DefaultValidModel
+SliderPlugin ..> DefaultView
 DefaultView o-- Body
 DefaultView o-- Scale
 Body o-- Point
