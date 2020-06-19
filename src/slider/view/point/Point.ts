@@ -3,7 +3,7 @@ import Tooltip from '../tooltip/Tooltip';
 import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
 import PointData from '../../types/PointData';
-import {AbsolutePoint, RelativePoint} from '../../types/PointPosition';
+import {RelativePoint} from '../../types/RelativePoint';
 import CssClassUtil from '../../utils/CssClassUtil';
 import ClassNames from '../../utils/ClassNames';
 
@@ -46,10 +46,11 @@ class Point extends Observer implements ViewElement {
   }
 
   private handleMouseMove = (event: MouseEvent) => {
-    this.notify(SliderEvent.PointMove, {
-      x: event.clientX + this.moveDiff.x,
-      y: event.clientY + this.moveDiff.y
-    } as AbsolutePoint);
+    this.notify(SliderEvent.PointMove, (isVertical: boolean) => this.calcAbsolute(isVertical, event));
+  }
+
+  private calcAbsolute(isVertical: boolean, event: MouseEvent): number {
+    return isVertical ? event.clientY + this.moveDiff.y : event.clientX + this.moveDiff.x;
   }
 
   updatePosition(isVertical: boolean, point: PointData) {
@@ -73,12 +74,8 @@ class Point extends Observer implements ViewElement {
   }
 
   calcClientCenterCoordinate(isVertical: boolean) {
-    if (isVertical) {
-      const {top, height} = this.element.getBoundingClientRect();
-      return top + height / 2;
-    }
-    const {left, width} = this.element.getBoundingClientRect();
-    return left + width / 2;
+    const {top, height, left, width} = this.element.getBoundingClientRect();
+    return isVertical ? top + height / 2 : left + width / 2;
   }
 }
 

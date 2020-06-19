@@ -2,7 +2,6 @@ import MinMax from '../types/MinMax';
 import PointData from '../types/PointData';
 import ViewBoolOptions from '../types/ViewBoolOptions';
 import MinMaxPosition from '../types/MinMaxPosition';
-import ConvertUtil from '../utils/ConvertUtil';
 import SliderOptions from "../types/SliderOptions";
 
 class DefaultModel {
@@ -63,11 +62,7 @@ class DefaultModel {
 
   getPoint(position: MinMaxPosition): PointData {
     return {
-      percent: ConvertUtil.toPercentWithDiff(
-        this.getCurrent()[position],
-        this.border.min,
-        this.border.max,
-      ),
+      percent: (this.getCurrent()[position] - this.border.min) / this.getRangeSize() * 100,
       tooltip: this.getCurrent()[position],
     };
   }
@@ -127,11 +122,11 @@ class DefaultModel {
     return newValue > this.border.max ? this.border.max : newValue;
   }
 
-  calcModelValue(percent: number): number {
-    if (percent <= 0) return this.border.min;
-    if (percent >= 100) return this.border.max;
+  calcValue(ratio: number): number {
+    if (ratio <= 0) return this.border.min;
+    if (ratio >= 1) return this.border.max;
 
-    const modelValue = ConvertUtil.fromPercentWithDiff(percent, this.border.min, this.border.max);
+    const modelValue = this.border.min + (this.border.max - this.border.min) * ratio;
     return this.normalizeByStep(modelValue);
   }
 

@@ -2,10 +2,9 @@ import ViewElement from '../ViewElement';
 import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
 import CssClassUtil from '../../utils/CssClassUtil';
-import ConvertUtil from '../../utils/ConvertUtil';
 import PositionUtil from '../../utils/PositionUtil';
 import ClassNames from '../../utils/ClassNames';
-import {ScaleMoveData} from "../../types/NotifyData";
+import {ScalePointMoveData} from "../../types/NotifyData";
 
 class Scale extends Observer implements ViewElement {
   private element: HTMLElement;
@@ -29,7 +28,8 @@ class Scale extends Observer implements ViewElement {
   toggleOrientation() {
     CssClassUtil.toggleOrientation(this.element, ClassNames.Scale);
     this.element.childNodes.forEach((child: ChildNode) => {
-      CssClassUtil.toggleOrientation(child as HTMLElement, ClassNames.Line);    return null;
+      CssClassUtil.toggleOrientation(child as HTMLElement, ClassNames.Line);
+      return null;
 
     });
   }
@@ -68,7 +68,7 @@ class Scale extends Observer implements ViewElement {
       count /= 2;
     }
     return {
-      percentGap: ConvertUtil.toPercent(pxGap, elementSize),
+      percentGap: 100 * (pxGap / elementSize),
       visibleCount: Math.floor(count),
     };
   }
@@ -81,14 +81,14 @@ class Scale extends Observer implements ViewElement {
     )
   }
 
-  private calcScaleMoveData(isVertical: boolean, event: MouseEvent): ScaleMoveData {
+  private calcScaleMoveData(isVertical: boolean, event: MouseEvent): ScalePointMoveData {
     if (isVertical) return {
-      diff: -ConvertUtil.toPercent(event.movementY, this.element.offsetHeight),
-      clientCoord: event.clientY
+      diff: -event.movementY / this.element.offsetHeight,
+      coordinate: event.clientY
     }
     return {
-      diff: ConvertUtil.toPercent(event.movementX, this.element.offsetWidth),
-      clientCoord: event.clientX
+      diff: event.movementX / this.element.offsetWidth,
+      coordinate: event.clientX
     }
   }
 
@@ -101,7 +101,7 @@ class Scale extends Observer implements ViewElement {
   private handleMouseUp = (event: MouseEvent) => {
     CssClassUtil.removeGrabbing();
     if (this.withClickHandle) {
-      this.notify(SliderEvent.SliderClick, PositionUtil.calcEventPoint(this.element, event));
+      this.notify(SliderEvent.SliderClick, (isVertical: boolean) => PositionUtil.calc(isVertical, this.element, event));
     } else {
       this.notify(SliderEvent.StopPointMoveByScale);
     }

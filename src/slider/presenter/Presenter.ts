@@ -1,11 +1,10 @@
 import DefaultModel from '../model/DefaultModel';
 import SliderEvent from '../observer/SliderEvent';
-import {PointMoveData, RelativePointPercents} from '../types/PointPosition';
 import Observer from '../observer/Observer';
 import MinMaxPosition from '../types/MinMaxPosition';
 import SliderError from '../SliderError';
 import View from '../view/View';
-import {CalcPositionWithDiffFunc, PosWithDiff} from "../types/NotifyData";
+import {CalcPoint, CalcPositionWithDiff, CalcRatio} from "../types/NotifyData";
 
 class Presenter extends Observer {
   protected model: DefaultModel;
@@ -53,22 +52,20 @@ class Presenter extends Observer {
     this.notify(SliderEvent.ValueChanged, {value: modelValue, position});
   }
 
-  private handleSliderClick = ({x, y}: RelativePointPercents) => {
-    const modelValue = this.model.calcModelValue(this.model.isVertical ? 100 - y : x);
+  private handleSliderClick = (calcRatio: CalcRatio) => {
+    const modelValue = this.model.calcValue(calcRatio(this.model.isVertical));
     if (this.model.isSameCurrent(modelValue)) return;
     this.updatePosition(modelValue, this.model.selectPosition(modelValue));
   }
 
-  private handlePointMove = ({x, y, position}: PointMoveData) => {
-    this.updatePosition(
-      this.model.calcModelValue(this.model.isVertical ? 100 - y : x),
-      position,
-    );
+  private handlePointMove = (calcPoint: CalcPoint) => {
+    const {ratio, position} = calcPoint(this.model.isVertical);
+    this.updatePosition(this.model.calcValue(ratio), position);
   }
 
-  private handlePointMoveByScale = (calcPositionWithDiff: CalcPositionWithDiffFunc) => {
+  private handlePointMoveByScale = (calcPositionWithDiff: CalcPositionWithDiff) => {
     const {diff, position} = calcPositionWithDiff(this.model.isVertical, this.model.isRange);
-    const modelValue = this.model.calcModelValue(this.model.getCurrent()[position] + diff);
+    const modelValue = this.model.calcValue(this.model.getCurrent()[position] / this.model.getRangeSize() + diff);
     if (this.model.isSameCurrent(modelValue)) return;
     this.updatePosition(modelValue, position);
   }

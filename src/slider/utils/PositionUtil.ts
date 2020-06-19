@@ -1,34 +1,18 @@
-import ConvertUtil from './ConvertUtil';
-import { AbsolutePoint, RelativePointPercents } from '../types/PointPosition';
-
 class PositionUtil {
-  static calcEventPoint(element: HTMLElement, event: MouseEvent): RelativePointPercents {
+  static calc(isVertical: boolean, element: HTMLElement, event: MouseEvent): number {
     if (element === event.target) {
-      return {
-        x: ConvertUtil.toPercent(
-          event.offsetX,
-          (event.target as HTMLElement).offsetWidth,
-        ),
-        y: ConvertUtil.toPercent(
-          event.offsetY,
-          (event.target as HTMLElement).offsetHeight,
-        ),
-      };
+      return isVertical ?
+        1 - event.offsetY / (event.target as HTMLElement).offsetHeight :
+        event.offsetX / (event.target as HTMLElement).offsetWidth;
     }
-    return PositionUtil.calcPointByParent(
-      element as HTMLElement,
-      { x: event.clientX, y: event.clientY },
-    );
+    return PositionUtil.calcForOwner(isVertical, element, event);
   }
 
-  static calcPointByParent(parent: HTMLElement, { x, y }: AbsolutePoint): RelativePointPercents {
-    const {
-      left, top, width, height,
-    } = parent.getBoundingClientRect();
-    return {
-      x: ConvertUtil.toPercent(x - left, width),
-      y: ConvertUtil.toPercent(y - top, height),
-    };
+  private static calcForOwner(isVertical: boolean, element: HTMLElement, event: MouseEvent):number {
+    const {left, top, width, height} = element.getBoundingClientRect();
+    return isVertical ?
+      1 - (event.clientY - top) / height :
+      (event.clientX - left) / width;
   }
 }
 
