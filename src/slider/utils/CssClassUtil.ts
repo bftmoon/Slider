@@ -22,6 +22,14 @@ class CssClassUtil {
     element.classList.toggle(`${CssClassUtil.getFullName(name)}_grabbed`);
   }
 
+  static addGrabbing(){
+    document.documentElement.classList.add('slider-plugin');
+  }
+
+  static removeGrabbing(){
+    document.documentElement.classList.remove('slider-plugin');
+  }
+
   private static getFullName(name?: ClassNames) {
     return name !== undefined ? `${CssClassUtil.MAIN_PREFIX}__${ClassNames[name].toLowerCase()}` : CssClassUtil.MAIN_PREFIX;
   }

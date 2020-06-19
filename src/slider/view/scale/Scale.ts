@@ -5,7 +5,7 @@ import CssClassUtil from '../../utils/CssClassUtil';
 import ConvertUtil from '../../utils/ConvertUtil';
 import PositionUtil from '../../utils/PositionUtil';
 import ClassNames from '../../utils/ClassNames';
-import {PointMoveByScaleData} from "../../types/PointPosition";
+import {ScaleMoveData} from "../../types/NotifyData";
 
 class Scale extends Observer implements ViewElement {
   private element: HTMLElement;
@@ -29,7 +29,8 @@ class Scale extends Observer implements ViewElement {
   toggleOrientation() {
     CssClassUtil.toggleOrientation(this.element, ClassNames.Scale);
     this.element.childNodes.forEach((child: ChildNode) => {
-      CssClassUtil.toggleOrientation(child as HTMLElement, ClassNames.Line);
+      CssClassUtil.toggleOrientation(child as HTMLElement, ClassNames.Line);    return null;
+
     });
   }
 
@@ -73,13 +74,22 @@ class Scale extends Observer implements ViewElement {
   }
 
   private handleMouseMove = (event: MouseEvent) => {
+    CssClassUtil.addGrabbing();
     this.withClickHandle = false;
-    this.notify(SliderEvent.PointMoveByScale, {
-      x: event.clientX,
-      y: event.clientY,
-      diffX: event.movementX,
-      diffY: event.movementY
-    } as PointMoveByScaleData);
+    this.notify(SliderEvent.PointMoveByScale,
+      (isVertical: boolean) => this.calcScaleMoveData(isVertical, event)
+    )
+  }
+
+  private calcScaleMoveData(isVertical: boolean, event: MouseEvent): ScaleMoveData {
+    if (isVertical) return {
+      diff: -ConvertUtil.toPercent(event.movementY, this.element.offsetHeight),
+      clientCoord: event.clientY
+    }
+    return {
+      diff: ConvertUtil.toPercent(event.movementX, this.element.offsetWidth),
+      clientCoord: event.clientX
+    }
   }
 
   private handleScaleMouseDown = () => {
@@ -89,8 +99,11 @@ class Scale extends Observer implements ViewElement {
   }
 
   private handleMouseUp = (event: MouseEvent) => {
+    CssClassUtil.removeGrabbing();
     if (this.withClickHandle) {
       this.notify(SliderEvent.SliderClick, PositionUtil.calcEventPoint(this.element, event));
+    } else {
+      this.notify(SliderEvent.StopPointMoveByScale);
     }
     document.removeEventListener('mouseup', this.handleMouseUp);
     document.removeEventListener('mousemove', this.handleMouseMove);

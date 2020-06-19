@@ -26,7 +26,7 @@ class Point extends Observer implements ViewElement {
   }
 
   private handlePointMouseDown = (event: MouseEvent) => {
-    document.documentElement.classList.add('slider-plugin');
+    CssClassUtil.addGrabbing();
     this.updateMoveDiff(event.clientX, event.clientY);
     CssClassUtil.toggleGrab(this.element, ClassNames.Point);
     document.addEventListener('mouseup', this.handleMouseUp);
@@ -39,7 +39,7 @@ class Point extends Observer implements ViewElement {
   }
 
   private handleMouseUp = () => {
-    document.documentElement.classList.remove('slider-plugin');
+    CssClassUtil.removeGrabbing();
     CssClassUtil.toggleGrab(this.element, ClassNames.Point);
     document.removeEventListener('mouseup', this.handleMouseUp);
     document.removeEventListener('mousemove', this.handleMouseMove);
@@ -70,6 +70,15 @@ class Point extends Observer implements ViewElement {
     this.element.removeAttribute('style');
     CssClassUtil.toggleOrientation(this.element, ClassNames.Point);
     this.tooltip.toggleOrientation();
+  }
+
+  calcClientCenterCoordinate(isVertical: boolean) {
+    if (isVertical) {
+      const {top, height} = this.element.getBoundingClientRect();
+      return top + height / 2;
+    }
+    const {left, width} = this.element.getBoundingClientRect();
+    return left + width / 2;
   }
 }
 

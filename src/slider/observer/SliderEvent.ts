@@ -3,6 +3,7 @@ enum SliderEvent {
   PointMove,
   PointMoveByScale,
   ValueChanged,
+  StopPointMoveByScale,
 }
 
 export default SliderEvent;

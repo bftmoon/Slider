@@ -18,6 +18,8 @@ class Body extends Observer implements ViewElement {
 
   private points: MinMax<Point> = {min: new Point(), max: new Point()};
 
+  private cachedMovePosition: MinMaxPosition = null;
+
   getElement(): HTMLElement {
     return this.element;
   }
@@ -88,6 +90,25 @@ class Body extends Observer implements ViewElement {
 
   private isRangeOrBodyElement(event: Event): boolean {
     return event.target === this.element || event.target === this.range.getElement();
+  }
+
+  selectNeighbourPoint(data: { isVertical: boolean, coordinate: number }): MinMaxPosition {
+    if (this.cachedMovePosition === null) {
+      const centers: MinMax<number> = {
+        min: this.points.min.calcClientCenterCoordinate(data.isVertical),
+        max: this.points.max.calcClientCenterCoordinate(data.isVertical)
+      }
+      if (centers.min + (centers.max - centers.min) / 2 > data.coordinate) {
+        this.cachedMovePosition = data.isVertical ? MinMaxPosition.Max : MinMaxPosition.Min;
+      } else {
+        this.cachedMovePosition = data.isVertical ? MinMaxPosition.Min : MinMaxPosition.Max;
+      }
+    }
+    return this.cachedMovePosition;
+  }
+
+  cleanCachedPoint(){
+    this.cachedMovePosition = null;
   }
 
   private handlePointMove = (data: AbsolutePoint, position = MinMaxPosition.Min) => {

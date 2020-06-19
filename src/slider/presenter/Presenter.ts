@@ -1,10 +1,11 @@
 import DefaultModel from '../model/DefaultModel';
 import SliderEvent from '../observer/SliderEvent';
-import {PointMoveByScaleData, PointMoveData, RelativePointPercents} from '../types/PointPosition';
+import {PointMoveData, RelativePointPercents} from '../types/PointPosition';
 import Observer from '../observer/Observer';
 import MinMaxPosition from '../types/MinMaxPosition';
 import SliderError from '../SliderError';
 import View from '../view/View';
+import {CalcPositionWithDiffFunc, PosWithDiff} from "../types/NotifyData";
 
 class Presenter extends Observer {
   protected model: DefaultModel;
@@ -65,8 +66,11 @@ class Presenter extends Observer {
     );
   }
 
-  private handlePointMoveByScale = (viewData: PointMoveByScaleData) => {
-
+  private handlePointMoveByScale = (calcPositionWithDiff: CalcPositionWithDiffFunc) => {
+    const {diff, position} = calcPositionWithDiff(this.model.isVertical, this.model.isRange);
+    const modelValue = this.model.calcModelValue(this.model.getCurrent()[position] + diff);
+    if (this.model.isSameCurrent(modelValue)) return;
+    this.updatePosition(modelValue, position);
   }
 }
 

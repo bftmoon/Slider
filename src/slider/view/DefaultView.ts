@@ -5,9 +5,11 @@ import SliderEvent from '../observer/SliderEvent';
 import ViewBoolOptions from '../types/ViewBoolOptions';
 import MinMax from '../types/MinMax';
 import PointData from '../types/PointData';
-import {PointMoveByScaleData, PointMoveData, RelativePointPercents} from '../types/PointPosition';
+import {PointMoveData, RelativePointPercents} from '../types/PointPosition';
 import CssClassUtil from '../utils/CssClassUtil';
 import View from './View';
+import MinMaxPosition from "../types/MinMaxPosition";
+import {CalcMoveDiffPercentsFunc, PosWithDiff} from "../types/NotifyData";
 
 class DefaultView extends Observer implements View {
   element: HTMLElement;
@@ -38,7 +40,9 @@ class DefaultView extends Observer implements View {
     this.body
       .subscribe(SliderEvent.SliderClick, this.handleBodyClick)
       .subscribe(SliderEvent.PointMove, this.handlePointMove);
-    this.scale.subscribe(SliderEvent.SliderClick, this.handleScaleClick).subscribe(SliderEvent.PointMoveByScale, this.handleMouseMoveOnScale)
+    this.scale
+      .subscribe(SliderEvent.SliderClick, this.handleScaleClick)
+      .subscribe(SliderEvent.PointMoveByScale, this.handleScaleMouseMove).subscribe(SliderEvent.StopPointMoveByScale, this.handleStopMoveByScale)
 
     if (!withTooltip) this.body.toggleTooltip();
     element.append(fragment);
@@ -75,11 +79,6 @@ class DefaultView extends Observer implements View {
     this.body.updatePosition(isVertical, points);
   }
 
-  movePointByScale(data: {isRange: boolean, isVertical: boolean, viewData: PointMoveByScaleData}){
-// if ()
-    // todo
-  }
-
   private handlePointMove = (data: PointMoveData) => {
     this.notify(SliderEvent.PointMove, data);
   }
@@ -92,8 +91,21 @@ class DefaultView extends Observer implements View {
     this.notify(SliderEvent.SliderClick, data);
   }
 
-  private handleMouseMoveOnScale = (data: PointMoveByScaleData) => {
-    this.notify(SliderEvent.PointMoveByScale, data);
+  private handleScaleMouseMove = (calcScaleMoveData: CalcMoveDiffPercentsFunc) => {
+    this.notify(
+      SliderEvent.PointMoveByScale,
+      (isVertical: boolean, isRange: boolean) => this.calcPositionWithDiff(isVertical, isRange, calcScaleMoveData)
+    );
+  }
+
+  private calcPositionWithDiff(isVertical: boolean, isRange: boolean, calcScaleMoveData: CalcMoveDiffPercentsFunc): PosWithDiff {
+    const {diff, clientCoord} = calcScaleMoveData(isVertical);
+    if (!isRange) return {diff, position: MinMaxPosition.Max}
+    return {diff, position: this.body.selectNeighbourPoint({isVertical, coordinate: clientCoord})};
+  }
+
+  private handleStopMoveByScale = () => {
+    this.body.cleanCachedPoint();
   }
 }
 
