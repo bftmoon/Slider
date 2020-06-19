@@ -1,7 +1,7 @@
 enum SliderEvent {
   SliderClick,
   PointMove,
-  PointGrab,
+  PointMoveByScale,
   ValueChanged,
 }
 

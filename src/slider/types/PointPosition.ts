@@ -15,6 +15,7 @@ type RelativePoint = {
   y: number;
 }
 
-type PointMoveData = RelativePointPercents & { position: MinMaxPosition; }
+type PointMoveData = RelativePointPercents & { position: MinMaxPosition }
+type PointMoveByScaleData = AbsolutePoint & { diffX: number, diffY: number };
 
-export {AbsolutePoint, RelativePoint, RelativePointPercents, PointMoveData};
+export {AbsolutePoint, RelativePoint, RelativePointPercents, PointMoveData, PointMoveByScaleData};

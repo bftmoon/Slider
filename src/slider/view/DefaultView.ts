@@ -5,7 +5,7 @@ import SliderEvent from '../observer/SliderEvent';
 import ViewBoolOptions from '../types/ViewBoolOptions';
 import MinMax from '../types/MinMax';
 import PointData from '../types/PointData';
-import { PointMoveData, RelativePointPercents } from '../types/PointPosition';
+import {PointMoveByScaleData, PointMoveData, RelativePointPercents} from '../types/PointPosition';
 import CssClassUtil from '../utils/CssClassUtil';
 import View from './View';
 
@@ -17,15 +17,15 @@ class DefaultView extends Observer implements View {
   scale: Scale = new Scale();
 
   render(element: HTMLElement,
-    {
-      isVertical,
-      isRange,
-      withTooltip,
-      withScale,
-    }: ViewBoolOptions,
-    points: MinMax<PointData>,
-    step: number,
-    size: number): void {
+         {
+           isVertical,
+           isRange,
+           withTooltip,
+           withScale,
+         }: ViewBoolOptions,
+         points: MinMax<PointData>,
+         step: number,
+         size: number): void {
     this.element = element;
     const fragment = document.createDocumentFragment();
     CssClassUtil.initClass(this.element, isVertical);
@@ -38,7 +38,7 @@ class DefaultView extends Observer implements View {
     this.body
       .subscribe(SliderEvent.SliderClick, this.handleBodyClick)
       .subscribe(SliderEvent.PointMove, this.handlePointMove);
-    this.scale.subscribe(SliderEvent.SliderClick, this.handleScaleClick);
+    this.scale.subscribe(SliderEvent.SliderClick, this.handleScaleClick).subscribe(SliderEvent.PointMoveByScale, this.handleMouseMoveOnScale)
 
     if (!withTooltip) this.body.toggleTooltip();
     element.append(fragment);
@@ -75,6 +75,11 @@ class DefaultView extends Observer implements View {
     this.body.updatePosition(isVertical, points);
   }
 
+  movePointByScale(data: {isRange: boolean, isVertical: boolean, viewData: PointMoveByScaleData}){
+// if ()
+    // todo
+  }
+
   private handlePointMove = (data: PointMoveData) => {
     this.notify(SliderEvent.PointMove, data);
   }
@@ -85,6 +90,10 @@ class DefaultView extends Observer implements View {
 
   private handleBodyClick = (data: RelativePointPercents) => {
     this.notify(SliderEvent.SliderClick, data);
+  }
+
+  private handleMouseMoveOnScale = (data: PointMoveByScaleData) => {
+    this.notify(SliderEvent.PointMoveByScale, data);
   }
 }
 

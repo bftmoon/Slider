@@ -5,14 +5,16 @@ import CssClassUtil from '../../utils/CssClassUtil';
 import ConvertUtil from '../../utils/ConvertUtil';
 import PositionUtil from '../../utils/PositionUtil';
 import ClassNames from '../../utils/ClassNames';
+import {PointMoveByScaleData} from "../../types/PointPosition";
 
 class Scale extends Observer implements ViewElement {
   private element: HTMLElement;
+  private withClickHandle: boolean;
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
     CssClassUtil.initClass(this.element, isVertical, ClassNames.Scale);
-    this.element.addEventListener('click', this.handleScaleClick);
+    this.element.addEventListener('mousedown', this.handleScaleMouseDown)
     return this.element;
   }
 
@@ -35,7 +37,7 @@ class Scale extends Observer implements ViewElement {
     this.element.innerHTML = '';
     const count = Math.floor(size / step) - Number(size % step === 0);
     if (count > 0) {
-      const { percentGap, visibleCount } = Scale.calcGapAndCount(count, this.element[isVertical ? 'offsetHeight' : 'offsetWidth'], step, size);
+      const {percentGap, visibleCount} = Scale.calcGapAndCount(count, this.element[isVertical ? 'offsetHeight' : 'offsetWidth'], step, size);
 
       const fragment = document.createDocumentFragment();
       for (let i = 0; i < visibleCount; i += 1) {
@@ -70,8 +72,28 @@ class Scale extends Observer implements ViewElement {
     };
   }
 
-  private handleScaleClick = (event: MouseEvent) => {
-    this.notify(SliderEvent.SliderClick, PositionUtil.calcEventPoint(this.element, event));
+  private handleMouseMove = (event: MouseEvent) => {
+    this.withClickHandle = false;
+    this.notify(SliderEvent.PointMoveByScale, {
+      x: event.clientX,
+      y: event.clientY,
+      diffX: event.movementX,
+      diffY: event.movementY
+    } as PointMoveByScaleData);
+  }
+
+  private handleScaleMouseDown = () => {
+    this.withClickHandle = true;
+    document.addEventListener('mouseup', this.handleMouseUp);
+    document.addEventListener('mousemove', this.handleMouseMove);
+  }
+
+  private handleMouseUp = (event: MouseEvent) => {
+    if (this.withClickHandle) {
+      this.notify(SliderEvent.SliderClick, PositionUtil.calcEventPoint(this.element, event));
+    }
+    document.removeEventListener('mouseup', this.handleMouseUp);
+    document.removeEventListener('mousemove', this.handleMouseMove);
   }
 }
 

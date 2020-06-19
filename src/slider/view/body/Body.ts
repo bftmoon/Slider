@@ -5,7 +5,7 @@ import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
 import MinMax from '../../types/MinMax';
 import PointData from '../../types/PointData';
-import { AbsolutePoint, PointMoveData } from '../../types/PointPosition';
+import {AbsolutePoint, PointMoveData} from '../../types/PointPosition';
 import CssClassUtil from '../../utils/CssClassUtil';
 import MinMaxPosition from '../../types/MinMaxPosition';
 import PositionUtil from '../../utils/PositionUtil';
@@ -16,7 +16,7 @@ class Body extends Observer implements ViewElement {
 
   private range: Range = new Range();
 
-  private points: MinMax<Point> = { min: new Point(), max: new Point() };
+  private points: MinMax<Point> = {min: new Point(), max: new Point()};
 
   getElement(): HTMLElement {
     return this.element;
@@ -54,7 +54,7 @@ class Body extends Observer implements ViewElement {
     this.range.toggleOrientation();
   }
 
-  updatePosition(isVertical: boolean, { min, max }: MinMax<PointData>) {
+  updatePosition(isVertical: boolean, {min, max}: MinMax<PointData>) {
     const percents: MinMax<number> = {};
     if (min !== undefined) {
       this.points.min.updatePosition(isVertical, min);
@@ -81,7 +81,13 @@ class Body extends Observer implements ViewElement {
   }
 
   private handleSliderBodyClick = (event: MouseEvent) => {
-    this.notify(SliderEvent.SliderClick, PositionUtil.calcEventPoint(this.element, event));
+    if (this.isRangeOrBodyElement(event)) {
+      this.notify(SliderEvent.SliderClick, PositionUtil.calcEventPoint(this.element, event));
+    }
+  }
+
+  private isRangeOrBodyElement(event: Event): boolean {
+    return event.target === this.element || event.target === this.range.getElement();
   }
 
   private handlePointMove = (data: AbsolutePoint, position = MinMaxPosition.Min) => {
