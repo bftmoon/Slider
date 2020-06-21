@@ -3,9 +3,9 @@ import Tooltip from '../tooltip/Tooltip';
 import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
 import PointData from '../../types/PointData';
-import {RelativePoint} from '../../types/RelativePoint';
 import CssClassUtil from '../../utils/CssClassUtil';
 import ClassNames from '../../utils/ClassNames';
+import RelativePoint from "../../types/RelativePoint";
 
 class Point extends Observer implements ViewElement {
   private element: HTMLDivElement;

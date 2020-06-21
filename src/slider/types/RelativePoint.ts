@@ -3,4 +3,4 @@ type RelativePoint = {
   y: number;
 }
 
-export {RelativePoint};
+export default RelativePoint;

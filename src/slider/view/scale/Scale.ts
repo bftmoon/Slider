@@ -9,6 +9,7 @@ import {ScalePointMoveData} from "../../types/NotifyData";
 class Scale extends Observer implements ViewElement {
   private element: HTMLElement;
   private withClickHandle: boolean;
+  private notUsedMove: number = 0;
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
@@ -82,12 +83,16 @@ class Scale extends Observer implements ViewElement {
   }
 
   private calcScaleMoveData(isVertical: boolean, event: MouseEvent): ScalePointMoveData {
-    if (isVertical) return {
-      diff: -event.movementY / this.element.offsetHeight,
-      coordinate: event.clientY
+    if (isVertical) {
+      this.notUsedMove -= event.movementY / this.element.offsetHeight
+      return {
+        diff: this.notUsedMove,
+        coordinate: event.clientY
+      }
     }
+    this.notUsedMove += event.movementX / this.element.offsetWidth;
     return {
-      diff: event.movementX / this.element.offsetWidth,
+      diff: this.notUsedMove,
       coordinate: event.clientX
     }
   }
@@ -107,6 +112,10 @@ class Scale extends Observer implements ViewElement {
     }
     document.removeEventListener('mouseup', this.handleMouseUp);
     document.removeEventListener('mousemove', this.handleMouseMove);
+  }
+
+  notifyPositionChanged() {
+    this.notUsedMove = 0;
   }
 }
 

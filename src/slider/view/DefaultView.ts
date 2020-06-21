@@ -78,6 +78,7 @@ class DefaultView extends Observer implements View {
 
   updatePosition(isVertical: boolean, points: MinMax<PointData>) {
     this.body.updatePosition(isVertical, points);
+    this.scale.notifyPositionChanged();
   }
 
   private handlePointMove = (calcPoint: CalcPoint) => {
