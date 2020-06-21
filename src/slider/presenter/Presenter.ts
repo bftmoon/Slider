@@ -4,8 +4,8 @@ import Observer from '../observer/Observer';
 import MinMaxPosition from '../types/MinMaxPosition';
 import SliderError from '../SliderError';
 import View from '../view/View';
-import {CalcPoint, CalcPositionWithDiff, CalcRatio} from "../types/NotifyData";
-import Model from "../model/Model";
+import { CalcPoint, CalcPositionWithDiff, CalcRatio } from '../types/NotifyData';
+import Model from '../model/Model';
 
 class Presenter extends Observer {
   protected model: Model;
@@ -30,27 +30,27 @@ class Presenter extends Observer {
     this.view
       .subscribe(SliderEvent.SliderClick, this.handleSliderClick)
       .subscribe(SliderEvent.PointMove, this.handlePointMove)
-      .subscribe(SliderEvent.PointMoveByScale, this.handlePointMoveByScale)
+      .subscribe(SliderEvent.PointMoveByScale, this.handlePointMoveByScale);
   }
 
   protected updatePosition(modelValue: number, position: MinMaxPosition) {
     if (!this.model.willCurrentCollapse(position, modelValue)) {
       this.updateModelAndViewCurrent(modelValue, position);
-    } else {
-      if (!this.model.areCurrentEqual()) {
-        const current = this.model.getCurrent()[position === MinMaxPosition.Max ? MinMaxPosition.Min : MinMaxPosition.Max];
-        this.updateModelAndViewCurrent(current, position)
-      }
+    } else if (!this.model.areCurrentEqual()) {
+      const current = this.model.getCurrent()[
+        position === MinMaxPosition.Max ? MinMaxPosition.Min : MinMaxPosition.Max
+      ];
+      this.updateModelAndViewCurrent(current, position);
     }
   }
 
   private updateModelAndViewCurrent(modelValue: number, position: MinMaxPosition) {
-    this.model.setCurrent({[position]: modelValue});
+    this.model.setCurrent({ [position]: modelValue });
     this.view.updatePosition(
       this.model.isVertical,
-      {[position]: this.model.getPoint(position)},
+      { [position]: this.model.getPoint(position) },
     );
-    this.notify(SliderEvent.ValueChanged, {value: modelValue, position});
+    this.notify(SliderEvent.ValueChanged, { value: modelValue, position });
   }
 
   private handleSliderClick = (calcRatio: CalcRatio) => {
@@ -60,13 +60,16 @@ class Presenter extends Observer {
   }
 
   private handlePointMove = (calcPoint: CalcPoint) => {
-    const {ratio, position} = calcPoint(this.model.isVertical);
+    const { ratio, position } = calcPoint(this.model.isVertical);
     this.updatePosition(this.model.calcValue(ratio), position);
   }
 
   private handlePointMoveByScale = (calcPositionWithDiff: CalcPositionWithDiff) => {
-    const {diff, position} = calcPositionWithDiff(this.model.isVertical, this.model.isRange);
-    const modelValue = this.model.calcValue(this.model.getCurrent()[position] / this.model.getRangeSize() + diff);
+    const { diff, position } = calcPositionWithDiff(this.model.isVertical, this.model.isRange);
+    const modelValue = this.model.calcValue(
+      // eslint-disable-next-line comma-dangle
+      this.model.getCurrent()[position] / this.model.getRangeSize() + diff
+    );
     if (this.model.isSameCurrent(modelValue)) return;
     this.updatePosition(modelValue, position);
   }

@@ -3,7 +3,7 @@ import DefaultValidModel from '../model/DefaultValidModel';
 import PresenterProxy from './PresenterProxy';
 import SliderEvent from '../observer/SliderEvent';
 import MinMaxPosition from '../types/MinMaxPosition';
-import SliderOptions from "../types/SliderOptions";
+import SliderOptions from '../types/SliderOptions';
 
 describe('PresenterProxy class', () => {
   let presenter: PresenterProxy;

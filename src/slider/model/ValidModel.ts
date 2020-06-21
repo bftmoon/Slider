@@ -1,5 +1,5 @@
-import Model from "./Model";
-import MinMaxPosition from "../types/MinMaxPosition";
+import Model from './Model';
+import MinMaxPosition from '../types/MinMaxPosition';
 
 interface ValidModel extends Model {
   setValidCurrent(current: any, position: MinMaxPosition): void;

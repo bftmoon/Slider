@@ -1,8 +1,8 @@
-import MinMax from "../types/MinMax";
-import SliderOptions from "../types/SliderOptions";
-import MinMaxPosition from "../types/MinMaxPosition";
-import PointData from "../types/PointData";
-import ViewBoolOptions from "../types/ViewBoolOptions";
+import MinMax from '../types/MinMax';
+import SliderOptions from '../types/SliderOptions';
+import MinMaxPosition from '../types/MinMaxPosition';
+import PointData from '../types/PointData';
+import ViewBoolOptions from '../types/ViewBoolOptions';
 
 interface Model {
   border: MinMax<number>;

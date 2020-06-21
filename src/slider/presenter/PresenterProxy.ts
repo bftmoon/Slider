@@ -1,8 +1,8 @@
 import Presenter from './Presenter';
 import SliderEvent from '../observer/SliderEvent';
 import MinMaxPosition from '../types/MinMaxPosition';
-import SliderOptions from "../types/SliderOptions";
-import ValidModel from "../model/ValidModel";
+import SliderOptions from '../types/SliderOptions';
+import ValidModel from '../model/ValidModel';
 
 class PresenterProxy extends Presenter {
   protected model: ValidModel;
@@ -24,7 +24,7 @@ class PresenterProxy extends Presenter {
     this.model.setValidCurrent(value, MinMaxPosition.Min);
     this.view.updatePosition(
       this.model.isVertical,
-      {min: this.model.getPoint(MinMaxPosition.Min)},
+      { min: this.model.getPoint(MinMaxPosition.Min) },
     );
   }
 
@@ -32,7 +32,7 @@ class PresenterProxy extends Presenter {
     this.model.setValidCurrent(value, MinMaxPosition.Max);
     this.view.updatePosition(
       this.model.isVertical,
-      {max: this.model.getPoint(MinMaxPosition.Max)},
+      { max: this.model.getPoint(MinMaxPosition.Max) },
     );
   }
 
@@ -80,7 +80,7 @@ class PresenterProxy extends Presenter {
       this.model.normalizeCurrentOrder();
       this.view.updatePosition(
         this.model.isVertical,
-        {max: this.model.getPoint(MinMaxPosition.Max)},
+        { max: this.model.getPoint(MinMaxPosition.Max) },
       );
       this.notify(SliderEvent.ValueChanged, {
         value: this.model.getCurrent().max,
@@ -89,7 +89,7 @@ class PresenterProxy extends Presenter {
     }
     this.view.updatePosition(
       this.model.isVertical,
-      {min: this.model.getPoint(MinMaxPosition.Min)},
+      { min: this.model.getPoint(MinMaxPosition.Min) },
     );
   }
 
@@ -130,12 +130,12 @@ class PresenterProxy extends Presenter {
   private normalizePoints(border: number, checkIsOverflow: (current: number) => boolean) {
     const realCurrent = this.model.getRealCurrent();
     if (checkIsOverflow(realCurrent.min)) {
-      this.model.setCurrent({min: border});
-      this.notify(SliderEvent.ValueChanged, {value: border, position: MinMaxPosition.Min});
+      this.model.setCurrent({ min: border });
+      this.notify(SliderEvent.ValueChanged, { value: border, position: MinMaxPosition.Min });
     }
     if (checkIsOverflow(realCurrent.max)) {
-      this.model.setCurrent({max: border});
-      this.notify(SliderEvent.ValueChanged, {value: border, position: MinMaxPosition.Max});
+      this.model.setCurrent({ max: border });
+      this.notify(SliderEvent.ValueChanged, { value: border, position: MinMaxPosition.Max });
     }
     this.view.updatePosition(this.model.isVertical, this.model.getCurrentPoints());
   }

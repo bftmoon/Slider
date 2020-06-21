@@ -4,17 +4,19 @@ import SliderEvent from '../../observer/SliderEvent';
 import CssClassUtil from '../../utils/CssClassUtil';
 import PositionUtil from '../../utils/PositionUtil';
 import ClassNames from '../../utils/ClassNames';
-import {ScalePointMoveData} from "../../types/NotifyData";
+import { ScalePointMoveData } from '../../types/NotifyData';
 
 class Scale extends Observer implements ViewElement {
   private element: HTMLElement;
+
   private withClickHandle: boolean;
+
   private notUsedMove: number = 0;
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
     CssClassUtil.initClass(this.element, isVertical, ClassNames.Scale);
-    this.element.addEventListener('mousedown', this.handleScaleMouseDown)
+    this.element.addEventListener('mousedown', this.handleScaleMouseDown);
     return this.element;
   }
 
@@ -31,7 +33,6 @@ class Scale extends Observer implements ViewElement {
     this.element.childNodes.forEach((child: ChildNode) => {
       CssClassUtil.toggleOrientation(child as HTMLElement, ClassNames.Line);
       return null;
-
     });
   }
 
@@ -39,7 +40,7 @@ class Scale extends Observer implements ViewElement {
     this.element.innerHTML = '';
     const count = Math.floor(size / step) - Number(size % step === 0);
     if (count > 0) {
-      const {percentGap, visibleCount} = Scale.calcGapAndCount(count, this.element[isVertical ? 'offsetHeight' : 'offsetWidth'], step, size);
+      const { percentGap, visibleCount } = Scale.calcGapAndCount(count, this.element[isVertical ? 'offsetHeight' : 'offsetWidth'], step, size);
 
       const fragment = document.createDocumentFragment();
       for (let i = 0; i < visibleCount; i += 1) {
@@ -82,23 +83,22 @@ class Scale extends Observer implements ViewElement {
     CssClassUtil.addGrabbing();
     this.withClickHandle = false;
     this.notify(SliderEvent.PointMoveByScale,
-      (isVertical: boolean) => this.calcScaleMoveData(isVertical, event)
-    )
+      (isVertical: boolean) => this.calcScaleMoveData(isVertical, event));
   }
 
   private calcScaleMoveData(isVertical: boolean, event: MouseEvent): ScalePointMoveData {
     if (isVertical) {
-      this.notUsedMove -= event.movementY / this.element.offsetHeight
+      this.notUsedMove -= event.movementY / this.element.offsetHeight;
       return {
         diff: this.notUsedMove,
-        coordinate: event.clientY
-      }
+        coordinate: event.clientY,
+      };
     }
     this.notUsedMove += event.movementX / this.element.offsetWidth;
     return {
       diff: this.notUsedMove,
-      coordinate: event.clientX
-    }
+      coordinate: event.clientX,
+    };
   }
 
   private handleScaleMouseDown = () => {
@@ -110,7 +110,10 @@ class Scale extends Observer implements ViewElement {
   private handleMouseUp = (event: MouseEvent) => {
     CssClassUtil.removeGrabbing();
     if (this.withClickHandle) {
-      this.notify(SliderEvent.SliderClick, (isVertical: boolean) => PositionUtil.calc(isVertical, this.element, event));
+      this.notify(
+        SliderEvent.SliderClick,
+        (isVertical: boolean) => PositionUtil.calc(isVertical, this.element, event),
+      );
     } else {
       this.notify(SliderEvent.StopPointMoveByScale);
     }

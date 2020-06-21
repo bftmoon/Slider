@@ -1,4 +1,4 @@
-import MinMax from './/MinMax';
+import MinMax from './MinMax';
 
 type SliderOptions = {
   border?: MinMax<number>;

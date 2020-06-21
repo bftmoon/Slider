@@ -22,11 +22,11 @@ class CssClassUtil {
     element.classList.toggle(`${CssClassUtil.getFullName(name)}_grabbed`);
   }
 
-  static addGrabbing(){
+  static addGrabbing() {
     document.documentElement.classList.add('slider-plugin');
   }
 
-  static removeGrabbing(){
+  static removeGrabbing() {
     document.documentElement.classList.remove('slider-plugin');
   }
 

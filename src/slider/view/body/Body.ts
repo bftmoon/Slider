@@ -9,14 +9,14 @@ import CssClassUtil from '../../utils/CssClassUtil';
 import MinMaxPosition from '../../types/MinMaxPosition';
 import PositionUtil from '../../utils/PositionUtil';
 import ClassNames from '../../utils/ClassNames';
-import {CalcAbsolute, ViewPointData} from "../../types/NotifyData";
+import { CalcAbsolute, ViewPointData } from '../../types/NotifyData';
 
 class Body extends Observer implements ViewElement {
   private element: HTMLElement;
 
   private range: Range = new Range();
 
-  private points: MinMax<Point> = {min: new Point(), max: new Point()};
+  private points: MinMax<Point> = { min: new Point(), max: new Point() };
 
   private cachedMovePosition: MinMaxPosition = null;
 
@@ -56,7 +56,7 @@ class Body extends Observer implements ViewElement {
     this.range.toggleOrientation();
   }
 
-  updatePosition(isVertical: boolean, {min, max}: MinMax<PointData>) {
+  updatePosition(isVertical: boolean, { min, max }: MinMax<PointData>) {
     const percents: MinMax<number> = {};
     if (min !== undefined) {
       this.points.min.updatePosition(isVertical, min);
@@ -84,7 +84,10 @@ class Body extends Observer implements ViewElement {
 
   private handleSliderBodyClick = (event: MouseEvent) => {
     if (this.isRangeOrBodyElement(event)) {
-      this.notify(SliderEvent.SliderClick, (isVertical: boolean) => PositionUtil.calc(isVertical, this.element, event));
+      this.notify(
+        SliderEvent.SliderClick,
+        (isVertical: boolean) => PositionUtil.calc(isVertical, this.element, event),
+      );
     }
   }
 
@@ -96,8 +99,8 @@ class Body extends Observer implements ViewElement {
     if (this.cachedMovePosition === null) {
       const centers: MinMax<number> = {
         min: this.points.min.calcClientCenterCoordinate(data.isVertical),
-        max: this.points.max.calcClientCenterCoordinate(data.isVertical)
-      }
+        max: this.points.max.calcClientCenterCoordinate(data.isVertical),
+      };
       if (centers.min + (centers.max - centers.min) / 2 > data.coordinate) {
         this.cachedMovePosition = data.isVertical ? MinMaxPosition.Max : MinMaxPosition.Min;
       } else {
@@ -113,17 +116,17 @@ class Body extends Observer implements ViewElement {
 
   private handlePointMove = (calcAbsolute: CalcAbsolute, position = MinMaxPosition.Min) => {
     this.notify(
-      SliderEvent.PointMove, (isVertical: boolean): ViewPointData => {
-        return {
-          position,
-          ratio: this.calcValue(isVertical, calcAbsolute(isVertical)),
-        }
-      }
+      SliderEvent.PointMove, (isVertical: boolean): ViewPointData => ({
+        position,
+        ratio: this.calcValue(isVertical, calcAbsolute(isVertical)),
+      }),
     );
   }
 
   private calcValue(isVertical: boolean, coordinate: number) {
-    const {top, height, left, width} = this.element.getBoundingClientRect();
+    const {
+      top, height, left, width,
+    } = this.element.getBoundingClientRect();
     return isVertical ? 1 - (coordinate - top) / height : (coordinate - left) / width;
   }
 }

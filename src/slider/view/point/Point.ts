@@ -5,10 +5,11 @@ import SliderEvent from '../../observer/SliderEvent';
 import PointData from '../../types/PointData';
 import CssClassUtil from '../../utils/CssClassUtil';
 import ClassNames from '../../utils/ClassNames';
-import RelativePoint from "../../types/RelativePoint";
+import RelativePoint from '../../types/RelativePoint';
 
 class Point extends Observer implements ViewElement {
   private element: HTMLDivElement;
+
   private moveDiff: RelativePoint = null;
 
   private tooltip = new Tooltip();
@@ -34,8 +35,10 @@ class Point extends Observer implements ViewElement {
   }
 
   private updateMoveDiff(clientX: number, clientY: number) {
-    const {x, y, width, height} = this.element.getBoundingClientRect();
-    this.moveDiff = {x: x + width / 2 - clientX, y: y + height / 2 - clientY};
+    const {
+      x, y, width, height,
+    } = this.element.getBoundingClientRect();
+    this.moveDiff = { x: x + width / 2 - clientX, y: y + height / 2 - clientY };
   }
 
   private handleMouseUp = () => {
@@ -46,7 +49,10 @@ class Point extends Observer implements ViewElement {
   }
 
   private handleMouseMove = (event: MouseEvent) => {
-    this.notify(SliderEvent.PointMove, (isVertical: boolean) => this.calcAbsolute(isVertical, event));
+    this.notify(
+      SliderEvent.PointMove,
+      (isVertical: boolean) => this.calcAbsolute(isVertical, event),
+    );
   }
 
   private calcAbsolute(isVertical: boolean, event: MouseEvent): number {
@@ -74,7 +80,9 @@ class Point extends Observer implements ViewElement {
   }
 
   calcClientCenterCoordinate(isVertical: boolean) {
-    const {top, height, left, width} = this.element.getBoundingClientRect();
+    const {
+      top, height, left, width,
+    } = this.element.getBoundingClientRect();
     return isVertical ? top + height / 2 : left + width / 2;
   }
 }

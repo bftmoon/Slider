@@ -2,8 +2,8 @@ import { SliderGroup } from '../../slider/Slider';
 import '../../slider/slider-jquery';
 import MinMaxPosition from '../../slider/types/MinMaxPosition';
 import SliderError from '../../slider/SliderError';
-import MinMax from "../../slider/types/MinMax";
-import SliderOptions from "../../slider/types/SliderOptions";
+import MinMax from '../../slider/types/MinMax';
+import SliderOptions from '../../slider/types/SliderOptions';
 
 
 class Panel {

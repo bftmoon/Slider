@@ -32,8 +32,8 @@ describe('Presenter class', () => {
     let presenter: Presenter;
     let mockView: MockView;
     const model = new DefaultModel({
-      border: {min: 0, max: 100},
-      current: {min: 10, max: 20},
+      border: { min: 0, max: 100 },
+      current: { min: 10, max: 20 },
       isVertical: false,
     });
     beforeEach(() => {
@@ -67,9 +67,9 @@ describe('Presenter class', () => {
         model.withScale = false;
         const spyCalc = jest.spyOn(DefaultModel.prototype, 'calcValue');
         const spyScale = jest.spyOn(MockView.prototype, 'updateScaleLines');
-        mockView.notify(SliderEvent.PointMove, () => {
-          return {ratio: 0.2, position: MinMaxPosition.Min}
-        });
+        mockView.notify(SliderEvent.PointMove, () => (
+          { ratio: 0.2, position: MinMaxPosition.Min }
+        ));
         expect(spyCalc).toBeCalled();
         expect(spyScale).not.toBeCalled();
       });

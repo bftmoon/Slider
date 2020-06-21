@@ -1,7 +1,7 @@
 import DefaultValidModel from './DefaultValidModel';
 import SliderError from '../SliderError';
 import MinMaxPosition from '../types/MinMaxPosition';
-import SliderOptions from "../types/SliderOptions";
+import SliderOptions from '../types/SliderOptions';
 
 describe('DefaultValidModel class', () => {
   describe('constructor', () => {

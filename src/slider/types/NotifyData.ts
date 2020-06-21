@@ -1,4 +1,4 @@
-import MinMaxPosition from "./MinMaxPosition";
+import MinMaxPosition from './MinMaxPosition';
 
 type ScalePointMoveData = { diff: number, coordinate: number }
 type ViewPointMoveData = { diff: number, position: MinMaxPosition }
@@ -18,5 +18,5 @@ export {
   CalcAbsolute,
   CalcPoint,
   ViewPointData,
-  CalcRatio
-}
+  CalcRatio,
+};
