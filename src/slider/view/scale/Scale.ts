@@ -49,6 +49,10 @@ class Scale extends Observer implements ViewElement {
     }
   }
 
+  notifyPositionChanged() {
+    this.notUsedMove = 0;
+  }
+
   private static buildLineHtml(isVertical: boolean, index: number, gap: number): HTMLDivElement {
     const line = document.createElement('div');
     line.style[isVertical ? 'bottom' : 'left'] = `${gap * index}%`;
@@ -112,10 +116,6 @@ class Scale extends Observer implements ViewElement {
     }
     document.removeEventListener('mouseup', this.handleMouseUp);
     document.removeEventListener('mousemove', this.handleMouseMove);
-  }
-
-  notifyPositionChanged() {
-    this.notUsedMove = 0;
   }
 }
 

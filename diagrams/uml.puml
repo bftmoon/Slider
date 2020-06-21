@@ -29,11 +29,13 @@ class PositionUtil {
 class Scale extends Observer implements ViewElement {
     -element: HTMLElement
     -withClickHandle: boolean
+    -notUsedMove: number
     +buildHtml(isVertical: boolean): HTMLElement
     +getElement(): HTMLElement
     +toggleHidden(): void
     +toggleOrientation(): void
     +updateLines(step: number, size: number, isVertical: boolean): void
+    +notifyPositionChanged():void
     -handleMouseMove: (event: MouseEvent) => void
     -calcScaleMoveData(isVertical: boolean, event: MouseEvent): ScalePointMoveData
     -handleScaleMouseDown: () => void
