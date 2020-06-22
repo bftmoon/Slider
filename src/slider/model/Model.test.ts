@@ -46,7 +46,6 @@ describe('DefaultModel class', () => {
     });
   });
 
-
   describe('getCurrent', () => {
     test('Current min equals border min when range on', () => {
       const model = new Model({
@@ -76,7 +75,6 @@ describe('DefaultModel class', () => {
       expect(model.getRealCurrent().min).toBe(20);
     });
   });
-
 
   describe('getPoint', () => {
     test('Calculate percents', () => {
@@ -116,7 +114,10 @@ describe('DefaultModel class', () => {
   describe('getBoolOptions', () => {
     test('Return bool options', () => {
       const options = {
-        isVertical: true, isRange: false, withScale: true, withTooltip: false,
+        isVertical: true,
+        isRange: false,
+        withScale: true,
+        withTooltip: false,
       };
       const model = new Model(options);
       expect(model.getBoolOptions()).toEqual(options);
@@ -132,7 +133,10 @@ describe('DefaultModel class', () => {
 
   describe('selectPosition', () => {
     test('Always max when range off', () => {
-      const model = new Model({ isRange: false, current: { min: 33, max: 66 } });
+      const model = new Model({
+        isRange: false,
+        current: { min: 33, max: 66 },
+      });
       expect(model.selectPosition(32)).toBe(MinMaxPosition.Max);
       expect(model.selectPosition(33)).toBe(MinMaxPosition.Max);
       expect(model.selectPosition(50)).toBe(MinMaxPosition.Max);
@@ -221,7 +225,10 @@ describe('DefaultModel class', () => {
 
   describe('toggles', () => {
     const model = new Model({
-      isRange: true, isVertical: true, withTooltip: true, withScale: true,
+      isRange: true,
+      isVertical: true,
+      withTooltip: true,
+      withScale: true,
     });
 
     test('toggleRange', () => {

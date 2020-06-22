@@ -11,7 +11,7 @@ class ValidModel extends Model {
       if (options.border !== undefined) {
         this.setValidBorders(
           options.border.min || this.border.min,
-          options.border.max || this.border.max,
+          options.border.max || this.border.max
         );
       }
       if (options.current !== undefined) {
@@ -19,7 +19,10 @@ class ValidModel extends Model {
           this.setValidCurrent(options.current.min, MinMaxPosition.Min);
         }
         if (options.current.max !== undefined) {
-          this.setValidCurrent(options.current.max || this.current.max, MinMaxPosition.Max);
+          this.setValidCurrent(
+            options.current.max || this.current.max,
+            MinMaxPosition.Max
+          );
         }
       }
       if (options.step !== undefined) {
@@ -87,7 +90,7 @@ class ValidModel extends Model {
     if (step <= 0) {
       throw new SliderError('Too small step size');
     }
-    if (step > (this.border.max - this.border.min)) {
+    if (step > this.border.max - this.border.min) {
       throw new SliderError('Too big step size');
     }
   }
@@ -99,9 +102,11 @@ class ValidModel extends Model {
   }
 
   private isNotValidByStepOrBorder(current: number) {
-    return (current - this.border.min) % this.step !== 0
-      && current !== this.border.min
-      && current !== this.border.max;
+    return (
+      (current - this.border.min) % this.step !== 0 &&
+      current !== this.border.min &&
+      current !== this.border.max
+    );
   }
 
   private isValidBorder(value: number, position: MinMaxPosition) {

@@ -2,9 +2,9 @@ import SliderEvent from './SliderEvent';
 
 class Observer {
   // eslint-disable-next-line comma-spacing
-  private events = new Map<SliderEvent,((data?: any) => void)[]>();
+  private events = new Map<SliderEvent, ((data?: any) => void)[]>();
 
-  subscribe(event: SliderEvent, callback: (data?: any) => void):Observer {
+  subscribe(event: SliderEvent, callback: (data?: any) => void): Observer {
     if (!this.events.has(event)) {
       this.events.set(event, []);
     }
@@ -14,9 +14,9 @@ class Observer {
 
   notify(event: SliderEvent, data?: any) {
     if (this.events.has(event)) {
-      this.events.get(event).forEach(((callback) => {
+      this.events.get(event).forEach((callback) => {
         callback(data);
-      }));
+      });
     }
   }
 }

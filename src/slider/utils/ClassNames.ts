@@ -4,6 +4,6 @@ enum ClassNames {
   Tooltip,
   Range,
   Body,
-  Line
+  Line,
 }
 export default ClassNames;

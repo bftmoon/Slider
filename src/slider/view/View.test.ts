@@ -63,15 +63,21 @@ describe('DefaultView class', () => {
   });
   describe('toggles for rendered', () => {
     beforeEach(() => {
-      view.render(document.createElement('div'), {
-        isVertical: true,
-        withScale: true,
-        isRange: true,
-        withTooltip: true,
-      }, {
-        max: { percent: 20, tooltip: 30 },
-        min: { percent: 10, tooltip: 20 },
-      }, 3, 200);
+      view.render(
+        document.createElement('div'),
+        {
+          isVertical: true,
+          withScale: true,
+          isRange: true,
+          withTooltip: true,
+        },
+        {
+          max: { percent: 20, tooltip: 30 },
+          min: { percent: 10, tooltip: 20 },
+        },
+        3,
+        200
+      );
     });
     test('toggleRange', () => {
       const spy = jest.spyOn(Body.prototype, 'toggleRange');

@@ -8,7 +8,7 @@ import CssClassUtil from '../../utils/CssClassUtil';
 import MinMaxPosition from '../../types/MinMaxPosition';
 import PositionUtil from '../../utils/PositionUtil';
 import ClassNames from '../../utils/ClassNames';
-import {CalcAbsolute, ViewPointData} from '../../types/NotifyData';
+import { CalcAbsolute, ViewPointData } from '../../types/NotifyData';
 
 class Body extends Observer {
   private element: HTMLElement;
@@ -27,7 +27,7 @@ class Body extends Observer {
     this.element.append(
       this.points.min.buildHtml(isVertical),
       this.points.max.buildHtml(isVertical),
-      this.range.buildHtml(isVertical),
+      this.range.buildHtml(isVertical)
     );
 
     this.points.min
@@ -75,7 +75,7 @@ class Body extends Observer {
     this.range.updatePosition(
       isVertical,
       percents,
-      isVertical ? this.element.offsetHeight : undefined,
+      isVertical ? this.element.offsetHeight : undefined
     );
   }
 
@@ -85,44 +85,49 @@ class Body extends Observer {
 
   private handleStopPointMove = () => {
     this.isMoveStarted = false;
-  }
+  };
 
   private handleMinPointMove = (calcAbsolute: CalcAbsolute) => {
     this.handlePointMove(calcAbsolute);
-  }
+  };
 
   private handleMaxPointMove = (calcAbsolute: CalcAbsolute) => {
     this.handlePointMove(calcAbsolute, MinMaxPosition.Max);
-  }
+  };
 
   private handleSliderBodyMouseDown = (event: MouseEvent) => {
     if (this.isRangeOrBodyElement(event)) {
       this.startPointMove();
-      this.notify(
-        SliderEvent.SliderClick,
-        (isVertical: boolean) => PositionUtil.calc(isVertical, this.element, event),
+      this.notify(SliderEvent.SliderClick, (isVertical: boolean) =>
+        PositionUtil.calc(isVertical, this.element, event)
       );
     }
-  }
+  };
 
   private isRangeOrBodyElement(event: Event) {
-    return event.target === this.element || event.target === this.range.getElement();
-  }
-
-  private handlePointMove = (calcAbsolute: CalcAbsolute, position = MinMaxPosition.Min) => {
-    this.notify(
-      SliderEvent.PointMove, (isVertical: boolean): ViewPointData => ({
-        position,
-        ratio: this.calcValue(isVertical, calcAbsolute(isVertical)),
-      }),
+    return (
+      event.target === this.element || event.target === this.range.getElement()
     );
   }
 
+  private handlePointMove = (
+    calcAbsolute: CalcAbsolute,
+    position = MinMaxPosition.Min
+  ) => {
+    this.notify(
+      SliderEvent.PointMove,
+      (isVertical: boolean): ViewPointData => ({
+        position,
+        ratio: this.calcValue(isVertical, calcAbsolute(isVertical)),
+      })
+    );
+  };
+
   private calcValue(isVertical: boolean, coordinate: number) {
-    const {
-      top, height, left, width,
-    } = this.element.getBoundingClientRect();
-    return isVertical ? 1 - (coordinate - top) / height : (coordinate - left) / width;
+    const { top, height, left, width } = this.element.getBoundingClientRect();
+    return isVertical
+      ? 1 - (coordinate - top) / height
+      : (coordinate - left) / width;
   }
 }
 

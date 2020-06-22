@@ -15,23 +15,20 @@ class View extends Observer {
 
   private scale: Scale = new Scale();
 
-  render(element: HTMLElement,
-    {
-      isVertical,
-      isRange,
-      withTooltip,
-      withScale,
-    }: ViewBoolOptions,
+  render(
+    element: HTMLElement,
+    { isVertical, isRange, withTooltip, withScale }: ViewBoolOptions,
     points: MinMax<PointData>,
     step: number,
-    size: number) {
+    size: number
+  ) {
     this.element = element;
     const fragment = document.createDocumentFragment();
     CssClassUtil.initClass(this.element, isVertical);
 
     fragment.append(
       this.body.buildHtml(isVertical),
-      this.scale.buildHtml(isVertical),
+      this.scale.buildHtml(isVertical)
     );
 
     this.body
@@ -76,16 +73,16 @@ class View extends Observer {
 
   private handlePointMove = (calcPoint: CalcPoint) => {
     this.notify(SliderEvent.PointMove, calcPoint);
-  }
+  };
 
   private handleScaleClick = (calcRatio: CalcRatio) => {
     this.body.startPointMove();
     this.notify(SliderEvent.SliderClick, calcRatio);
-  }
+  };
 
   private handleBodyClick = (calcRatio: CalcRatio) => {
     this.notify(SliderEvent.SliderClick, calcRatio);
-  }
+  };
 }
 
 export default View;

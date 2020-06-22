@@ -33,8 +33,11 @@ class Point extends Observer {
 
   updatePosition(isVertical: boolean, point: PointData) {
     const radius = this.element.offsetWidth / 2;
-    this.element.style[isVertical ? 'bottom' : 'left'] = `calc(${point.percent}% - ${radius}px)`;
-    if (point.tooltip !== undefined) this.tooltip.update(point.tooltip, isVertical);
+    this.element.style[
+      isVertical ? 'bottom' : 'left'
+    ] = `calc(${point.percent}% - ${radius}px)`;
+    if (point.tooltip !== undefined)
+      this.tooltip.update(point.tooltip, isVertical);
   }
 
   toggleHidden() {
@@ -54,12 +57,10 @@ class Point extends Observer {
   private handlePointMouseDown = (event: MouseEvent) => {
     this.updateMoveDiff(event.clientX, event.clientY);
     this.startGrabbing();
-  }
+  };
 
   private updateMoveDiff(clientX: number, clientY: number) {
-    const {
-      x, y, width, height,
-    } = this.element.getBoundingClientRect();
+    const { x, y, width, height } = this.element.getBoundingClientRect();
     this.moveDiff = { x: x + width / 2 - clientX, y: y + height / 2 - clientY };
   }
 
@@ -69,17 +70,18 @@ class Point extends Observer {
     document.removeEventListener('mousemove', this.handleMouseMove);
     this.moveDiff = { x: 0, y: 0 };
     this.notify(SliderEvent.StopPointMove);
-  }
+  };
 
   private handleMouseMove = (event: MouseEvent) => {
-    this.notify(
-      SliderEvent.PointMove,
-      (isVertical: boolean) => this.calcAbsolute(isVertical, event),
+    this.notify(SliderEvent.PointMove, (isVertical: boolean) =>
+      this.calcAbsolute(isVertical, event)
     );
-  }
+  };
 
   private calcAbsolute(isVertical: boolean, event: MouseEvent) {
-    return isVertical ? event.clientY + this.moveDiff.y : event.clientX + this.moveDiff.x;
+    return isVertical
+      ? event.clientY + this.moveDiff.y
+      : event.clientX + this.moveDiff.x;
   }
 }
 

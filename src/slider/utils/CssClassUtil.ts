@@ -1,11 +1,18 @@
 import ClassNames from './ClassNames';
 
 class CssClassUtil {
-  static readonly MAIN_PREFIX = 'slider'
+  static readonly MAIN_PREFIX = 'slider';
 
-  static initClass(element: HTMLElement, isVertical: boolean, name?: ClassNames) {
+  static initClass(
+    element: HTMLElement,
+    isVertical: boolean,
+    name?: ClassNames
+  ) {
     const cssClass = CssClassUtil.getFullName(name);
-    element.classList.add(cssClass, cssClass + (isVertical ? '_vertical' : '_horizontal'));
+    element.classList.add(
+      cssClass,
+      cssClass + (isVertical ? '_vertical' : '_horizontal')
+    );
   }
 
   static toggleOrientation(element: HTMLElement, name?: ClassNames) {
@@ -27,9 +34,10 @@ class CssClassUtil {
   }
 
   private static getFullName(name?: ClassNames) {
-    return name !== undefined ? `${CssClassUtil.MAIN_PREFIX}__${ClassNames[name].toLowerCase()}` : CssClassUtil.MAIN_PREFIX;
+    return name !== undefined
+      ? `${CssClassUtil.MAIN_PREFIX}__${ClassNames[name].toLowerCase()}`
+      : CssClassUtil.MAIN_PREFIX;
   }
 }
-
 
 export default CssClassUtil;

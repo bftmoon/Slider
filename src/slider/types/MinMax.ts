@@ -1,8 +1,8 @@
-type MinMax <T> = {
+type MinMax<T> = {
   min?: T;
-  max?:T;
+  max?: T;
 
   [index: string]: T;
-}
+};
 
 export default MinMax;

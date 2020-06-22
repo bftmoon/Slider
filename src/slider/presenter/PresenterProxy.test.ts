@@ -60,7 +60,10 @@ describe('PresenterProxy class', () => {
     });
     test('setCurrent', () => {
       model.isRange = false;
-      const spyModel = jest.spyOn(PresenterProxy.prototype, 'setCurrentRangeMax');
+      const spyModel = jest.spyOn(
+        PresenterProxy.prototype,
+        'setCurrentRangeMax'
+      );
       presenter.setCurrent(4);
       expect(spyModel).toBeCalled();
     });
@@ -122,7 +125,10 @@ describe('PresenterProxy class', () => {
         model.setCurrent({ min: 60, max: 40 });
         model.isRange = false;
         model.setCurrent({ max: 40 });
-        const spyNormalize = jest.spyOn(ValidModel.prototype, 'normalizeCurrentOrder');
+        const spyNormalize = jest.spyOn(
+          ValidModel.prototype,
+          'normalizeCurrentOrder'
+        );
         const spyUpdate = jest.spyOn(MockView.prototype, 'updatePosition');
         const spyNotify = jest.spyOn(PresenterProxy.prototype, 'notify');
         presenter.toggleRange();
@@ -134,7 +140,10 @@ describe('PresenterProxy class', () => {
         const spyToggleModel = jest.spyOn(ValidModel.prototype, 'toggleRange');
         const spyToggleView = jest.spyOn(MockView.prototype, 'toggleRange');
         const spyUpdate = jest.spyOn(MockView.prototype, 'updatePosition');
-        const spyCheck = jest.spyOn(ValidModel.prototype, 'isOrderNormalizeRequired');
+        const spyCheck = jest.spyOn(
+          ValidModel.prototype,
+          'isOrderNormalizeRequired'
+        );
         presenter.toggleRange();
         expect(spyToggleModel).toBeCalled();
         expect(spyToggleView).toBeCalled();

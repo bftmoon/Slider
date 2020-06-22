@@ -3,6 +3,6 @@ type ViewBoolOptions = {
   isRange: boolean;
   withTooltip: boolean;
   withScale: boolean;
-}
+};
 
 export default ViewBoolOptions;

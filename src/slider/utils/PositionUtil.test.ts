@@ -9,27 +9,31 @@ describe('PositionUtil class', () => {
     test('horizontal', () => {
       const bodyClick = { offsetX: 10, offsetY: 20, target: sliderBody };
       // @ts-ignore
-      expect(PositionUtil.calc(false, sliderBody, bodyClick))
-        .toEqual(0.1);
+      expect(PositionUtil.calc(false, sliderBody, bodyClick)).toEqual(0.1);
     });
 
     test('vertical', () => {
       const bodyClick = { offsetX: 10, offsetY: 20, target: sliderBody };
       // @ts-ignore
-      expect(PositionUtil.calc(true, sliderBody, bodyClick))
-        .toEqual(0.9);
+      expect(PositionUtil.calc(true, sliderBody, bodyClick)).toEqual(0.9);
     });
 
     test('calcForOwner', () => {
       const sliderRangeOrScale = document.createElement('div');
       // @ts-ignore
       sliderBody.getBoundingClientRect = () => ({
-        left: 20, top: 30, height: 100, width: 200,
+        left: 20,
+        top: 30,
+        height: 100,
+        width: 200,
       });
-      const rangeClick = { clientX: 100, clientY: 50, target: sliderRangeOrScale };
+      const rangeClick = {
+        clientX: 100,
+        clientY: 50,
+        target: sliderRangeOrScale,
+      };
       // @ts-ignore
-      expect(PositionUtil.calc(false, sliderBody, rangeClick))
-        .toEqual(0.4);
+      expect(PositionUtil.calc(false, sliderBody, rangeClick)).toEqual(0.4);
     });
   });
 });

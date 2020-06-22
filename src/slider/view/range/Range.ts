@@ -15,14 +15,22 @@ class Range {
     return this.element;
   }
 
-  updatePosition(isVertical: boolean, percent: MinMax<number>, height?: number) {
+  updatePosition(
+    isVertical: boolean,
+    percent: MinMax<number>,
+    height?: number
+  ) {
     if (isVertical) {
       const heightPart = height / 100;
-      if (percent.min !== undefined) this.element.style.marginBottom = `${heightPart * percent.min}px`;
-      if (percent.max !== undefined) this.element.style.marginTop = `${heightPart * (100 - percent.max)}px`;
+      if (percent.min !== undefined)
+        this.element.style.marginBottom = `${heightPart * percent.min}px`;
+      if (percent.max !== undefined)
+        this.element.style.marginTop = `${heightPart * (100 - percent.max)}px`;
     } else {
-      if (percent.min !== undefined) this.element.style.marginLeft = `${percent.min}%`;
-      if (percent.max !== undefined) this.element.style.marginRight = `${100 - percent.max}%`;
+      if (percent.min !== undefined)
+        this.element.style.marginLeft = `${percent.min}%`;
+      if (percent.max !== undefined)
+        this.element.style.marginRight = `${100 - percent.max}%`;
     }
   }
 

@@ -98,7 +98,9 @@ describe('Point class', () => {
           point.getElement().dispatchEvent(new MouseEvent('mousedown'));
           document.dispatchEvent(new MouseEvent('mouseup'));
           expect(spyClass).toBeCalled();
-          expect(document.documentElement.classList).not.toContain('slider-plugin');
+          expect(document.documentElement.classList).not.toContain(
+            'slider-plugin'
+          );
         });
       });
       describe('handleMouseMove', () => {

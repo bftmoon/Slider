@@ -5,7 +5,7 @@ import SliderOptions from './types/SliderOptions';
 
 declare global {
   interface JQuery {
-    slider: (options?: SliderOptions) => SliderGroup
+    slider: (options?: SliderOptions) => SliderGroup;
   }
 }
 
@@ -20,8 +20,9 @@ $.fn.slider = function querySlider(options?: SliderOptions): SliderGroup {
   });
 
   return {
-    addSlideListener(callback: (
-      data: { value: number; position: MinMaxPosition }) => void): void {
+    addSlideListener(
+      callback: (data: { value: number; position: MinMaxPosition }) => void
+    ) {
       sliders.forEach((slider) => slider.addSlideListener(callback));
     },
     setCurrentRange(valueMin: number, valueMax: number) {

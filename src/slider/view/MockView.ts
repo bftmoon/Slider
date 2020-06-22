@@ -9,27 +9,20 @@ class MockView extends View {
     options: ViewBoolOptions,
     points: MinMax<PointData>,
     step: number,
-    size: number,
-  ): void {
-  }
+    size: number
+  ) {}
 
-  toggleOrientation(): void {
-  }
+  toggleOrientation(): void {}
 
-  toggleRange(): void {
-  }
+  toggleRange() {}
 
-  toggleScale(): void {
-  }
+  toggleScale() {}
 
-  toggleTooltip(): void {
-  }
+  toggleTooltip() {}
 
-  updatePosition(isVertical: boolean, points: MinMax<PointData>): void {
-  }
+  updatePosition(isVertical: boolean, points: MinMax<PointData>) {}
 
-  updateScaleLines(step: number, size: number, isVertical: boolean): void {
-  }
+  updateScaleLines(step: number, size: number, isVertical: boolean) {}
 }
 
 export default MockView;

@@ -1,5 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -11,7 +11,7 @@ const config = {
     panel: './src/demo/panel/Panel.ts',
   },
   externals: {
-    jquery: '$'
+    jquery: '$',
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -22,7 +22,7 @@ const config = {
     }),
     new HtmlWebpackPlugin({
       template: './src/demo/demo.pug',
-      chunks: ['demo', 'jqslider', 'panel', 'query']
+      chunks: ['demo', 'jqslider', 'panel', 'query'],
     }),
   ],
   module: {
@@ -33,11 +33,7 @@ const config = {
       },
       {
         test: /\.scss$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader',
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
         test: /\.svg$/,
@@ -80,7 +76,9 @@ module.exports = (env, argv) => {
             chunks: 'all',
             test: /[\\/]node_modules[\\/]/,
             name(module) {
-              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+              const packageName = module.context.match(
+                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+              )[1];
               return `npm.${packageName.replace('@', '')}`;
             },
           },

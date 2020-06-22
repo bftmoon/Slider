@@ -11,6 +11,6 @@ type SliderOptions = {
   withScale?: boolean;
 
   [index: string]: any;
-}
+};
 
 export default SliderOptions;
