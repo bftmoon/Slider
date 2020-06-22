@@ -135,9 +135,8 @@ class Model {
   }
 
   willCurrentCollapse(position: MinMaxPosition, value: number): boolean {
-    const current = this.getCurrent();
-    return (position === MinMaxPosition.Min && value > current.max)
-      || (position === MinMaxPosition.Max && value < current.min);
+    return (position === MinMaxPosition.Min && value >  this.getCurrent().max)
+      || (position === MinMaxPosition.Max && value <  this.getCurrent().min);
   }
 
   areCurrentEqual(): boolean {
