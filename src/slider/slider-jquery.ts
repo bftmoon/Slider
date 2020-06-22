@@ -1,5 +1,5 @@
 import SliderPlugin from './SliderPlugin';
-import { SliderGroup } from './Slider';
+import {SliderGroup} from './Slider';
 import MinMaxPosition from './types/MinMaxPosition';
 import SliderOptions from './types/SliderOptions';
 
@@ -24,52 +24,52 @@ $.fn.slider = function querySlider(options?: SliderOptions): SliderGroup {
       data: { value: number; position: MinMaxPosition }) => void): void {
       sliders.forEach((slider) => slider.addSlideListener(callback));
     },
-    setCurrentRange(valueMin: number, valueMax: number): void {
+    setCurrentRange(valueMin: number, valueMax: number) {
       sliders.forEach((slider) => slider.setCurrentRange(valueMin, valueMax));
     },
-    setBorderMax(value: number): void {
+    setBorderMax(value: number) {
       sliders.forEach((slider) => slider.setBorderMax(value));
     },
-    setBorderMin(value: number): void {
+    setBorderMin(value: number) {
       sliders.forEach((slider) => slider.setBorderMin(value));
     },
-    setBorders(borderMin: number, borderMax: number): void {
+    setBorders(borderMin: number, borderMax: number) {
       sliders.forEach((slider) => slider.setBorders(borderMin, borderMax));
     },
-    setCurrent(value: number): void {
+    setCurrent(value: number) {
       sliders.forEach((slider) => slider.setCurrent(value));
     },
-    setCurrentRangeMax(value: number): void {
+    setCurrentRangeMax(value: number) {
       sliders.forEach((slider) => slider.setCurrentRangeMax(value));
     },
-    setCurrentRangeMin(value: number): void {
+    setCurrentRangeMin(value: number) {
       sliders.forEach((slider) => slider.setCurrentRangeMin(value));
     },
-    setStep(step: number): void {
+    setStep(step: number) {
       sliders.forEach((slider) => slider.setStep(step));
     },
-    toggleOrientation(): void {
+    toggleOrientation() {
       sliders.forEach((slider) => slider.toggleOrientation());
     },
-    toggleRange(): void {
+    toggleRange() {
       sliders.forEach((slider) => slider.toggleRange());
     },
-    toggleScale(): void {
+    toggleScale() {
       sliders.forEach((slider) => slider.toggleScale());
     },
-    toggleTooltip(): void {
+    toggleTooltip() {
       sliders.forEach((slider) => slider.toggleTooltip());
     },
-    getOptions(): SliderOptions[] {
+    getOptions() {
       return sliders.map((slider) => slider.getOptions());
     },
-    getSlider(index: number): SliderPlugin {
+    getSlider(index: number) {
       return sliders[index];
     },
-    getElementsQuery(): JQuery {
+    getElementsQuery() {
       return query;
     },
-    size(): number {
+    size() {
       return sliders.length;
     },
   };

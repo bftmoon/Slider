@@ -1,14 +1,14 @@
-import { SliderGroup } from '../../slider/Slider';
+import {SliderGroup} from '../../slider/Slider';
 import '../../slider/slider-jquery';
 import MinMaxPosition from '../../slider/types/MinMaxPosition';
-import SliderError from '../../slider/SliderError';
 import MinMax from '../../slider/types/MinMax';
 import SliderOptions from '../../slider/types/SliderOptions';
 
 class Panel {
   private changeableInputs: MinMax<HTMLInputElement> = {};
 
-  constructor(private sliderGroup: SliderGroup){};
+  constructor(private sliderGroup: SliderGroup) {
+  };
 
   init(panelElement: HTMLElement) {
     const data = this.sliderGroup.getOptions()[0];
@@ -48,39 +48,33 @@ class Panel {
     }
   }
 
-  private mapCheckboxData(data: SliderOptions, inputName: string): {
-    value: boolean,
-    listener: (event: InputEvent) => void
-  } {
+  private mapCheckboxData(data: SliderOptions, inputName: string) {
     switch (inputName) {
       case 'isRange':
-        return { value: data.isRange, listener: this.handleRangeListener };
+        return {value: data.isRange, listener: this.handleRangeListener};
       case 'isVertical':
-        return { value: data.isVertical, listener: this.handleVerticalListener };
+        return {value: data.isVertical, listener: this.handleVerticalListener};
       case 'withTooltip':
-        return { value: data.withTooltip, listener: this.handleTooltipListener };
+        return {value: data.withTooltip, listener: this.handleTooltipListener};
       case 'withScale':
-        return { value: data.withScale, listener: this.handleScaleListener };
+        return {value: data.withScale, listener: this.handleScaleListener};
       default:
         throw Error('unknown input');
     }
   }
 
-  private mapNumberData(data: SliderOptions, inputName: string): {
-    value: number,
-    listener: (event: InputEvent) => void
-  } {
+  private mapNumberData(data: SliderOptions, inputName: string) {
     switch (inputName) {
       case 'min':
-        return { value: data.border.min, listener: this.handleMinInput };
+        return {value: data.border.min, listener: this.handleMinInput};
       case 'max':
-        return { value: data.border.max, listener: this.handleMaxInput };
+        return {value: data.border.max, listener: this.handleMaxInput};
       case 'step':
-        return { value: data.step, listener: this.handleStepInput };
+        return {value: data.step, listener: this.handleStepInput};
       case 'currentMax':
-        return { value: data.current.max, listener: this.handleCurrentMaxInput };
+        return {value: data.current.max, listener: this.handleCurrentMaxInput};
       case 'currentMin':
-        return { value: data.current.min, listener: this.handleCurrentMinInput };
+        return {value: data.current.min, listener: this.handleCurrentMinInput};
       default:
         throw Error('unknown input');
     }
@@ -122,8 +116,8 @@ class Panel {
     this.sliderGroup.setBorderMin(Panel.getNumber(event));
   }
 
-  private static getNumber(event:InputEvent) {
-    const { value } = event.target as HTMLInputElement;
+  private static getNumber(event: InputEvent) {
+    const {value} = event.target as HTMLInputElement;
     if (!Panel.isNumber(value)) throw Error('Number required');
     return Number(value);
   }

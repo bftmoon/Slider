@@ -1,21 +1,20 @@
-import ViewElement from '../ViewElement';
 import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
 import CssClassUtil from '../../utils/CssClassUtil';
 import PositionUtil from '../../utils/PositionUtil';
 import ClassNames from '../../utils/ClassNames';
 
-class Scale extends Observer implements ViewElement {
+class Scale extends Observer {
   private element: HTMLElement;
 
-  buildHtml(isVertical: boolean): HTMLElement {
+  buildHtml(isVertical: boolean) {
     this.element = document.createElement('div');
     CssClassUtil.initClass(this.element, isVertical, ClassNames.Scale);
     this.element.addEventListener('mousedown', this.handleScaleMouseDown);
     return this.element;
   }
 
-  getElement(): HTMLElement {
+  getElement() {
     return this.element;
   }
 
@@ -35,7 +34,7 @@ class Scale extends Observer implements ViewElement {
     this.element.innerHTML = '';
     const count = Math.floor(size / step) - Number(size % step === 0);
     if (count > 0) {
-      const { percentGap, visibleCount } = Scale.calcGapAndCount(count, this.element[isVertical ? 'offsetHeight' : 'offsetWidth'], step, size);
+      const {percentGap, visibleCount} = Scale.calcGapAndCount(count, this.element[isVertical ? 'offsetHeight' : 'offsetWidth'], step, size);
 
       const fragment = document.createDocumentFragment();
       for (let i = 0; i < visibleCount; i += 1) {
@@ -45,7 +44,7 @@ class Scale extends Observer implements ViewElement {
     }
   }
 
-  private static buildLineHtml(isVertical: boolean, index: number, gap: number): HTMLDivElement {
+  private static buildLineHtml(isVertical: boolean, index: number, gap: number) {
     const line = document.createElement('div');
     line.style[isVertical ? 'bottom' : 'left'] = `${gap * index}%`;
     CssClassUtil.initClass(line, isVertical, ClassNames.Line);

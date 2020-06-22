@@ -60,8 +60,7 @@ class Presenter extends Observer {
   private handlePointMoveByScale = (calcPositionWithDiff: CalcPositionWithDiff) => {
     const { diff, position } = calcPositionWithDiff(this.model.isVertical, this.model.isRange);
     const modelValue = this.model.calcValue(
-      // eslint-disable-next-line comma-dangle
-      this.model.getCurrent()[position] / this.model.getRangeSize() + diff
+      this.model.getCurrent()[position] / this.model.getRangeSize() + diff,
     );
     if (this.model.isSameCurrent(modelValue)) return;
     this.updatePosition(modelValue, position);

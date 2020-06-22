@@ -8,12 +8,12 @@ import PointData from '../types/PointData';
 import CssClassUtil from '../utils/CssClassUtil';
 import { CalcPoint, CalcRatio } from '../types/NotifyData';
 
-class View extends Observer implements View {
-  element: HTMLElement;
+class View extends Observer {
+  private element: HTMLElement;
 
-  body: Body = new Body();
+  private body: Body = new Body();
 
-  scale: Scale = new Scale();
+  private scale: Scale = new Scale();
 
   render(element: HTMLElement,
     {
@@ -24,7 +24,7 @@ class View extends Observer implements View {
     }: ViewBoolOptions,
     points: MinMax<PointData>,
     step: number,
-    size: number): void {
+    size: number) {
     this.element = element;
     const fragment = document.createDocumentFragment();
     CssClassUtil.initClass(this.element, isVertical);

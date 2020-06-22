@@ -5,9 +5,9 @@ import MinMaxPosition from '../types/MinMaxPosition';
 import SliderOptions from '../types/SliderOptions';
 
 class Model {
-  protected current: MinMax<number> = { min: 0, max: 80 };
+  protected current: MinMax<number> = {min: 0, max: 80};
 
-  border: MinMax<number> = { min: 0, max: 100 };
+  border: MinMax<number> = {min: 0, max: 100};
 
   step = 1;
 
@@ -31,8 +31,8 @@ class Model {
   }
 
   protected copyBool({
-    isVertical, isRange, withScale, withTooltip,
-  }: SliderOptions) {
+                       isVertical, isRange, withScale, withTooltip,
+                     }: SliderOptions) {
     if (isRange !== undefined) this.isRange = isRange;
     if (isVertical !== undefined) this.isVertical = isVertical;
     if (withTooltip !== undefined) this.withTooltip = withTooltip;
@@ -52,7 +52,7 @@ class Model {
     };
   }
 
-  getRealCurrent(): MinMax<number> {
+  getRealCurrent() {
     return this.current;
   }
 
@@ -91,11 +91,11 @@ class Model {
     };
   }
 
-  getRangeSize(): number {
+  getRangeSize() {
     return this.border.max - this.border.min;
   }
 
-  selectPosition(value: number): MinMaxPosition {
+  selectPosition(value: number) {
     if (!this.isRange) return MinMaxPosition.Max;
     if (value <= this.current.min) return MinMaxPosition.Min;
     if (value >= this.current.max) return MinMaxPosition.Max;
@@ -110,7 +110,7 @@ class Model {
     this.current.max = temp;
   }
 
-  normalizeByStep(value: number): number {
+  normalizeByStep(value: number) {
     let newValue = value;
     const diff = (value - this.border.min) % this.step;
     if (diff === 0) return value;
@@ -118,7 +118,7 @@ class Model {
     return newValue > this.border.max ? this.border.max : newValue;
   }
 
-  calcValue(ratio: number): number {
+  calcValue(ratio: number) {
     if (ratio <= 0) return this.border.min;
     if (ratio >= 1) return this.border.max;
 
@@ -126,20 +126,20 @@ class Model {
     return this.normalizeByStep(modelValue);
   }
 
-  isOrderNormalizeRequired(): boolean {
+  isOrderNormalizeRequired() {
     return this.getCurrent().max < this.getCurrent().min;
   }
 
-  isSameCurrent(value: number): boolean {
+  isSameCurrent(value: number) {
     return value === this.getCurrent().min || value === this.getCurrent().max;
   }
 
-  willCurrentCollapse(position: MinMaxPosition, value: number): boolean {
-    return (position === MinMaxPosition.Min && value >  this.getCurrent().max)
-      || (position === MinMaxPosition.Max && value <  this.getCurrent().min);
+  willCurrentCollapse(position: MinMaxPosition, value: number) {
+    return (position === MinMaxPosition.Min && value > this.getCurrent().max)
+      || (position === MinMaxPosition.Max && value < this.getCurrent().min);
   }
 
-  areCurrentEqual(): boolean {
+  areCurrentEqual() {
     const current = this.getCurrent();
     return current.min === current.max;
   }

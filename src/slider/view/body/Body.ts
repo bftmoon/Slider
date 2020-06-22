@@ -1,4 +1,3 @@
-import ViewElement from '../ViewElement';
 import Point from '../point/Point';
 import Range from '../range/Range';
 import Observer from '../../observer/Observer';
@@ -9,9 +8,9 @@ import CssClassUtil from '../../utils/CssClassUtil';
 import MinMaxPosition from '../../types/MinMaxPosition';
 import PositionUtil from '../../utils/PositionUtil';
 import ClassNames from '../../utils/ClassNames';
-import { CalcAbsolute, ViewPointData } from '../../types/NotifyData';
+import {CalcAbsolute, ViewPointData} from '../../types/NotifyData';
 
-class Body extends Observer implements ViewElement {
+class Body extends Observer {
   private element: HTMLElement;
 
   private range: Range = new Range();
@@ -20,7 +19,7 @@ class Body extends Observer implements ViewElement {
 
   private isMoveStarted = false;
 
-  buildHtml(isVertical: boolean): HTMLElement {
+  buildHtml(isVertical: boolean) {
     this.element = document.createElement('div');
     CssClassUtil.initClass(this.element, isVertical, ClassNames.Body);
 
@@ -40,7 +39,7 @@ class Body extends Observer implements ViewElement {
     return this.element;
   }
 
-  getElement(): HTMLElement {
+  getElement() {
     return this.element;
   }
 
@@ -106,7 +105,7 @@ class Body extends Observer implements ViewElement {
     }
   }
 
-  private isRangeOrBodyElement(event: Event): boolean {
+  private isRangeOrBodyElement(event: Event) {
     return event.target === this.element || event.target === this.range.getElement();
   }
 

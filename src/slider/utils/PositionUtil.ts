@@ -1,5 +1,5 @@
 class PositionUtil {
-  static calc(isVertical: boolean, element: HTMLElement, event: MouseEvent): number {
+  static calc(isVertical: boolean, element: HTMLElement, event: MouseEvent) {
     if (element === event.target) {
       return isVertical
         ? 1 - event.offsetY / (event.target as HTMLElement).offsetHeight
@@ -8,7 +8,7 @@ class PositionUtil {
     return PositionUtil.calcForOwner(isVertical, element, event);
   }
 
-  private static calcForOwner(isVertical: boolean, element: HTMLElement, event: MouseEvent):number {
+  private static calcForOwner(isVertical: boolean, element: HTMLElement, event: MouseEvent) {
     const {
       left, top, width, height,
     } = element.getBoundingClientRect();

@@ -1,4 +1,3 @@
-import ViewElement from '../ViewElement';
 import Tooltip from '../tooltip/Tooltip';
 import Observer from '../../observer/Observer';
 import SliderEvent from '../../observer/SliderEvent';
@@ -7,22 +6,22 @@ import CssClassUtil from '../../utils/CssClassUtil';
 import ClassNames from '../../utils/ClassNames';
 import RelativePoint from '../../types/RelativePoint';
 
-class Point extends Observer implements ViewElement {
+class Point extends Observer {
   private element: HTMLDivElement;
 
   private moveDiff: RelativePoint = { x: 0, y: 0 };
 
   private tooltip = new Tooltip();
 
-  getElement(): HTMLElement {
-    return this.element;
-  }
-
   buildHtml(isVertical: boolean) {
     this.element = document.createElement('div');
     CssClassUtil.initClass(this.element, isVertical, ClassNames.Point);
     this.element.addEventListener('mousedown', this.handlePointMouseDown);
     this.element.append(this.tooltip.buildHtml(isVertical));
+    return this.element;
+  }
+
+  getElement() {
     return this.element;
   }
 
@@ -79,7 +78,7 @@ class Point extends Observer implements ViewElement {
     );
   }
 
-  private calcAbsolute(isVertical: boolean, event: MouseEvent): number {
+  private calcAbsolute(isVertical: boolean, event: MouseEvent) {
     return isVertical ? event.clientY + this.moveDiff.y : event.clientX + this.moveDiff.x;
   }
 }

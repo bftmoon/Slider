@@ -1,15 +1,14 @@
-import ViewElement from '../ViewElement';
 import CssClassUtil from '../../utils/CssClassUtil';
 import ClassNames from '../../utils/ClassNames';
 
-class Tooltip implements ViewElement {
+class Tooltip {
   private element: HTMLElement;
 
-  getElement(): HTMLElement {
+  getElement() {
     return this.element;
   }
 
-  buildHtml(isVertical: boolean): HTMLElement {
+  buildHtml(isVertical: boolean) {
     this.element = document.createElement('div');
     CssClassUtil.initClass(this.element, isVertical, ClassNames.Tooltip);
     return this.element;

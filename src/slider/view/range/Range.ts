@@ -1,18 +1,17 @@
-import ViewElement from '../ViewElement';
 import MinMax from '../../types/MinMax';
 import CssClassUtil from '../../utils/CssClassUtil';
 import ClassNames from '../../utils/ClassNames';
 
-class Range implements ViewElement {
+class Range {
   private element: HTMLDivElement;
 
-  getElement(): HTMLElement {
+  buildHtml(isVertical: boolean) {
+    this.element = document.createElement('div');
+    CssClassUtil.initClass(this.element, isVertical, ClassNames.Range);
     return this.element;
   }
 
-  buildHtml(isVertical: boolean): HTMLElement {
-    this.element = document.createElement('div');
-    CssClassUtil.initClass(this.element, isVertical, ClassNames.Range);
+  getElement() {
     return this.element;
   }
 
