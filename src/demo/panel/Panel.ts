@@ -7,6 +7,7 @@ import SliderOptions from '../../slider/types/SliderOptions';
 class Panel {
   private changeableInputs: MinMax<HTMLInputElement> = {};
 
+  // eslint-disable-next-line no-useless-constructor, no-empty-function
   constructor(private sliderGroup: SliderGroup) {}
 
   init(panelElement: HTMLElement) {

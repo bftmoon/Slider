@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import ViewBoolOptions from '../types/ViewBoolOptions';
 import MinMax from '../types/MinMax';
 import PointData from '../types/PointData';
