@@ -7,13 +7,9 @@ import SliderOptions from '../../slider/types/SliderOptions';
 
 
 class Panel {
-  private sliderGroup: SliderGroup;
-
   private changeableInputs: MinMax<HTMLInputElement> = {};
 
-  constructor(slider: SliderGroup) {
-    this.sliderGroup = slider;
-  }
+  constructor(private sliderGroup: SliderGroup) {}
 
   init(panelElement: HTMLElement) {
     const data = this.sliderGroup.getOptions()[0];
