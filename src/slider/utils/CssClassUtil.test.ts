@@ -39,11 +39,5 @@ describe('CssClassUtil class', () => {
       expect(element.classList).not.toContain(`${CssClassUtil.MAIN_PREFIX}__point_horizontal`);
       expect(element.classList).toContain(`${CssClassUtil.MAIN_PREFIX}__point_vertical`);
     });
-    test('toggleGrab', () => {
-      CssClassUtil.toggleGrab(element, ClassNames.Point);
-      expect(element.classList).toContain(`${CssClassUtil.MAIN_PREFIX}__point_grabbed`);
-      CssClassUtil.toggleGrab(element, ClassNames.Point);
-      expect(element.classList).not.toContain(`${CssClassUtil.MAIN_PREFIX}__point_grabbed`);
-    });
   });
 });

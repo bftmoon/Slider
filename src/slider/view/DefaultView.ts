@@ -7,10 +7,7 @@ import MinMax from '../types/MinMax';
 import PointData from '../types/PointData';
 import CssClassUtil from '../utils/CssClassUtil';
 import View from './View';
-import MinMaxPosition from '../types/MinMaxPosition';
-import {
-  CalcMoveDiff, CalcPoint, CalcRatio, ViewPointMoveData,
-} from '../types/NotifyData';
+import {CalcPoint, CalcRatio,} from '../types/NotifyData';
 
 class DefaultView extends Observer implements View {
   element: HTMLElement;
@@ -20,15 +17,15 @@ class DefaultView extends Observer implements View {
   scale: Scale = new Scale();
 
   render(element: HTMLElement,
-    {
-      isVertical,
-      isRange,
-      withTooltip,
-      withScale,
-    }: ViewBoolOptions,
-    points: MinMax<PointData>,
-    step: number,
-    size: number): void {
+         {
+           isVertical,
+           isRange,
+           withTooltip,
+           withScale,
+         }: ViewBoolOptions,
+         points: MinMax<PointData>,
+         step: number,
+         size: number): void {
     this.element = element;
     const fragment = document.createDocumentFragment();
     CssClassUtil.initClass(this.element, isVertical);
@@ -41,11 +38,7 @@ class DefaultView extends Observer implements View {
     this.body
       .subscribe(SliderEvent.SliderClick, this.handleBodyClick)
       .subscribe(SliderEvent.PointMove, this.handlePointMove);
-
-    // splitting for normal tests work
     this.scale.subscribe(SliderEvent.SliderClick, this.handleScaleClick);
-    this.scale.subscribe(SliderEvent.PointMoveByScale, this.handleScaleMouseMove);
-    this.scale.subscribe(SliderEvent.StopPointMoveByScale, this.handleStopMoveByScale);
 
     if (!withTooltip) this.body.toggleTooltip();
     element.append(fragment);
@@ -80,7 +73,6 @@ class DefaultView extends Observer implements View {
 
   updatePosition(isVertical: boolean, points: MinMax<PointData>) {
     this.body.updatePosition(isVertical, points);
-    this.scale.notifyPositionChanged();
   }
 
   private handlePointMove = (calcPoint: CalcPoint) => {
@@ -88,36 +80,12 @@ class DefaultView extends Observer implements View {
   }
 
   private handleScaleClick = (calcRatio: CalcRatio) => {
+    this.body.startPointMove();
     this.notify(SliderEvent.SliderClick, calcRatio);
   }
 
   private handleBodyClick = (calcRatio: CalcRatio) => {
     this.notify(SliderEvent.SliderClick, calcRatio);
-  }
-
-  private handleScaleMouseMove = (calcScaleMoveData: CalcMoveDiff) => {
-    this.notify(
-      SliderEvent.PointMoveByScale,
-      (isVertical: boolean, isRange: boolean) => this.calcPositionWithDiff(
-        isVertical,
-        isRange,
-        calcScaleMoveData,
-      ),
-    );
-  }
-
-  private calcPositionWithDiff(
-    isVertical: boolean,
-    isRange: boolean,
-    calcScaleMoveData: CalcMoveDiff,
-  ): ViewPointMoveData {
-    const { diff, coordinate } = calcScaleMoveData(isVertical);
-    if (!isRange) return { diff, position: MinMaxPosition.Max };
-    return { diff, position: this.body.selectNeighbourPoint({ isVertical, coordinate }) };
-  }
-
-  private handleStopMoveByScale = () => {
-    this.body.cleanCachedPoint();
   }
 }
 

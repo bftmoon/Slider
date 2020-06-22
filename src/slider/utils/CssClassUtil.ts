@@ -18,10 +18,6 @@ class CssClassUtil {
     element.classList.toggle(`${CssClassUtil.getFullName(name)}_hidden`);
   }
 
-  static toggleGrab(element: HTMLElement, name?: ClassNames) {
-    element.classList.toggle(`${CssClassUtil.getFullName(name)}_grabbed`);
-  }
-
   static addGrabbing() {
     document.documentElement.classList.add('slider-plugin');
   }

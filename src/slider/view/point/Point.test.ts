@@ -85,7 +85,7 @@ describe('Point class', () => {
     describe('handlers', () => {
       describe('handleMouseDown', () => {
         test('add point and body class and notify', () => {
-          const spyClass = jest.spyOn(CssClassUtil, 'toggleGrab');
+          const spyClass = jest.spyOn(CssClassUtil, 'addGrabbing');
           point.getElement().dispatchEvent(new MouseEvent('mousedown'));
           expect(spyClass).toBeCalled();
           expect(document.documentElement.classList).toContain('slider-plugin');
@@ -94,7 +94,7 @@ describe('Point class', () => {
       describe('handleMouseUp', () => {
         test('remove point and body class', () => {
           jest.resetAllMocks();
-          const spyClass = jest.spyOn(CssClassUtil, 'toggleGrab');
+          const spyClass = jest.spyOn(CssClassUtil, 'removeGrabbing');
           point.getElement().dispatchEvent(new MouseEvent('mousedown'));
           document.dispatchEvent(new MouseEvent('mouseup'));
           expect(spyClass).toBeCalled();

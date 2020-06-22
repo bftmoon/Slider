@@ -9,34 +9,38 @@ import CssClassUtil from '../../utils/CssClassUtil';
 import MinMaxPosition from '../../types/MinMaxPosition';
 import PositionUtil from '../../utils/PositionUtil';
 import ClassNames from '../../utils/ClassNames';
-import { CalcAbsolute, ViewPointData } from '../../types/NotifyData';
+import {CalcAbsolute, ViewPointData} from '../../types/NotifyData';
 
 class Body extends Observer implements ViewElement {
   private element: HTMLElement;
 
   private range: Range = new Range();
 
-  private points: MinMax<Point> = { min: new Point(), max: new Point() };
+  private points: MinMax<Point> = {min: new Point(), max: new Point()};
 
-  private cachedMovePosition: MinMaxPosition = null;
-
-  getElement(): HTMLElement {
-    return this.element;
-  }
+  private isMoveStarted = false;
 
   buildHtml(isVertical: boolean): HTMLElement {
     this.element = document.createElement('div');
     CssClassUtil.initClass(this.element, isVertical, ClassNames.Body);
 
-    this.element.addEventListener('click', this.handleSliderBodyClick);
+    this.element.addEventListener('mousedown', this.handleSliderBodyMouseDown);
     this.element.append(
       this.points.min.buildHtml(isVertical),
       this.points.max.buildHtml(isVertical),
       this.range.buildHtml(isVertical),
     );
 
-    this.points.min.subscribe(SliderEvent.PointMove, this.handleMinPointMove);
-    this.points.max.subscribe(SliderEvent.PointMove, this.handleMaxPointMove);
+    this.points.min
+      .subscribe(SliderEvent.PointMove, this.handleMinPointMove)
+      .subscribe(SliderEvent.StopPointMove, this.handleStopPointMove);
+    this.points.max
+      .subscribe(SliderEvent.PointMove, this.handleMaxPointMove)
+      .subscribe(SliderEvent.StopPointMove, this.handleStopPointMove);
+    return this.element;
+  }
+
+  getElement(): HTMLElement {
     return this.element;
   }
 
@@ -56,15 +60,17 @@ class Body extends Observer implements ViewElement {
     this.range.toggleOrientation();
   }
 
-  updatePosition(isVertical: boolean, { min, max }: MinMax<PointData>) {
+  updatePosition(isVertical: boolean, {min, max}: MinMax<PointData>) {
     const percents: MinMax<number> = {};
     if (min !== undefined) {
       this.points.min.updatePosition(isVertical, min);
       percents.min = min.percent;
+      if (this.isMoveStarted) this.points.min.startGrabbing();
     }
     if (max !== undefined) {
       this.points.max.updatePosition(isVertical, max);
       percents.max = max.percent;
+      if (this.isMoveStarted) this.points.max.startGrabbing();
     }
 
     this.range.updatePosition(
@@ -72,6 +78,14 @@ class Body extends Observer implements ViewElement {
       percents,
       isVertical ? this.element.offsetHeight : undefined,
     );
+  }
+
+  startPointMove() {
+    this.isMoveStarted = true;
+  }
+
+  private handleStopPointMove = () => {
+    this.isMoveStarted = false;
   }
 
   private handleMinPointMove = (calcAbsolute: CalcAbsolute) => {
@@ -82,8 +96,9 @@ class Body extends Observer implements ViewElement {
     this.handlePointMove(calcAbsolute, MinMaxPosition.Max);
   }
 
-  private handleSliderBodyClick = (event: MouseEvent) => {
+  private handleSliderBodyMouseDown = (event: MouseEvent) => {
     if (this.isRangeOrBodyElement(event)) {
+      this.startPointMove();
       this.notify(
         SliderEvent.SliderClick,
         (isVertical: boolean) => PositionUtil.calc(isVertical, this.element, event),
@@ -93,25 +108,6 @@ class Body extends Observer implements ViewElement {
 
   private isRangeOrBodyElement(event: Event): boolean {
     return event.target === this.element || event.target === this.range.getElement();
-  }
-
-  selectNeighbourPoint(data: { isVertical: boolean, coordinate: number }): MinMaxPosition {
-    if (this.cachedMovePosition === null) {
-      const centers: MinMax<number> = {
-        min: this.points.min.calcClientCenterCoordinate(data.isVertical),
-        max: this.points.max.calcClientCenterCoordinate(data.isVertical),
-      };
-      if (centers.min + (centers.max - centers.min) / 2 > data.coordinate) {
-        this.cachedMovePosition = data.isVertical ? MinMaxPosition.Max : MinMaxPosition.Min;
-      } else {
-        this.cachedMovePosition = data.isVertical ? MinMaxPosition.Min : MinMaxPosition.Max;
-      }
-    }
-    return this.cachedMovePosition;
-  }
-
-  cleanCachedPoint() {
-    this.cachedMovePosition = null;
   }
 
   private handlePointMove = (calcAbsolute: CalcAbsolute, position = MinMaxPosition.Min) => {
