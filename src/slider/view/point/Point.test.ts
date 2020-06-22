@@ -99,7 +99,7 @@ describe('Point class', () => {
           document.dispatchEvent(new MouseEvent('mouseup'));
           expect(spyClass).toBeCalled();
           expect(document.documentElement.classList).not.toContain(
-            'slider-plugin'
+            'slider-plugin',
           );
         });
       });

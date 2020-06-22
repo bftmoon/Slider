@@ -2,7 +2,7 @@ import SliderEvent from './SliderEvent';
 
 class Observer {
   // eslint-disable-next-line comma-spacing
-  private events = new Map<SliderEvent, ((data?: any) => void)[]>();
+  private events = new Map<SliderEvent,((data?: any) => void)[]>();
 
   subscribe(event: SliderEvent, callback: (data?: any) => void): Observer {
     if (!this.events.has(event)) {

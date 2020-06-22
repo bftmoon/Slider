@@ -6,12 +6,12 @@ class CssClassUtil {
   static initClass(
     element: HTMLElement,
     isVertical: boolean,
-    name?: ClassNames
+    name?: ClassNames,
   ) {
     const cssClass = CssClassUtil.getFullName(name);
     element.classList.add(
       cssClass,
-      cssClass + (isVertical ? '_vertical' : '_horizontal')
+      cssClass + (isVertical ? '_vertical' : '_horizontal'),
     );
   }
 

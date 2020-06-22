@@ -62,7 +62,7 @@ describe('PresenterProxy class', () => {
       model.isRange = false;
       const spyModel = jest.spyOn(
         PresenterProxy.prototype,
-        'setCurrentRangeMax'
+        'setCurrentRangeMax',
       );
       presenter.setCurrent(4);
       expect(spyModel).toBeCalled();
@@ -127,7 +127,7 @@ describe('PresenterProxy class', () => {
         model.setCurrent({ max: 40 });
         const spyNormalize = jest.spyOn(
           ValidModel.prototype,
-          'normalizeCurrentOrder'
+          'normalizeCurrentOrder',
         );
         const spyUpdate = jest.spyOn(MockView.prototype, 'updatePosition');
         const spyNotify = jest.spyOn(PresenterProxy.prototype, 'notify');
@@ -142,7 +142,7 @@ describe('PresenterProxy class', () => {
         const spyUpdate = jest.spyOn(MockView.prototype, 'updatePosition');
         const spyCheck = jest.spyOn(
           ValidModel.prototype,
-          'isOrderNormalizeRequired'
+          'isOrderNormalizeRequired',
         );
         presenter.toggleRange();
         expect(spyToggleModel).toBeCalled();

@@ -1,5 +1,5 @@
 import SliderPlugin from './SliderPlugin';
-import {SliderGroup} from './Slider';
+import { SliderGroup } from './Slider';
 import MinMaxPosition from './types/MinMaxPosition';
 import SliderOptions from './types/SliderOptions';
 
@@ -21,7 +21,7 @@ $.fn.slider = function querySlider(options?: SliderOptions): SliderGroup {
 
   return {
     addSlideListener(
-      callback: (data: { value: number; position: MinMaxPosition }) => void
+      callback: (data: { value: number; position: MinMaxPosition }) => void,
     ) {
       sliders.forEach((slider) => slider.addSlideListener(callback));
     },

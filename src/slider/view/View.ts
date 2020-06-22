@@ -17,10 +17,12 @@ class View extends Observer {
 
   render(
     element: HTMLElement,
-    { isVertical, isRange, withTooltip, withScale }: ViewBoolOptions,
+    {
+      isVertical, isRange, withTooltip, withScale,
+    }: ViewBoolOptions,
     points: MinMax<PointData>,
     step: number,
-    size: number
+    size: number,
   ) {
     this.element = element;
     const fragment = document.createDocumentFragment();
@@ -28,7 +30,7 @@ class View extends Observer {
 
     fragment.append(
       this.body.buildHtml(isVertical),
-      this.scale.buildHtml(isVertical)
+      this.scale.buildHtml(isVertical),
     );
 
     this.body

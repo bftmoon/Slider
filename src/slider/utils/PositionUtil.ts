@@ -11,9 +11,11 @@ class PositionUtil {
   private static calcForOwner(
     isVertical: boolean,
     element: HTMLElement,
-    event: MouseEvent
+    event: MouseEvent,
   ) {
-    const { left, top, width, height } = element.getBoundingClientRect();
+    const {
+      left, top, width, height,
+    } = element.getBoundingClientRect();
     return isVertical
       ? 1 - (event.clientY - top) / height
       : (event.clientX - left) / width;

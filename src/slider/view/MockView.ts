@@ -9,7 +9,7 @@ class MockView extends View {
     options: ViewBoolOptions,
     points: MinMax<PointData>,
     step: number,
-    size: number
+    size: number,
   ) {}
 
   toggleOrientation(): void {}

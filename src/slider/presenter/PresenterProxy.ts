@@ -12,7 +12,7 @@ class PresenterProxy extends Presenter {
   }
 
   addSlideListener(
-    callback: (data: { value: number; position: MinMaxPosition }) => void
+    callback: (data: { value: number; position: MinMaxPosition }) => void,
   ) {
     this.subscribe(SliderEvent.ValueChanged, callback);
   }
@@ -21,7 +21,7 @@ class PresenterProxy extends Presenter {
     this.model.setValidCurrents(valueMin, valueMax);
     this.view.updatePosition(
       this.model.isVertical,
-      this.model.getCurrentPoints()
+      this.model.getCurrentPoints(),
     );
   }
 
@@ -49,7 +49,7 @@ class PresenterProxy extends Presenter {
       this.view.updateScaleLines(
         this.model.step,
         this.model.getRangeSize(),
-        this.model.isVertical
+        this.model.isVertical,
       );
     }
     this.updatePointByStep(MinMaxPosition.Max);
@@ -62,7 +62,7 @@ class PresenterProxy extends Presenter {
     this.model.setValidBorder(value, MinMaxPosition.Min);
     this.normalizePoints(
       this.model.border.min,
-      (current) => current < this.model.border.min
+      (current) => current < this.model.border.min,
     );
     this.updateScaleLines();
   }
@@ -71,7 +71,7 @@ class PresenterProxy extends Presenter {
     this.model.setValidBorder(value, MinMaxPosition.Max);
     this.normalizePoints(
       this.model.border.max,
-      (current) => current > this.model.border.max
+      (current) => current > this.model.border.max,
     );
     this.updateScaleLines();
   }
@@ -80,11 +80,11 @@ class PresenterProxy extends Presenter {
     this.model.setValidBorders(borderMin, borderMax);
     this.normalizePoints(
       this.model.border.min,
-      (current) => current < this.model.border.min
+      (current) => current < this.model.border.min,
     );
     this.normalizePoints(
       this.model.border.max,
-      (current) => current > this.model.border.max
+      (current) => current > this.model.border.max,
     );
   }
 
@@ -124,13 +124,13 @@ class PresenterProxy extends Presenter {
     this.view.toggleOrientation();
     this.view.updatePosition(
       this.model.isVertical,
-      this.model.getCurrentPoints()
+      this.model.getCurrentPoints(),
     );
     if (this.model.withScale) {
       this.view.updateScaleLines(
         this.model.step,
         this.model.getRangeSize(),
-        this.model.isVertical
+        this.model.isVertical,
       );
     }
   }
@@ -145,7 +145,7 @@ class PresenterProxy extends Presenter {
 
   private normalizePoints(
     border: number,
-    checkIsOverflow: (current: number) => boolean
+    checkIsOverflow: (current: number) => boolean,
   ) {
     const realCurrent = this.model.getRealCurrent();
     if (checkIsOverflow(realCurrent.min)) {
@@ -164,7 +164,7 @@ class PresenterProxy extends Presenter {
     }
     this.view.updatePosition(
       this.model.isVertical,
-      this.model.getCurrentPoints()
+      this.model.getCurrentPoints(),
     );
   }
 
@@ -173,7 +173,7 @@ class PresenterProxy extends Presenter {
       this.view.updateScaleLines(
         this.model.step,
         this.model.getRangeSize(),
-        this.model.isVertical
+        this.model.isVertical,
       );
     }
   }

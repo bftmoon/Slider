@@ -21,14 +21,10 @@ class Model {
 
   constructor(options?: SliderOptions) {
     if (options !== undefined) {
-      if (options.border?.max !== undefined)
-        this.border.max = options.border.max;
-      if (options.border?.min !== undefined)
-        this.border.min = options.border.min;
-      if (options.current?.max !== undefined)
-        this.current.max = options.current.max;
-      if (options.current?.min !== undefined)
-        this.current.min = options.current.min;
+      if (options.border?.max !== undefined) this.border.max = options.border.max;
+      if (options.border?.min !== undefined) this.border.min = options.border.min;
+      if (options.current?.max !== undefined) this.current.max = options.current.max;
+      if (options.current?.min !== undefined) this.current.min = options.current.min;
       if (options.step !== undefined) this.step = options.step;
       this.copyBool(options);
     }
@@ -66,9 +62,9 @@ class Model {
   getPoint(position: MinMaxPosition): PointData {
     return {
       percent:
-        ((this.getCurrent()[position] - this.border.min) /
-          this.getRangeSize()) *
-        100,
+        ((this.getCurrent()[position] - this.border.min)
+          / this.getRangeSize())
+        * 100,
       tooltip: this.getCurrent()[position],
     };
   }
@@ -132,8 +128,7 @@ class Model {
     if (ratio <= 0) return this.border.min;
     if (ratio >= 1) return this.border.max;
 
-    const modelValue =
-      this.border.min + (this.border.max - this.border.min) * ratio;
+    const modelValue = this.border.min + (this.border.max - this.border.min) * ratio;
     return this.normalizeByStep(modelValue);
   }
 
@@ -147,8 +142,8 @@ class Model {
 
   willCurrentCollapse(position: MinMaxPosition, value: number) {
     return (
-      (position === MinMaxPosition.Min && value > this.getCurrent().max) ||
-      (position === MinMaxPosition.Max && value < this.getCurrent().min)
+      (position === MinMaxPosition.Min && value > this.getCurrent().max)
+      || (position === MinMaxPosition.Max && value < this.getCurrent().min)
     );
   }
 

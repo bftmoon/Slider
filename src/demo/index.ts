@@ -14,6 +14,6 @@ $('.js-demo__container').each((index, element) => {
         isRange: index !== 0,
         withScale: index !== 0,
         isVertical: index === 2,
-      })
+      }),
   ).init(element.firstElementChild as HTMLElement);
 });

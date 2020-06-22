@@ -38,13 +38,14 @@ class Panel {
     if (element.name === 'currentMax') this.changeableInputs.max = element;
     element.addEventListener(
       'input',
-      this.makeWrappedListener(mappedData.listener)
+      this.makeWrappedListener(mappedData.listener),
     );
   }
 
   private makeWrappedListener = (
-    listener: (event: InputEvent) => void
-  ): ((event: InputEvent) => void) => (event: InputEvent) => {
+    listener: (event: InputEvent) => void,
+  ): ((event: InputEvent) => void
+) => (event: InputEvent) => {
     try {
       listener(event);
       (event.target as HTMLInputElement).setCustomValidity('');

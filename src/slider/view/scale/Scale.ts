@@ -38,7 +38,7 @@ class Scale extends Observer {
         count,
         this.element[isVertical ? 'offsetHeight' : 'offsetWidth'],
         step,
-        size
+        size,
       );
 
       const fragment = document.createDocumentFragment();
@@ -52,7 +52,7 @@ class Scale extends Observer {
   private static buildLineHtml(
     isVertical: boolean,
     index: number,
-    gap: number
+    gap: number,
   ) {
     const line = document.createElement('div');
     line.style[isVertical ? 'bottom' : 'left'] = `${gap * index}%`;
@@ -64,7 +64,7 @@ class Scale extends Observer {
     childCount: number,
     elementSize: number,
     modelStep: number,
-    modelSize: number
+    modelSize: number,
   ) {
     let count = childCount;
     let pxGap = elementSize * (modelStep / modelSize);
@@ -79,8 +79,9 @@ class Scale extends Observer {
   }
 
   private handleScaleMouseDown = (event: MouseEvent) => {
-    this.notify(SliderEvent.SliderClick, (isVertical: boolean) =>
-      PositionUtil.calc(isVertical, this.element, event)
+    this.notify(
+      SliderEvent.SliderClick,
+      (isVertical: boolean) => PositionUtil.calc(isVertical, this.element, event),
     );
   };
 }

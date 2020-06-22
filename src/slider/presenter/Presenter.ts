@@ -22,7 +22,7 @@ class Presenter extends Observer {
       this.model.getBoolOptions(),
       this.model.getCurrentPoints(),
       this.model.step,
-      this.model.getRangeSize()
+      this.model.getRangeSize(),
     );
     this.view
       .subscribe(SliderEvent.SliderClick, this.handleSliderClick)
@@ -45,7 +45,7 @@ class Presenter extends Observer {
 
   private updateModelAndViewCurrent(
     modelValue: number,
-    position: MinMaxPosition
+    position: MinMaxPosition,
   ) {
     this.model.setCurrent({ [position]: modelValue });
     this.view.updatePosition(this.model.isVertical, {
@@ -66,14 +66,14 @@ class Presenter extends Observer {
   };
 
   private handlePointMoveByScale = (
-    calcPositionWithDiff: CalcPositionWithDiff
+    calcPositionWithDiff: CalcPositionWithDiff,
   ) => {
     const { diff, position } = calcPositionWithDiff(
       this.model.isVertical,
-      this.model.isRange
+      this.model.isRange,
     );
     const modelValue = this.model.calcValue(
-      this.model.getCurrent()[position] / this.model.getRangeSize() + diff
+      this.model.getCurrent()[position] / this.model.getRangeSize() + diff,
     );
     if (this.model.isSameCurrent(modelValue)) return;
     this.updatePosition(modelValue, position);

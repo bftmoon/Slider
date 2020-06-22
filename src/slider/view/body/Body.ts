@@ -27,7 +27,7 @@ class Body extends Observer {
     this.element.append(
       this.points.min.buildHtml(isVertical),
       this.points.max.buildHtml(isVertical),
-      this.range.buildHtml(isVertical)
+      this.range.buildHtml(isVertical),
     );
 
     this.points.min
@@ -75,7 +75,7 @@ class Body extends Observer {
     this.range.updatePosition(
       isVertical,
       percents,
-      isVertical ? this.element.offsetHeight : undefined
+      isVertical ? this.element.offsetHeight : undefined,
     );
   }
 
@@ -98,8 +98,13 @@ class Body extends Observer {
   private handleSliderBodyMouseDown = (event: MouseEvent) => {
     if (this.isRangeOrBodyElement(event)) {
       this.startPointMove();
-      this.notify(SliderEvent.SliderClick, (isVertical: boolean) =>
-        PositionUtil.calc(isVertical, this.element, event)
+      this.notify(
+        SliderEvent.SliderClick,
+        (isVertical: boolean) => PositionUtil.calc(
+          isVertical,
+          this.element,
+          event,
+        ),
       );
     }
   };
@@ -112,19 +117,21 @@ class Body extends Observer {
 
   private handlePointMove = (
     calcAbsolute: CalcAbsolute,
-    position = MinMaxPosition.Min
+    position = MinMaxPosition.Min,
   ) => {
     this.notify(
       SliderEvent.PointMove,
       (isVertical: boolean): ViewPointData => ({
         position,
         ratio: this.calcValue(isVertical, calcAbsolute(isVertical)),
-      })
+      }),
     );
   };
 
   private calcValue(isVertical: boolean, coordinate: number) {
-    const { top, height, left, width } = this.element.getBoundingClientRect();
+    const {
+      top, height, left, width,
+    } = this.element.getBoundingClientRect();
     return isVertical
       ? 1 - (coordinate - top) / height
       : (coordinate - left) / width;

@@ -76,7 +76,7 @@ describe('DefaultView class', () => {
           min: { percent: 10, tooltip: 20 },
         },
         3,
-        200
+        200,
       );
     });
     test('toggleRange', () => {

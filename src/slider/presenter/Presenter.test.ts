@@ -20,7 +20,7 @@ describe('Presenter class', () => {
       const spyPoint = jest.spyOn(Model.prototype, 'getCurrentPoints');
       const spyRange = jest.spyOn(Model.prototype, 'getRangeSize');
       new Presenter(new Model(), new MockView()).init(
-        document.createElement('div')
+        document.createElement('div'),
       );
       expect(spyPoint).toBeCalled();
       expect(spyRange).toBeCalled();

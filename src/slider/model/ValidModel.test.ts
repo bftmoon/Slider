@@ -59,7 +59,7 @@ describe('DefaultValidModel class', () => {
     test('Throw error when set min and range off', () => {
       const model = new ValidModel({ isRange: false });
       expect(() => model.setValidCurrent(3, MinMaxPosition.Min)).toThrow(
-        SliderError
+        SliderError,
       );
     });
     test('Throw error when set current not in borders', () => {
@@ -68,7 +68,7 @@ describe('DefaultValidModel class', () => {
         border: { min: 0, max: 200 },
       });
       expect(() => model.setValidCurrent(-100, MinMaxPosition.Min)).toThrow(
-        SliderError
+        SliderError,
       );
     });
     test('Throw error when set current min >= max', () => {
@@ -77,7 +77,7 @@ describe('DefaultValidModel class', () => {
         current: { min: 10, max: 20 },
       });
       expect(() => model.setValidCurrent(30, MinMaxPosition.Min)).toThrow(
-        SliderError
+        SliderError,
       );
     });
     test('Throw error when set number not according step orr border', () => {
@@ -88,13 +88,13 @@ describe('DefaultValidModel class', () => {
         border: { min: 0, max: 200 },
       });
       expect(() => model.setValidCurrent(32, MinMaxPosition.Max)).toThrow(
-        SliderError
+        SliderError,
       );
       expect(() => model.setValidCurrent(60, MinMaxPosition.Max)).not.toThrow(
-        SliderError
+        SliderError,
       );
       expect(() => model.setValidCurrent(200, MinMaxPosition.Max)).not.toThrow(
-        SliderError
+        SliderError,
       );
     });
   });
@@ -114,22 +114,22 @@ describe('DefaultValidModel class', () => {
     test('throw error when borders range <= 0', () => {
       const model = new ValidModel({ border: { min: 0, max: 200 } });
       expect(() => model.setValidBorder(300, MinMaxPosition.Min)).toThrow(
-        SliderError
+        SliderError,
       );
       expect(() => model.setValidBorder(200, MinMaxPosition.Min)).toThrow(
-        SliderError
+        SliderError,
       );
       expect(() => model.setValidBorder(0, MinMaxPosition.Max)).toThrow(
-        SliderError
+        SliderError,
       );
       expect(() => model.setValidBorder(-300, MinMaxPosition.Max)).toThrow(
-        SliderError
+        SliderError,
       );
       expect(() => model.setValidBorder(300, MinMaxPosition.Max)).not.toThrow(
-        SliderError
+        SliderError,
       );
       expect(() => model.setValidBorder(-100, MinMaxPosition.Min)).not.toThrow(
-        SliderError
+        SliderError,
       );
     });
   });

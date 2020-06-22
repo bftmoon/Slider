@@ -36,8 +36,7 @@ class Point extends Observer {
     this.element.style[
       isVertical ? 'bottom' : 'left'
     ] = `calc(${point.percent}% - ${radius}px)`;
-    if (point.tooltip !== undefined)
-      this.tooltip.update(point.tooltip, isVertical);
+    if (point.tooltip !== undefined) this.tooltip.update(point.tooltip, isVertical);
   }
 
   toggleHidden() {
@@ -60,7 +59,9 @@ class Point extends Observer {
   };
 
   private updateMoveDiff(clientX: number, clientY: number) {
-    const { x, y, width, height } = this.element.getBoundingClientRect();
+    const {
+      x, y, width, height,
+    } = this.element.getBoundingClientRect();
     this.moveDiff = { x: x + width / 2 - clientX, y: y + height / 2 - clientY };
   }
 
@@ -73,8 +74,9 @@ class Point extends Observer {
   };
 
   private handleMouseMove = (event: MouseEvent) => {
-    this.notify(SliderEvent.PointMove, (isVertical: boolean) =>
-      this.calcAbsolute(isVertical, event)
+    this.notify(
+      SliderEvent.PointMove,
+      (isVertical: boolean) => this.calcAbsolute(isVertical, event),
     );
   };
 
