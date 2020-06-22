@@ -15,12 +15,12 @@ class PresenterProxy extends Presenter {
     this.subscribe(SliderEvent.ValueChanged, callback);
   }
 
-  setCurrentRange(valueMin: any, valueMax: any) {
+  setCurrentRange(valueMin: number, valueMax: number) {
     this.model.setValidCurrents(valueMin, valueMax);
     this.view.updatePosition(this.model.isVertical, this.model.getCurrentPoints());
   }
 
-  setCurrentRangeMin(value: any) {
+  setCurrentRangeMin(value: number) {
     this.model.setValidCurrent(value, MinMaxPosition.Min);
     this.view.updatePosition(
       this.model.isVertical,
@@ -28,7 +28,7 @@ class PresenterProxy extends Presenter {
     );
   }
 
-  setCurrentRangeMax(value: any) {
+  setCurrentRangeMax(value: number) {
     this.model.setValidCurrent(value, MinMaxPosition.Max);
     this.view.updatePosition(
       this.model.isVertical,
@@ -36,11 +36,11 @@ class PresenterProxy extends Presenter {
     );
   }
 
-  setCurrent(value: any) {
+  setCurrent(value: number) {
     this.setCurrentRangeMax(value);
   }
 
-  setStep(step: any) {
+  setStep(step: number) {
     this.model.setValidStep(step);
     if (this.model.withScale) {
       this.view.updateScaleLines(
@@ -55,19 +55,19 @@ class PresenterProxy extends Presenter {
     }
   }
 
-  setBorderMin(value: any) {
+  setBorderMin(value: number) {
     this.model.setValidBorder(value, MinMaxPosition.Min);
     this.normalizePoints(this.model.border.min, (current) => current < this.model.border.min);
     this.updateScaleLines();
   }
 
-  setBorderMax(value: any) {
+  setBorderMax(value: number) {
     this.model.setValidBorder(value, MinMaxPosition.Max);
     this.normalizePoints(this.model.border.max, (current) => current > this.model.border.max);
     this.updateScaleLines();
   }
 
-  setBorders(borderMin: any, borderMax: any) {
+  setBorders(borderMin: number, borderMax: number) {
     this.model.setValidBorders(borderMin, borderMax);
     this.normalizePoints(this.model.border.min, (current) => current < this.model.border.min);
     this.normalizePoints(this.model.border.max, (current) => current > this.model.border.max);

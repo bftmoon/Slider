@@ -25,10 +25,12 @@ class Panel {
 
   private prepareElement(modelData: SliderOptions, element: HTMLInputElement) {
     const inputElement = element;
-    const mappedData = this.mapData(modelData, element.name);
+    let mappedData;
     if (element.type === 'checkbox') {
-      inputElement.checked = Boolean(mappedData.value);
+      mappedData = this.mapCheckboxData(modelData, element.name)
+      inputElement.checked = mappedData.value;
     } else {
+      mappedData = this.mapNumberData(modelData, element.name)
       inputElement.value = mappedData.value.toString();
     }
     if (element.name === 'currentMin') this.changeableInputs.min = element;
@@ -42,16 +44,33 @@ class Panel {
       listener(event);
       (event.target as HTMLInputElement).setCustomValidity('');
     } catch (error) {
-      if (error! instanceof SliderError) throw error;
       (event.target as HTMLInputElement).setCustomValidity(error.message);
       (event.target as HTMLInputElement).reportValidity();
     }
   }
 
-  private mapData(data: SliderOptions, inputName: string): {
-    value: number | boolean,
+  private mapCheckboxData(data: SliderOptions, inputName: string): {
+    value: boolean,
     listener: (event: InputEvent) => void
-  } {
+  }{
+    switch (inputName) {
+      case 'isRange':
+        return {value: data.isRange, listener: this.handleRangeListener};
+      case 'isVertical':
+        return {value: data.isVertical, listener: this.handleVerticalListener};
+      case 'withTooltip':
+        return {value: data.withTooltip, listener: this.handleTooltipListener};
+      case 'withScale':
+        return {value: data.withScale, listener: this.handleScaleListener};
+      default:
+        throw Error('unknown input');
+    }
+  }
+
+  private mapNumberData(data: SliderOptions, inputName: string): {
+    value: number,
+    listener: (event: InputEvent) => void
+  }{
     switch (inputName) {
       case 'min':
         return {value: data.border.min, listener: this.handleMinInput};
@@ -63,14 +82,6 @@ class Panel {
         return {value: data.current.max, listener: this.handleCurrentMaxInput};
       case 'currentMin':
         return {value: data.current.min, listener: this.handleCurrentMinInput};
-      case 'isRange':
-        return {value: data.isRange, listener: this.handleRangeListener};
-      case 'isVertical':
-        return {value: data.isVertical, listener: this.handleVerticalListener};
-      case 'withTooltip':
-        return {value: data.withTooltip, listener: this.handleTooltipListener};
-      case 'withScale':
-        return {value: data.withScale, listener: this.handleScaleListener};
       default:
         throw Error('unknown input');
     }
@@ -93,23 +104,33 @@ class Panel {
   }
 
   private handleCurrentMinInput = (event: InputEvent) => {
-    this.sliderGroup.setCurrentRangeMin((event.target as HTMLInputElement).value);
+    this.sliderGroup.setCurrentRangeMin(Panel.getNumber(event));
   }
 
   private handleCurrentMaxInput = (event: InputEvent) => {
-    this.sliderGroup.setCurrentRangeMax((event.target as HTMLInputElement).value);
+    this.sliderGroup.setCurrentRangeMax(Panel.getNumber(event));
   }
 
   private handleStepInput = (event: InputEvent) => {
-    this.sliderGroup.setStep((event.target as HTMLInputElement).value);
+    this.sliderGroup.setStep(Panel.getNumber(event));
   }
 
   private handleMaxInput = (event: InputEvent) => {
-    this.sliderGroup.setBorderMax((event.target as HTMLInputElement).value);
+    this.sliderGroup.setBorderMax(Panel.getNumber(event));
   }
 
   private handleMinInput = (event: InputEvent) => {
-    this.sliderGroup.setBorderMin((event.target as HTMLInputElement).value);
+    this.sliderGroup.setBorderMin(Panel.getNumber(event));
+  }
+
+  private static getNumber(event:InputEvent){
+    const value = (event.target as HTMLInputElement).value
+    if (!Panel.isNumber(value))
+      throw Error('Number required')
+    return Number(value);
+  }
+  private static isNumber(value: string){
+    return value !== '' && !Number.isNaN(Number(value))
   }
 }
 

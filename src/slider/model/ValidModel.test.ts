@@ -26,13 +26,6 @@ describe('DefaultValidModel class', () => {
       const model = new ValidModel({ isRange: false });
       expect(() => model.setValidCurrents(3, 4)).toThrow(SliderError);
     });
-    test('Throw error when set not number', () => {
-      const model = new ValidModel({ isRange: true });
-      expect(() => model.setValidCurrents('', 4)).toThrow(SliderError);
-      expect(() => model.setValidCurrents(4, '')).toThrow(SliderError);
-      expect(() => model.setValidCurrents('', '')).toThrow(SliderError);
-      expect(() => model.setValidCurrents(4, 5)).not.toThrow(SliderError);
-    });
     test('Throw error when set current not in borders', () => {
       const model = new ValidModel({ isRange: true, border: { min: 0, max: 200 } });
       expect(() => model.setValidCurrents(-100, 12)).toThrow(SliderError);
@@ -61,10 +54,6 @@ describe('DefaultValidModel class', () => {
       const model = new ValidModel({ isRange: false });
       expect(() => model.setValidCurrent(3, MinMaxPosition.Min)).toThrow(SliderError);
     });
-    test('Throw error when set not number', () => {
-      const model = new ValidModel({ isRange: false });
-      expect(() => model.setValidCurrent('', MinMaxPosition.Min)).toThrow(SliderError);
-    });
     test('Throw error when set current not in borders', () => {
       const model = new ValidModel({ isRange: true, border: { min: 0, max: 200 } });
       expect(() => model.setValidCurrent(-100, MinMaxPosition.Min)).toThrow(SliderError);
@@ -86,11 +75,6 @@ describe('DefaultValidModel class', () => {
     });
   });
   describe('setValidStep', () => {
-    test('throw error in not number', () => {
-      const model = new ValidModel({ border: { min: 0, max: 100 } });
-      expect(() => model.setValidStep('')).toThrow(SliderError);
-      expect(() => model.setValidStep(4)).not.toThrow(SliderError);
-    });
     test('throw error when not in borders', () => {
       const model = new ValidModel({ border: { min: 0, max: 100 } });
       expect(() => model.setValidStep(120)).toThrow(SliderError);
@@ -112,25 +96,11 @@ describe('DefaultValidModel class', () => {
       expect(() => model.setValidBorder(300, MinMaxPosition.Max)).not.toThrow(SliderError);
       expect(() => model.setValidBorder(-100, MinMaxPosition.Min)).not.toThrow(SliderError);
     });
-
-    test('Throw error when set not number', () => {
-      const model = new ValidModel({ isRange: true });
-      expect(() => model.setValidBorder(4, MinMaxPosition.Min)).not.toThrow(SliderError);
-      expect(() => model.setValidBorder('', MinMaxPosition.Min)).toThrow(SliderError);
-    });
   });
   describe('setValidBorders', () => {
     test('throw error when borders range <= 0', () => {
       const model = new ValidModel({ border: { min: 0, max: 200 } });
       expect(() => model.setValidBorders(100, 0)).toThrow(SliderError);
-      expect(() => model.setValidBorders(0, 100)).not.toThrow(SliderError);
-    });
-
-    test('Throw error when set not number', () => {
-      const model = new ValidModel({ isRange: true });
-      expect(() => model.setValidBorders('', 0)).toThrow(SliderError);
-      expect(() => model.setValidBorders(0, '')).toThrow(SliderError);
-      expect(() => model.setValidBorders('', '')).toThrow(SliderError);
       expect(() => model.setValidBorders(0, 100)).not.toThrow(SliderError);
     });
   });

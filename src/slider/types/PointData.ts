@@ -1,6 +1,6 @@
 type PointData = {
   percent: number;
-  tooltip?: any;
+  tooltip?: number;
 }
 
 export default PointData;

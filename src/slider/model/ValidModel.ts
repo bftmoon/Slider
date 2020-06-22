@@ -28,62 +28,41 @@ class ValidModel extends Model {
     }
   }
 
-  setValidCurrent(current: any, position: MinMaxPosition) {
-    ValidModel.isValidType(current);
-    const number = Number(current);
-    this.isInBorderRange(number);
+  setValidCurrent(current: number, position: MinMaxPosition) {
+    this.isInBorderRange(current);
     if (position === MinMaxPosition.Min) {
       this.isRangeActive();
-      ValidModel.isPositiveRange(number, this.getCurrent().max);
+      ValidModel.isPositiveRange(current, this.getCurrent().max);
     } else {
-      ValidModel.isPositiveRange(this.getCurrent().min, number);
+      ValidModel.isPositiveRange(this.getCurrent().min, current);
     }
-    this.isDivideToStepOrBorder(number);
-    this.current[position] = number;
+    this.isDivideToStepOrBorder(current);
+    this.current[position] = current;
   }
 
-  setValidCurrents(currentMin: any, currentMax: any) {
+  setValidCurrents(currentMin: number, currentMax: number) {
     this.isRangeActive();
-    ValidModel.isValidType(currentMin);
-    ValidModel.isValidType(currentMax);
-    const numberMin = Number(currentMin);
-    const numberMax = Number(currentMax);
-    this.isInBorderRange(numberMin);
-    this.isInBorderRange(numberMax);
-    ValidModel.isPositiveRange(numberMin, numberMax);
-    this.isDivideToStepOrBorder(numberMin);
-    this.isDivideToStepOrBorder(numberMax);
-    this.current = {min: numberMin, max: numberMax};
+    this.isInBorderRange(currentMin);
+    this.isInBorderRange(currentMax);
+    ValidModel.isPositiveRange(currentMin, currentMax);
+    this.isDivideToStepOrBorder(currentMin);
+    this.isDivideToStepOrBorder(currentMax);
+    this.current = {min: currentMin, max: currentMax};
   }
 
-  setValidStep(step: any) {
-    ValidModel.isValidType(step);
-    const number = Number(step);
-    this.isValidStep(number);
-    this.step = number;
+  setValidStep(step: number) {
+    this.isValidStep(step);
+    this.step = step;
   }
 
-  setValidBorder(value: any, position: MinMaxPosition) {
-    ValidModel.isValidType(value);
-    const number = Number(value);
-    this.isValidBorder(number, position);
-    this.border[position] = number;
+  setValidBorder(value: number, position: MinMaxPosition) {
+    this.isValidBorder(value, position);
+    this.border[position] = value;
   }
 
-  setValidBorders(borderMin: any, borderMax: any) {
-    ValidModel.isValidType(borderMin);
-    ValidModel.isValidType(borderMax);
-    const min = Number(borderMin);
-    const max = Number(borderMax);
-    ValidModel.isValidBorders(min, max);
-    this.border = {min, max};
-  }
-
-  private static isValidType(value: any) {
-    // eslint-disable-next-line fsd/split-conditionals
-    if (value === undefined || value === null || value === '' || Number.isNaN(Number(value))) {
-      throw new SliderError('Number required');
-    }
+  setValidBorders(borderMin: number, borderMax: number) {
+    ValidModel.isValidBorders(borderMin, borderMax);
+    this.border = {min: borderMin, max: borderMax};
   }
 
   private static isPositiveRange(min: number, max: number) {
@@ -114,13 +93,15 @@ class ValidModel extends Model {
   }
 
   private isDivideToStepOrBorder(current: number) {
-    // eslint-disable-next-line fsd/split-conditionals
-    if ((current - this.border.min) % this.step !== 0
-      && current !== this.border.min
-      && current !== this.border.max
-    ) {
+    if (this.isNotValidByStepOrBorder(current)) {
       throw new SliderError('Not divide on step');
     }
+  }
+
+  private isNotValidByStepOrBorder(current: number){
+    return (current - this.border.min) % this.step !== 0
+      && current !== this.border.min
+      && current !== this.border.max
   }
 
   private isValidBorder(value: number, position: MinMaxPosition) {

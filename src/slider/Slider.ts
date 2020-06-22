@@ -8,14 +8,14 @@ interface SliderCommon {
   toggleTooltip():void;
   toggleOrientation():void;
   addSlideListener(callback: (data: { value: number, position: MinMaxPosition }) => void):void;
-  setCurrentRangeMin(value: any): void;
-  setCurrentRangeMax(value: any): void;
-  setCurrent(value: any): void;
-  setCurrentRange(valueMin: any, valueMax: any): void;
-  setStep(step: any):void;
-  setBorderMin(value: any): void;
-  setBorderMax(value: any): void;
-  setBorders(borderMin: any, borderMax: any): void;
+  setCurrentRangeMin(value: number): void;
+  setCurrentRangeMax(value: number): void;
+  setCurrent(value: number): void;
+  setCurrentRange(valueMin: number, valueMax: number): void;
+  setStep(step: number):void;
+  setBorderMin(value: number): void;
+  setBorderMax(value: number): void;
+  setBorders(borderMin: number, borderMax: number): void;
 }
 
 interface Slider extends SliderCommon {
