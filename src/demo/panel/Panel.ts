@@ -27,7 +27,7 @@ class Panel {
     const inputElement = element;
     const mappedData = this.mapData(modelData, element.name);
     if (element.type === 'checkbox') {
-      inputElement.checked = mappedData.value as boolean;
+      inputElement.checked = Boolean(mappedData.value);
     } else {
       inputElement.value = mappedData.value.toString();
     }
