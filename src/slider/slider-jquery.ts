@@ -3,6 +3,12 @@ import { SliderGroup } from './Slider';
 import MinMaxPosition from './types/MinMaxPosition';
 import SliderOptions from './types/SliderOptions';
 
+declare global {
+  interface JQuery {
+    slider: (options?: SliderOptions) => SliderGroup
+  }
+}
+
 $.fn.slider = function querySlider(options?: SliderOptions): SliderGroup {
   const sliders: SliderPlugin[] = [];
   const query = this;
@@ -18,28 +24,28 @@ $.fn.slider = function querySlider(options?: SliderOptions): SliderGroup {
       data: { value: number; position: MinMaxPosition }) => void): void {
       sliders.forEach((slider) => slider.addSlideListener(callback));
     },
-    setCurrentRange(valueMin: any, valueMax: any): void {
+    setCurrentRange(valueMin: number, valueMax: number): void {
       sliders.forEach((slider) => slider.setCurrentRange(valueMin, valueMax));
     },
-    setBorderMax(value: any): void {
+    setBorderMax(value: number): void {
       sliders.forEach((slider) => slider.setBorderMax(value));
     },
-    setBorderMin(value: any): void {
+    setBorderMin(value: number): void {
       sliders.forEach((slider) => slider.setBorderMin(value));
     },
-    setBorders(borderMin: any, borderMax: any): void {
+    setBorders(borderMin: number, borderMax: number): void {
       sliders.forEach((slider) => slider.setBorders(borderMin, borderMax));
     },
-    setCurrent(value: any): void {
+    setCurrent(value: number): void {
       sliders.forEach((slider) => slider.setCurrent(value));
     },
-    setCurrentRangeMax(value: any): void {
+    setCurrentRangeMax(value: number): void {
       sliders.forEach((slider) => slider.setCurrentRangeMax(value));
     },
-    setCurrentRangeMin(value: any): void {
+    setCurrentRangeMin(value: number): void {
       sliders.forEach((slider) => slider.setCurrentRangeMin(value));
     },
-    setStep(step: any): void {
+    setStep(step: number): void {
       sliders.forEach((slider) => slider.setStep(step));
     },
     toggleOrientation(): void {
