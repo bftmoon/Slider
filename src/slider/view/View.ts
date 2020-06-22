@@ -6,7 +6,7 @@ import ViewBoolOptions from '../types/ViewBoolOptions';
 import MinMax from '../types/MinMax';
 import PointData from '../types/PointData';
 import CssClassUtil from '../utils/CssClassUtil';
-import {CalcPoint, CalcRatio,} from '../types/NotifyData';
+import { CalcPoint, CalcRatio } from '../types/NotifyData';
 
 class View extends Observer implements View {
   element: HTMLElement;
@@ -16,15 +16,15 @@ class View extends Observer implements View {
   scale: Scale = new Scale();
 
   render(element: HTMLElement,
-         {
-           isVertical,
-           isRange,
-           withTooltip,
-           withScale,
-         }: ViewBoolOptions,
-         points: MinMax<PointData>,
-         step: number,
-         size: number): void {
+    {
+      isVertical,
+      isRange,
+      withTooltip,
+      withScale,
+    }: ViewBoolOptions,
+    points: MinMax<PointData>,
+    step: number,
+    size: number): void {
     this.element = element;
     const fragment = document.createDocumentFragment();
     CssClassUtil.initClass(this.element, isVertical);

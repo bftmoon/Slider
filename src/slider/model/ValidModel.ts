@@ -1,7 +1,7 @@
 import MinMaxPosition from '../types/MinMaxPosition';
 import SliderError from '../SliderError';
 import SliderOptions from '../types/SliderOptions';
-import Model from "./Model";
+import Model from './Model';
 
 class ValidModel extends Model {
   constructor(options?: SliderOptions) {
@@ -47,7 +47,7 @@ class ValidModel extends Model {
     ValidModel.isPositiveRange(currentMin, currentMax);
     this.isDivideToStepOrBorder(currentMin);
     this.isDivideToStepOrBorder(currentMax);
-    this.current = {min: currentMin, max: currentMax};
+    this.current = { min: currentMin, max: currentMax };
   }
 
   setValidStep(step: number) {
@@ -62,7 +62,7 @@ class ValidModel extends Model {
 
   setValidBorders(borderMin: number, borderMax: number) {
     ValidModel.isValidBorders(borderMin, borderMax);
-    this.border = {min: borderMin, max: borderMax};
+    this.border = { min: borderMin, max: borderMax };
   }
 
   private static isPositiveRange(min: number, max: number) {
@@ -98,10 +98,10 @@ class ValidModel extends Model {
     }
   }
 
-  private isNotValidByStepOrBorder(current: number){
+  private isNotValidByStepOrBorder(current: number) {
     return (current - this.border.min) % this.step !== 0
       && current !== this.border.min
-      && current !== this.border.max
+      && current !== this.border.max;
   }
 
   private isValidBorder(value: number, position: MinMaxPosition) {

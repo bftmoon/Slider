@@ -5,9 +5,9 @@ import MinMaxPosition from '../types/MinMaxPosition';
 import SliderOptions from '../types/SliderOptions';
 
 class Model {
-  protected current: MinMax<number> = {min: 0, max: 80};
+  protected current: MinMax<number> = { min: 0, max: 80 };
 
-  border: MinMax<number> = {min: 0, max: 100};
+  border: MinMax<number> = { min: 0, max: 100 };
 
   step = 1;
 
@@ -31,8 +31,8 @@ class Model {
   }
 
   protected copyBool({
-                       isVertical, isRange, withScale, withTooltip,
-                     }: SliderOptions) {
+    isVertical, isRange, withScale, withTooltip,
+  }: SliderOptions) {
     if (isRange !== undefined) this.isRange = isRange;
     if (isVertical !== undefined) this.isVertical = isVertical;
     if (withTooltip !== undefined) this.withTooltip = withTooltip;

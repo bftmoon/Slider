@@ -44,7 +44,7 @@ describe('Tooltip class', () => {
         Object.defineProperty(
           document.documentElement,
           'offsetWidth',
-          {value: 10},
+          { value: 10 },
         );
       });
       test('set text to html', () => {
@@ -54,14 +54,14 @@ describe('Tooltip class', () => {
 
       test('add left position when tooltip get out window on left', () => {
         // @ts-ignore
-        tooltip.getElement().getBoundingClientRect = () => ({left: -20});
+        tooltip.getElement().getBoundingClientRect = () => ({ left: -20 });
         tooltip.update(0, false);
         expect(tooltip.getElement().style.left).toBe('0px');
       });
 
       test('add right position when tooltip get out window on right', () => {
         // @ts-ignore
-        tooltip.getElement().getBoundingClientRect = () => ({right: 20});
+        tooltip.getElement().getBoundingClientRect = () => ({ right: 20 });
         tooltip.update(0, false);
         expect(tooltip.getElement().style.right).toBe('0px');
       });
@@ -69,7 +69,7 @@ describe('Tooltip class', () => {
       test('clean position when tooltip in window', () => {
         tooltip.getElement().style.left = '0';
         // @ts-ignore
-        tooltip.getElement().getBoundingClientRect = () => ({left: 1, right: 9});
+        tooltip.getElement().getBoundingClientRect = () => ({ left: 1, right: 9 });
         tooltip.update(0, false);
         expect(tooltip.getElement().style.left).toBe('');
         expect(tooltip.getElement().style.right).toBe('');

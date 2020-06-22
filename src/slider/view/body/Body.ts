@@ -9,14 +9,14 @@ import CssClassUtil from '../../utils/CssClassUtil';
 import MinMaxPosition from '../../types/MinMaxPosition';
 import PositionUtil from '../../utils/PositionUtil';
 import ClassNames from '../../utils/ClassNames';
-import {CalcAbsolute, ViewPointData} from '../../types/NotifyData';
+import { CalcAbsolute, ViewPointData } from '../../types/NotifyData';
 
 class Body extends Observer implements ViewElement {
   private element: HTMLElement;
 
   private range: Range = new Range();
 
-  private points: MinMax<Point> = {min: new Point(), max: new Point()};
+  private points: MinMax<Point> = { min: new Point(), max: new Point() };
 
   private isMoveStarted = false;
 
@@ -60,7 +60,7 @@ class Body extends Observer implements ViewElement {
     this.range.toggleOrientation();
   }
 
-  updatePosition(isVertical: boolean, {min, max}: MinMax<PointData>) {
+  updatePosition(isVertical: boolean, { min, max }: MinMax<PointData>) {
     const percents: MinMax<number> = {};
     if (min !== undefined) {
       this.points.min.updatePosition(isVertical, min);

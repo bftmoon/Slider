@@ -50,10 +50,10 @@ describe('Body class', () => {
     test('updatePosition', () => {
       const spyPoint = jest.spyOn(Point.prototype, 'updatePosition');
       const spyRange = jest.spyOn(Range.prototype, 'updatePosition');
-      body.updatePosition(true, {min: {percent: 10}});
+      body.updatePosition(true, { min: { percent: 10 } });
       expect(spyPoint).toBeCalledTimes(1);
       expect(spyRange).toBeCalledTimes(1);
-      body.updatePosition(true, {min: {percent: 2}, max: {percent: 20}});
+      body.updatePosition(true, { min: { percent: 2 }, max: { percent: 20 } });
       expect(spyRange).toBeCalledTimes(2);
       expect(spyPoint).toBeCalledTimes(3);
     });

@@ -1,7 +1,7 @@
 import ViewBoolOptions from '../types/ViewBoolOptions';
 import MinMax from '../types/MinMax';
 import PointData from '../types/PointData';
-import View from "./View";
+import View from './View';
 
 class MockView extends View {
   render(

@@ -35,7 +35,7 @@ class Scale extends Observer implements ViewElement {
     this.element.innerHTML = '';
     const count = Math.floor(size / step) - Number(size % step === 0);
     if (count > 0) {
-      const {percentGap, visibleCount} = Scale.calcGapAndCount(count, this.element[isVertical ? 'offsetHeight' : 'offsetWidth'], step, size);
+      const { percentGap, visibleCount } = Scale.calcGapAndCount(count, this.element[isVertical ? 'offsetHeight' : 'offsetWidth'], step, size);
 
       const fragment = document.createDocumentFragment();
       for (let i = 0; i < visibleCount; i += 1) {

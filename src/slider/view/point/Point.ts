@@ -10,7 +10,7 @@ import RelativePoint from '../../types/RelativePoint';
 class Point extends Observer implements ViewElement {
   private element: HTMLDivElement;
 
-  private moveDiff: RelativePoint = {x: 0, y: 0};
+  private moveDiff: RelativePoint = { x: 0, y: 0 };
 
   private tooltip = new Tooltip();
 
@@ -61,15 +61,15 @@ class Point extends Observer implements ViewElement {
     const {
       x, y, width, height,
     } = this.element.getBoundingClientRect();
-    this.moveDiff = {x: x + width / 2 - clientX, y: y + height / 2 - clientY};
+    this.moveDiff = { x: x + width / 2 - clientX, y: y + height / 2 - clientY };
   }
 
   private handleMouseUp = () => {
     CssClassUtil.removeGrabbing();
     document.removeEventListener('mouseup', this.handleMouseUp);
     document.removeEventListener('mousemove', this.handleMouseMove);
-    this.moveDiff = {x: 0, y: 0};
-    this.notify(SliderEvent.StopPointMove)
+    this.moveDiff = { x: 0, y: 0 };
+    this.notify(SliderEvent.StopPointMove);
   }
 
   private handleMouseMove = (event: MouseEvent) => {

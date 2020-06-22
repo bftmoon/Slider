@@ -3,7 +3,7 @@ import Body from './body/Body';
 import Scale from './scale/Scale';
 import Observer from '../observer/Observer';
 import ViewBoolOptions from '../types/ViewBoolOptions';
-import View from "./View";
+import View from './View';
 
 jest.mock('./scale/Scale');
 
@@ -16,8 +16,8 @@ describe('DefaultView class', () => {
     let html: HTMLElement;
     let boolOptions: ViewBoolOptions;
     const points = {
-      max: {percent: 20, tooltip: 30},
-      min: {percent: 10, tooltip: 20},
+      max: { percent: 20, tooltip: 30 },
+      min: { percent: 10, tooltip: 20 },
     };
     beforeEach(() => {
       html = document.createElement('div');
@@ -69,8 +69,8 @@ describe('DefaultView class', () => {
         isRange: true,
         withTooltip: true,
       }, {
-        max: {percent: 20, tooltip: 30},
-        min: {percent: 10, tooltip: 20},
+        max: { percent: 20, tooltip: 30 },
+        min: { percent: 10, tooltip: 20 },
       }, 3, 200);
     });
     test('toggleRange', () => {
@@ -104,7 +104,7 @@ describe('DefaultView class', () => {
     });
     test('updatePosition', () => {
       const spy = jest.spyOn(Body.prototype, 'updatePosition');
-      view.updatePosition(true, {min: {percent: 20}});
+      view.updatePosition(true, { min: { percent: 20 } });
       expect(spy).toBeCalled();
     });
   });
