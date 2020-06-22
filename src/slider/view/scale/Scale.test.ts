@@ -36,12 +36,12 @@ describe('Scale class', () => {
     });
     describe('updateLines', () => {
       test('count of lines when it can be fit', () => {
-        Object.defineProperty(scale.getElement(), 'offsetHeight', { value: 500 });
+        Object.defineProperty(scale.getElement(), 'offsetHeight', {value: 500});
         scale.updateLines(2, 100, true);
         expect(scale.getElement().childElementCount).toBe(49);
       });
       test('count of lines when it can not be fit', () => {
-        Object.defineProperty(scale.getElement(), 'offsetWidth', { value: 50 });
+        Object.defineProperty(scale.getElement(), 'offsetWidth', {value: 50});
         scale.updateLines(2, 100, false);
         expect(scale.getElement().childElementCount).toBe(6);
       });

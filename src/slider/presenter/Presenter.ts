@@ -1,18 +1,17 @@
-import DefaultModel from '../model/DefaultModel';
-import SliderEvent from '../observer/SliderEvent';
 import Observer from '../observer/Observer';
 import MinMaxPosition from '../types/MinMaxPosition';
 import SliderError from '../SliderError';
-import View from '../view/View';
-import { CalcPoint, CalcPositionWithDiff, CalcRatio } from '../types/NotifyData';
-import Model from '../model/Model';
+import {CalcPoint, CalcPositionWithDiff, CalcRatio} from '../types/NotifyData';
+import Model from "../model/Model";
+import View from "../view/View";
+import SliderEvent from "../observer/SliderEvent";
 
 class Presenter extends Observer {
   protected model: Model;
 
   protected view: View;
 
-  constructor(model: DefaultModel, view: View) {
+  constructor(model: Model, view: View) {
     super();
     this.model = model;
     this.view = view;

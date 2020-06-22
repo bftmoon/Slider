@@ -36,15 +36,15 @@ Using full generated slider class diagram
 
 ![uml](diagrams/uml.svg)
 
-Or with "MVP with Passive DefaultView" overview
+Or with "MVP with Passive View" overview
 
 ![overview](diagrams/overview.png)      
 
 And classes brief:
 * Slider - main plugin class for connecting MVP components
-* Presenter - connect DefaultModel and DefaultView and call required methods for events
+* Presenter - connect Model and View and call required methods for events
   * PresenterProxy - extends Presenter,  contains functions for outer data update
-* DefaultModel - contain data, provides it according to condition
-  * DefaultValidModel - extends DefaultModel, contains functions for outer updates validation
-* DefaultView - render slider components and notify about points move and slider click
+* Model - contain data, provides it according to condition
+  * ValidModel - extends Model, contains functions for outer updates validation
+* View - render slider components and notify about points move and slider click
 * Observer - simplify work with events and callbacks

@@ -16,7 +16,7 @@ class Range implements ViewElement {
     return this.element;
   }
 
-  updatePosition(isVertical: boolean, percent: MinMax<number>, height?:number) {
+  updatePosition(isVertical: boolean, percent: MinMax<number>, height?: number) {
     if (isVertical) {
       const heightPart = height / 100;
       if (percent.min !== undefined) this.element.style.marginBottom = `${heightPart * percent.min}px`;

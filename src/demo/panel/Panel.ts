@@ -1,4 +1,4 @@
-import { SliderGroup } from '../../slider/Slider';
+import {SliderGroup} from '../../slider/Slider';
 import '../../slider/slider-jquery';
 import MinMaxPosition from '../../slider/types/MinMaxPosition';
 import SliderError from '../../slider/SliderError';
@@ -41,7 +41,7 @@ class Panel {
   }
 
   private makeWrappedListener = (listener: (event: InputEvent) => void):
-  ((event: InputEvent) => void) => (event: InputEvent) => {
+    ((event: InputEvent) => void) => (event: InputEvent) => {
     try {
       listener(event);
       (event.target as HTMLInputElement).setCustomValidity('');
@@ -58,23 +58,23 @@ class Panel {
   } {
     switch (inputName) {
       case 'min':
-        return { value: data.border.min, listener: this.handleMinInput };
+        return {value: data.border.min, listener: this.handleMinInput};
       case 'max':
-        return { value: data.border.max, listener: this.handleMaxInput };
+        return {value: data.border.max, listener: this.handleMaxInput};
       case 'step':
-        return { value: data.step, listener: this.handleStepInput };
+        return {value: data.step, listener: this.handleStepInput};
       case 'currentMax':
-        return { value: data.current.max, listener: this.handleCurrentMaxInput };
+        return {value: data.current.max, listener: this.handleCurrentMaxInput};
       case 'currentMin':
-        return { value: data.current.min, listener: this.handleCurrentMinInput };
+        return {value: data.current.min, listener: this.handleCurrentMinInput};
       case 'isRange':
-        return { value: data.isRange, listener: this.handleRangeListener };
+        return {value: data.isRange, listener: this.handleRangeListener};
       case 'isVertical':
-        return { value: data.isVertical, listener: this.handleVerticalListener };
+        return {value: data.isVertical, listener: this.handleVerticalListener};
       case 'withTooltip':
-        return { value: data.withTooltip, listener: this.handleTooltipListener };
+        return {value: data.withTooltip, listener: this.handleTooltipListener};
       case 'withScale':
-        return { value: data.withScale, listener: this.handleScaleListener };
+        return {value: data.withScale, listener: this.handleScaleListener};
       default:
         throw Error('unknown input');
     }

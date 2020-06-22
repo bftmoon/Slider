@@ -104,7 +104,7 @@ interface View extends Observable {
     +updateScaleLines(step: number, size: number, isVertical: boolean): void
     +updatePosition(isVertical: boolean, points: MinMax<PointData>): void
 }
-class DefaultView extends Observer implements View {
+class View extends Observer implements View {
     +element: HTMLElement
     +body: Body
     +scale: Scale
@@ -150,7 +150,7 @@ interface Model {
     +toggleOrientation(): void
     +toggleScale(): void
 }
-class DefaultModel implements Model {
+class Model implements Model {
     #current: MinMax<number>
     +border: MinMax<number>
     +step: number
@@ -221,7 +221,7 @@ class PresenterProxy extends Presenter {
     -normalizePoints(border: number, checkIsOverflow: (current: number) => boolean): void
     -updateScaleLines(): void
 }
-class DefaultValidModel extends DefaultModel implements ValidModel {
+class ValidModel extends Model implements ValidModel {
     +setValidCurrent(current: any, position: MinMaxPosition): void
     +setValidCurrents(currentMin: any, currentMax: any): void
     +setValidStep(step: any): void
@@ -262,7 +262,7 @@ interface SliderGroup extends SliderCommon {
     +size(): number
 }
 
-DefaultView..>CssClassUtil
+View..>CssClassUtil
 Body..>CssClassUtil
 Range..>CssClassUtil
 Scale..>CssClassUtil
@@ -272,16 +272,16 @@ Scale..>PositionUtil
 Body..>PositionUtil
 
 PresenterProxy..>SliderError
-DefaultValidModel..>SliderError
+ValidModel..>SliderError
 
 Presenter o-- Model
 Presenter o-- View
 PresenterProxy o-- ValidModel
 
-SliderPlugin ..> DefaultValidModel
-SliderPlugin ..> DefaultView
-DefaultView o-- Body
-DefaultView o-- Scale
+SliderPlugin ..> ValidModel
+SliderPlugin ..> View
+View o-- Body
+View o-- Scale
 Body o-- Point
 Body o-- Range
 Point o-- Tooltip

@@ -1,10 +1,9 @@
-import View from './View';
 import ViewBoolOptions from '../types/ViewBoolOptions';
 import MinMax from '../types/MinMax';
 import PointData from '../types/PointData';
-import Observer from '../observer/Observer';
+import View from "./View";
 
-class MockView extends Observer implements View {
+class MockView extends View {
   render(
     element: HTMLElement,
     options: ViewBoolOptions,
@@ -32,4 +31,5 @@ class MockView extends Observer implements View {
   updateScaleLines(step: number, size: number, isVertical: boolean): void {
   }
 }
+
 export default MockView;
