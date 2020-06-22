@@ -11,6 +11,8 @@ type CalcAbsolute = (isVertical: boolean) => number;
 type CalcPoint = (isVertical: boolean) => ViewPointData;
 type CalcRatio = (isVertical: boolean) => number;
 
+type NotifyCallback = (data?: any) => void;
+
 export {
   CalcPositionWithDiff,
   ViewPointMoveData,
@@ -18,4 +20,5 @@ export {
   CalcPoint,
   ViewPointData,
   CalcRatio,
+  NotifyCallback,
 };

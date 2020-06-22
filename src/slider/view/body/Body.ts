@@ -30,12 +30,10 @@ class Body extends Observer {
       this.range.buildHtml(isVertical),
     );
 
-    this.points.min
-      .subscribe(SliderEvent.PointMove, this.handleMinPointMove)
-      .subscribe(SliderEvent.StopPointMove, this.handleStopPointMove);
-    this.points.max
-      .subscribe(SliderEvent.PointMove, this.handleMaxPointMove)
-      .subscribe(SliderEvent.StopPointMove, this.handleStopPointMove);
+    this.points.min.subscribe(SliderEvent.PointMove, this.handleMinPointMove);
+    this.points.min.subscribe(SliderEvent.StopPointMove, this.handleStopPointMove);
+    this.points.max.subscribe(SliderEvent.PointMove, this.handleMaxPointMove);
+    this.points.max.subscribe(SliderEvent.StopPointMove, this.handleStopPointMove);
     return this.element;
   }
 

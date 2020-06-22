@@ -2,6 +2,7 @@ import Body from '../body/Body';
 import CssClassUtil from '../../utils/CssClassUtil';
 import Point from '../point/Point';
 import Range from '../range/Range';
+import Observer from '../../observer/Observer';
 
 describe('Body class', () => {
   let body: Body;
@@ -26,7 +27,6 @@ describe('Body class', () => {
   describe('with created html', () => {
     beforeEach(() => {
       body.buildHtml(true);
-      // jest.resetAllMocks();
     });
     test('toggleOrientation', () => {
       const spyClass = jest.spyOn(CssClassUtil, 'toggleOrientation');
@@ -53,9 +53,31 @@ describe('Body class', () => {
       body.updatePosition(true, { min: { percent: 10 } });
       expect(spyPoint).toBeCalledTimes(1);
       expect(spyRange).toBeCalledTimes(1);
+      const spyMove = jest.spyOn(Point.prototype, 'startGrabbing');
+      body.startPointMove();
       body.updatePosition(true, { min: { percent: 2 }, max: { percent: 20 } });
       expect(spyRange).toBeCalledTimes(2);
       expect(spyPoint).toBeCalledTimes(3);
+      expect(spyMove).toBeCalledTimes(2);
+    });
+    describe('handleSliderBodyMouseDown', () => {
+      const spyNotify = jest.spyOn(Observer.prototype, 'notify');
+      const spyMoveStart = jest.spyOn(Body.prototype, 'startPointMove');
+      beforeEach(() => {
+        jest.resetAllMocks();
+      });
+      test('not work on other children', () => {
+        const child = document.createElement('div');
+        body.getElement().append(child);
+        child.dispatchEvent(new MouseEvent('mousedown'));
+        expect(spyNotify).not.toBeCalled();
+        expect(spyMoveStart).not.toBeCalled();
+      });
+      test('work on body', () => {
+        body.getElement().dispatchEvent(new MouseEvent('mousedown'));
+        expect(spyNotify).toBeCalled();
+        expect(spyMoveStart).toBeCalled();
+      });
     });
   });
 });

@@ -1,10 +1,10 @@
 import SliderEvent from './SliderEvent';
+import { NotifyCallback } from '../types/NotifyData';
 
 class Observer {
-  // eslint-disable-next-line comma-spacing
-  private events = new Map<SliderEvent,((data?: any) => void)[]>();
+  private events = new Map<SliderEvent, NotifyCallback[]>();
 
-  subscribe(event: SliderEvent, callback: (data?: any) => void): Observer {
+  subscribe(event: SliderEvent, callback: NotifyCallback): Observer {
     if (!this.events.has(event)) {
       this.events.set(event, []);
     }
