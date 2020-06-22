@@ -21,8 +21,10 @@ class Model {
 
   constructor(options?: SliderOptions) {
     if (options !== undefined) {
-      if (options.border !== undefined) Model.copyMinMax(this.border, options.border);
-      if (options.current !== undefined) Model.copyMinMax(this.current, options.current);
+      if (options.border?.max !== undefined) this.border.max = options.border.max;
+      if (options.border?.min !== undefined) this.border.min = options.border.min;
+      if (options.current?.max !== undefined) this.current.max = options.current.max;
+      if (options.current?.min !== undefined) this.current.min = options.current.min;
       if (options.step !== undefined) this.step = options.step;
       this.copyBool(options);
     }
@@ -37,15 +39,9 @@ class Model {
     if (withScale !== undefined) this.withScale = withScale;
   }
 
-  private static copyMinMax(thisOption: MinMax<any>, {min, max}: MinMax<any>) {
-    // eslint-disable-next-line no-param-reassign
-    if (max !== undefined) thisOption.max = max;
-    // eslint-disable-next-line no-param-reassign
-    if (min !== undefined) thisOption.min = min;
-  }
-
   setCurrent(current: MinMax<number>) {
-    Model.copyMinMax(this.current, current);
+    if (current.max !== undefined) this.current.max = current.max;
+    if (current.min !== undefined) this.current.min = current.min;
   }
 
   getCurrent(): MinMax<number> {
