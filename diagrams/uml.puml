@@ -1,13 +1,10 @@
 @startuml
-interface Observable {
-    +subscribe(event: SliderEvent, callback: (data?: any) => void): Observable
-    +notify(event: SliderEvent, data?: any): void
-}
-class Observer implements Observable {
+class Observer {
     -events: Map<SliderEvent, ((data?: any) => void)[]>
     +subscribe(event: SliderEvent, callback: (data?: any) => void): Observer
     +notify(event: SliderEvent, data?: any): void
 }
+
 class SliderError extends Error {
     +name: string
 }
@@ -41,10 +38,7 @@ class Model {
     +toggleOrientation(): void
     +toggleScale(): void
 }
-interface ViewElement {
-    +getElement(): HTMLElement
-    +buildHtml(isVertical: boolean, args: any[]): HTMLElement
-}
+
 class CssClassUtil {
     +{static} MAIN_PREFIX: "slider"
     +{static} initClass(element: HTMLElement, isVertical: boolean, name?: ClassNames): void
@@ -58,7 +52,7 @@ class PositionUtil {
     +{static} calc(isVertical: boolean, element: HTMLElement, event: MouseEvent): number
     -{static} calcForOwner(isVertical: boolean, element: HTMLElement, event: MouseEvent): number
 }
-class Scale extends Observer implements ViewElement {
+class Scale extends Observer {
     -element: HTMLElement
     +buildHtml(isVertical: boolean): HTMLElement
     +getElement(): HTMLElement
@@ -69,7 +63,7 @@ class Scale extends Observer implements ViewElement {
     -{static} buildLineHtml(isVertical: boolean, index: number, gap: number): HTMLDivElement
     -{static} calcGapAndCount(childCount: number, elementSize: number, modelStep: number, modelSize: number): { percentGap: number; visibleCount: number; }
 }
-class Tooltip implements ViewElement {
+class Tooltip {
     -element: HTMLElement
     +getElement(): HTMLElement
     +buildHtml(isVertical: boolean): HTMLElement
@@ -77,12 +71,12 @@ class Tooltip implements ViewElement {
     +update(text: any, isVertical: boolean): void
     +toggleOrientation(): void
 }
-class Point extends Observer implements ViewElement {
+class Point extends Observer {
     -element: HTMLDivElement
     -moveDiff: RelativePoint
     -tooltip: Tooltip
-    +getElement(): HTMLElement
     +buildHtml(isVertical: boolean): HTMLDivElement
+    +getElement(): HTMLDivElement
     +startGrabbing(): void
     +updatePosition(isVertical: boolean, point: PointData): void
     +toggleHidden(): void
@@ -94,14 +88,14 @@ class Point extends Observer implements ViewElement {
     -handleMouseMove: (event: MouseEvent) => void
     -calcAbsolute(isVertical: boolean, event: MouseEvent): number
 }
-class Range implements ViewElement {
+class Range {
     -element: HTMLDivElement
-    +getElement(): HTMLElement
-    +buildHtml(isVertical: boolean): HTMLElement
+    +buildHtml(isVertical: boolean): HTMLDivElement
+    +getElement(): HTMLDivElement
     +updatePosition(isVertical: boolean, percent: MinMax<number>, height?: number): void
     +toggleOrientation(): void
 }
-class Body extends Observer implements ViewElement {
+class Body extends Observer {
     -element: HTMLElement
     -range: Range
     -points: MinMax<Point>
@@ -121,10 +115,10 @@ class Body extends Observer implements ViewElement {
     -handlePointMove: (calcAbsolute: CalcAbsolute, position?: MinMaxPosition) => void
     -calcValue(isVertical: boolean, coordinate: number): number
 }
-class View extends Observer implements View {
-    +element: HTMLElement
-    +body: Body
-    +scale: Scale
+class View extends Observer {
+    -element: HTMLElement
+    -body: Body
+    -scale: Scale
     +render(element: HTMLElement, __1: ViewBoolOptions, points: MinMax<PointData>, step: number, size: number): void
     +toggleRange(): void
     +toggleTooltip(): void
@@ -206,7 +200,6 @@ interface SliderGroup extends SliderCommon {
     +getOptions(): SliderOptions[]
     +size(): number
 }
-
 View..>CssClassUtil
 Body..>CssClassUtil
 Range..>CssClassUtil
