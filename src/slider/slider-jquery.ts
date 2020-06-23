@@ -2,6 +2,7 @@ import SliderPlugin from './SliderPlugin';
 import { SliderGroup } from './Slider';
 import MinMaxPosition from './types/MinMaxPosition';
 import SliderOptions from './types/SliderOptions';
+import MinMax from "./types/MinMax";
 
 declare global {
   interface JQuery {
@@ -21,7 +22,7 @@ $.fn.slider = function querySlider(options?: SliderOptions): SliderGroup {
 
   return {
     addSlideListener(
-      callback: (data: { value: number; position: MinMaxPosition }) => void,
+      callback: (currents: MinMax<number>) => void,
     ) {
       sliders.forEach((slider) => slider.addSlideListener(callback));
     },

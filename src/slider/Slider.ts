@@ -1,6 +1,7 @@
 import SliderPlugin from './SliderPlugin';
 import MinMaxPosition from './types/MinMaxPosition';
 import SliderOptions from './types/SliderOptions';
+import MinMax from "./types/MinMax";
 
 interface SliderCommon {
   toggleRange(): void;
@@ -8,7 +9,7 @@ interface SliderCommon {
   toggleTooltip(): void;
   toggleOrientation(): void;
   addSlideListener(
-    callback: (data: { value: number; position: MinMaxPosition }) => void
+    callback: (currents: MinMax<number>) => void
   ): void;
   setCurrentRangeMin(value: number): void;
   setCurrentRangeMax(value: number): void;

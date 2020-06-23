@@ -8,7 +8,7 @@ describe('DefaultValidModel class', () => {
     test('Not throw error', () => {
       const options: SliderOptions = {
         border: { min: -10, max: 20 },
-        current: { min: 0, max: 2 },
+        current: { min: -1, max: 2 },
         step: 3,
         isRange: true,
         isVertical: true,
@@ -80,7 +80,7 @@ describe('DefaultValidModel class', () => {
         SliderError,
       );
     });
-    test('Throw error when set number not according step orr border', () => {
+    test('Throw error when set number not according step or border', () => {
       const model = new ValidModel({
         isRange: true,
         current: { min: 0, max: 30 },
@@ -110,33 +110,11 @@ describe('DefaultValidModel class', () => {
       expect(() => model.setValidStep(-3)).toThrow(SliderError);
     });
   });
-  describe('setValidBorder', () => {
-    test('throw error when borders range <= 0', () => {
-      const model = new ValidModel({ border: { min: 0, max: 200 } });
-      expect(() => model.setValidBorder(300, MinMaxPosition.Min)).toThrow(
-        SliderError,
-      );
-      expect(() => model.setValidBorder(200, MinMaxPosition.Min)).toThrow(
-        SliderError,
-      );
-      expect(() => model.setValidBorder(0, MinMaxPosition.Max)).toThrow(
-        SliderError,
-      );
-      expect(() => model.setValidBorder(-300, MinMaxPosition.Max)).toThrow(
-        SliderError,
-      );
-      expect(() => model.setValidBorder(300, MinMaxPosition.Max)).not.toThrow(
-        SliderError,
-      );
-      expect(() => model.setValidBorder(-100, MinMaxPosition.Min)).not.toThrow(
-        SliderError,
-      );
-    });
-  });
   describe('setValidBorders', () => {
     test('throw error when borders range <= 0', () => {
       const model = new ValidModel({ border: { min: 0, max: 200 } });
       expect(() => model.setValidBorders(100, 0)).toThrow(SliderError);
+      expect(() => model.setValidBorders(0, 0)).toThrow(SliderError);
       expect(() => model.setValidBorders(0, 100)).not.toThrow(SliderError);
     });
   });

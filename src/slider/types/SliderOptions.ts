@@ -9,8 +9,6 @@ type SliderOptions = {
   isRange?: boolean;
   withTooltip?: boolean;
   withScale?: boolean;
-
-  [index: string]: any;
 };
 
 export default SliderOptions;

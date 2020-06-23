@@ -5,129 +5,98 @@ import Model from './Model';
 
 class ValidModel extends Model {
   constructor(options?: SliderOptions) {
-    super();
-    if (options) {
-      this.copyBool(options);
-      if (options.border !== undefined) {
-        this.setValidBorders(
-          options.border.min || this.border.min,
-          options.border.max || this.border.max,
-        );
-      }
-      if (options.current !== undefined) {
-        if (options.current.min !== undefined) {
-          this.setValidCurrent(options.current.min, MinMaxPosition.Min);
-        }
-        if (options.current.max !== undefined) {
-          this.setValidCurrent(
-            options.current.max || this.current.max,
-            MinMaxPosition.Max,
-          );
-        }
-      }
-      if (options.step !== undefined) {
-        this.setValidStep(options.step);
-      }
-    }
+    super(options);
+    this.validateOptions();
   }
 
   setValidCurrent(current: number, position: MinMaxPosition) {
-    this.isInBorderRange(current);
+    this.validateInBorderRange(current);
     if (position === MinMaxPosition.Min) {
-      this.isRangeActive();
-      ValidModel.isPositiveRange(current, this.getCurrent().max);
+      this.validateRangeActive();
+      ValidModel.validatePositiveRange(current, this.options.current.max);
     } else {
-      ValidModel.isPositiveRange(this.getCurrent().min, current);
+      ValidModel.validatePositiveRange(this.options.current.min, current);
     }
-    this.isDivideToStepOrBorder(current);
-    this.current[position] = current;
+    this.validateDivision(current);
+    this.options.current[position] = current;
   }
 
   setValidCurrents(currentMin: number, currentMax: number) {
-    this.isRangeActive();
-    this.isInBorderRange(currentMin);
-    this.isInBorderRange(currentMax);
-    ValidModel.isPositiveRange(currentMin, currentMax);
-    this.isDivideToStepOrBorder(currentMin);
-    this.isDivideToStepOrBorder(currentMax);
-    this.current = { min: currentMin, max: currentMax };
+    this.validateRangeActive();
+    this.validateInBorderRange(currentMin);
+    this.validateInBorderRange(currentMax);
+    ValidModel.validatePositiveRange(currentMin, currentMax);
+    this.validateDivision(currentMin);
+    this.validateDivision(currentMax);
+    this.options.current = {min: currentMin, max: currentMax};
   }
 
   setValidStep(step: number) {
-    this.isValidStep(step);
-    this.step = step;
-  }
-
-  setValidBorder(value: number, position: MinMaxPosition) {
-    this.isValidBorder(value, position);
-    this.border[position] = value;
+    this.validateStep(step);
+    this.options.step = step;
+    this.options.current.max = this.normalizeByStep(this.options.current.max);
+    this.options.current.min = this.normalizeByStep(this.options.current.min);
   }
 
   setValidBorders(borderMin: number, borderMax: number) {
-    ValidModel.isValidBorders(borderMin, borderMax);
-    this.border = { min: borderMin, max: borderMax };
+    ValidModel.validateBorders(borderMin, borderMax);
+    this.options.border = {min: borderMin, max: borderMax};
+    if (this.options.current.min < borderMin) this.options.current.min = borderMin;
+    if (this.options.current.max < borderMin) this.options.current.max = borderMin;
+    if (this.options.current.max > borderMax) this.options.current.max = borderMax;
+    if (this.options.current.min > borderMax) this.options.current.min = borderMax;
   }
 
-  private static isPositiveRange(min: number, max: number) {
+  private validateOptions() {
+    ValidModel.validateBorders(this.options.border.min, this.options.border.max);
+    this.validateStep(this.options.step);
+    this.validateInBorderRange(this.options.current.min);
+    this.validateInBorderRange(this.options.current.max);
+    if (this.options.current.min !== this.options.border.min) this.validateRangeActive();
+    ValidModel.validatePositiveRange(this.options.current.min, this.options.current.max);
+    this.validateDivision(this.options.current.min);
+    this.validateDivision(this.options.current.max);
+  }
+
+  private validateInBorderRange(current: number) {
+    const isNotInBorderRange = (current: number) => current < this.options.border.min || current > this.options.border.max;
+    if (isNotInBorderRange(current)) {
+      throw new SliderError('Not in range');
+    }
+  }
+
+  private validateRangeActive() {
+    if (!this.options.isRange) {
+      throw new SliderError('Setting ranged value for not ranged slider');
+    }
+  }
+
+  private validateStep(step: number) {
+    if (step <= 0) {
+      throw new SliderError('Too small step size');
+    }
+    if (step > this.getSize()) {
+      throw new SliderError('Too big step size');
+    }
+  }
+
+  private validateDivision(current: number) {
+    const isNotDivideToStepOrBorder = (current: number) =>
+      (current - this.options.border.min) % this.options.step !== 0
+      && current !== this.options.border.min
+      && current !== this.options.border.max;
+    if (isNotDivideToStepOrBorder(current)) {
+      throw new SliderError('Not divide on step');
+    }
+  }
+
+  private static validatePositiveRange(min: number, max: number) {
     if (max < min) {
       throw new SliderError('Negative range');
     }
   }
 
-  private isInBorderRange(current: number) {
-    if (current < this.border.min || current > this.border.max) {
-      throw new SliderError('Not in range');
-    }
-  }
-
-  private isRangeActive() {
-    if (!this.isRange) {
-      throw new SliderError('Setting ranged value for not ranged slider');
-    }
-  }
-
-  private isValidStep(step: number) {
-    if (step <= 0) {
-      throw new SliderError('Too small step size');
-    }
-    if (step > this.border.max - this.border.min) {
-      throw new SliderError('Too big step size');
-    }
-  }
-
-  private isDivideToStepOrBorder(current: number) {
-    if (this.isNotValidByStepOrBorder(current)) {
-      throw new SliderError('Not divide on step');
-    }
-  }
-
-  private isNotValidByStepOrBorder(current: number) {
-    return (
-      (current - this.border.min) % this.step !== 0
-      && current !== this.border.min
-      && current !== this.border.max
-    );
-  }
-
-  private isValidBorder(value: number, position: MinMaxPosition) {
-    if (position === MinMaxPosition.Min) {
-      if (value > this.border.max) {
-        throw new SliderError('Negative slider body size');
-      }
-      if (value === this.border.max) {
-        throw new SliderError('Slider with only one value');
-      }
-    } else {
-      if (value < this.border.min) {
-        throw new SliderError('Negative slider body size');
-      }
-      if (value === this.border.min) {
-        throw new SliderError('Slider with only one value');
-      }
-    }
-  }
-
-  private static isValidBorders(borderMin: number, borderMax: number) {
+  private static validateBorders(borderMin: number, borderMax: number) {
     if (borderMin > borderMax) {
       throw new SliderError('Negative slider body size');
     }

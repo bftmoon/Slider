@@ -1,17 +1,11 @@
 /* eslint-disable class-methods-use-this */
-import ViewBoolOptions from '../types/ViewBoolOptions';
+import ViewOptions from '../types/ViewOptions';
 import MinMax from '../types/MinMax';
 import PointData from '../types/PointData';
 import View from './View';
 
 class MockView extends View {
-  render(
-    element: HTMLElement,
-    options: ViewBoolOptions,
-    points: MinMax<PointData>,
-    step: number,
-    size: number,
-  ) {}
+  render(options:ViewOptions) {}
 
   toggleOrientation(): void {}
 

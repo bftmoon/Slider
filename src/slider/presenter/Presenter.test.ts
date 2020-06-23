@@ -1,5 +1,4 @@
 import Presenter from './Presenter';
-import SliderError from '../SliderError';
 import MockView from '../view/MockView';
 import SliderEvent from '../observer/SliderEvent';
 import MinMaxPosition from '../types/MinMaxPosition';
@@ -7,26 +6,14 @@ import Model from '../model/Model';
 
 describe('Presenter class', () => {
   describe('init', () => {
-    test('Throw error when element undefined', () => {
-      let div: HTMLElement;
-      expect(() => {
-        new Presenter(new Model(), new MockView()).init(div);
-      }).toThrow(SliderError);
-    });
-    test('call all required methods', () => {
+    test('call render and subscribe', () => {
       const spyRender = jest.spyOn(MockView.prototype, 'render');
       const spySubscribe = jest.spyOn(MockView.prototype, 'subscribe');
-      const spyOptions = jest.spyOn(Model.prototype, 'getBoolOptions');
-      const spyPoint = jest.spyOn(Model.prototype, 'getCurrentPoints');
-      const spyRange = jest.spyOn(Model.prototype, 'getRangeSize');
       new Presenter(new Model(), new MockView()).init(
         document.createElement('div'),
       );
-      expect(spyPoint).toBeCalled();
-      expect(spyRange).toBeCalled();
-      expect(spyOptions).toBeCalled();
-      expect(spySubscribe).toBeCalled();
-      expect(spyRender).toBeCalled();
+      expect(spySubscribe).toBeCalledTimes(3);
+      expect(spyRender).toBeCalledTimes(1);
     });
   });
 
@@ -66,7 +53,7 @@ describe('Presenter class', () => {
     });
     describe('handlePointMove', () => {
       test('start update', () => {
-        model.withScale = false;
+        model.toggleScale();
         const spyCalc = jest.spyOn(Model.prototype, 'calcValue');
         const spyScale = jest.spyOn(MockView.prototype, 'updateScaleLines');
         mockView.notify(SliderEvent.PointMove, () => ({

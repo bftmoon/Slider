@@ -3,6 +3,7 @@ import SliderEvent from '../observer/SliderEvent';
 import MinMaxPosition from '../types/MinMaxPosition';
 import SliderOptions from '../types/SliderOptions';
 import ValidModel from '../model/ValidModel';
+import MinMax from "../types/MinMax";
 
 class PresenterProxy extends Presenter {
   protected model: ValidModel;
@@ -11,32 +12,30 @@ class PresenterProxy extends Presenter {
     return this.model.getOptions();
   }
 
-  addSlideListener(
-    callback: (data: { value: number; position: MinMaxPosition }) => void,
-  ) {
+  addSlideListener(callback: (data: MinMax<number>) => void) {
     this.subscribe(SliderEvent.ValueChanged, callback);
   }
 
   setCurrentRange(valueMin: number, valueMax: number) {
     this.model.setValidCurrents(valueMin, valueMax);
-    this.view.updatePosition(
-      this.model.isVertical,
-      this.model.getCurrentPoints(),
-    );
+    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
+    this.notifyValueChanged();
   }
 
   setCurrentRangeMin(value: number) {
     this.model.setValidCurrent(value, MinMaxPosition.Min);
-    this.view.updatePosition(this.model.isVertical, {
+    this.view.updatePosition(this.model.isVertical(), {
       min: this.model.getPoint(MinMaxPosition.Min),
     });
+    this.notifyValueChanged();
   }
 
   setCurrentRangeMax(value: number) {
     this.model.setValidCurrent(value, MinMaxPosition.Max);
-    this.view.updatePosition(this.model.isVertical, {
+    this.view.updatePosition(this.model.isVertical(), {
       max: this.model.getPoint(MinMaxPosition.Max),
     });
+    this.notifyValueChanged();
   }
 
   setCurrent(value: number) {
@@ -45,73 +44,43 @@ class PresenterProxy extends Presenter {
 
   setStep(step: number) {
     this.model.setValidStep(step);
-    if (this.model.withScale) {
-      this.view.updateScaleLines(
-        this.model.step,
-        this.model.getRangeSize(),
-        this.model.isVertical,
-      );
-    }
-    this.updatePointByStep(MinMaxPosition.Max);
-    if (this.model.isRange) {
-      this.updatePointByStep(MinMaxPosition.Min);
-    }
+    this.view.updatePosition(this.model.isVertical(), this.model.getPoints())
+    this.updateScaleLines();
+    this.notifyValueChanged()
   }
 
   setBorderMin(value: number) {
-    this.model.setValidBorder(value, MinMaxPosition.Min);
-    this.normalizePoints(
-      this.model.border.min,
-      (current) => current < this.model.border.min,
-    );
+    this.model.setValidBorders(value, this.model.getBorder(MinMaxPosition.Max));
+    this.view.updatePosition(this.model.isVertical(), this.model.getPoints())
     this.updateScaleLines();
+    this.notifyValueChanged()
   }
 
   setBorderMax(value: number) {
-    this.model.setValidBorder(value, MinMaxPosition.Max);
-    this.normalizePoints(
-      this.model.border.max,
-      (current) => current > this.model.border.max,
-    );
+    this.model.setValidBorders(this.model.getBorder(MinMaxPosition.Min), value);
+    this.view.updatePosition(this.model.isVertical(), this.model.getPoints())
     this.updateScaleLines();
+    this.notifyValueChanged()
   }
 
   setBorders(borderMin: number, borderMax: number) {
     this.model.setValidBorders(borderMin, borderMax);
-    this.normalizePoints(
-      this.model.border.min,
-      (current) => current < this.model.border.min,
-    );
-    this.normalizePoints(
-      this.model.border.max,
-      (current) => current > this.model.border.max,
-    );
+    this.view.updatePosition(this.model.isVertical(), this.model.getPoints())
+    this.updateScaleLines();
+    this.notifyValueChanged()
   }
 
   toggleRange() {
     this.model.toggleRange();
     this.view.toggleRange();
-    if (this.model.isOrderNormalizeRequired()) {
-      this.model.normalizeCurrentOrder();
-      this.view.updatePosition(this.model.isVertical, {
-        max: this.model.getPoint(MinMaxPosition.Max),
-      });
-      this.notify(SliderEvent.ValueChanged, {
-        value: this.model.getCurrent().max,
-        position: MinMaxPosition.Max,
-      });
-    }
-    this.view.updatePosition(this.model.isVertical, {
-      min: this.model.getPoint(MinMaxPosition.Min),
-    });
+    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
+    this.notifyValueChanged()
   }
 
   toggleScale() {
     this.model.toggleScale();
     this.view.toggleScale();
-    if (this.model.withScale) {
-      this.updateScaleLines();
-    }
+    this.updateScaleLines();
   }
 
   toggleTooltip() {
@@ -122,58 +91,16 @@ class PresenterProxy extends Presenter {
   toggleOrientation() {
     this.model.toggleOrientation();
     this.view.toggleOrientation();
-    this.view.updatePosition(
-      this.model.isVertical,
-      this.model.getCurrentPoints(),
-    );
-    if (this.model.withScale) {
-      this.view.updateScaleLines(
-        this.model.step,
-        this.model.getRangeSize(),
-        this.model.isVertical,
-      );
-    }
-  }
-
-  private updatePointByStep(position: MinMaxPosition) {
-    const current = this.model.getCurrent()[position];
-    const normalizedCurrent = this.model.normalizeByStep(current);
-    if (normalizedCurrent !== current) {
-      this.updatePosition(normalizedCurrent, position);
-    }
-  }
-
-  private normalizePoints(
-    border: number,
-    checkIsOverflow: (current: number) => boolean,
-  ) {
-    const realCurrent = this.model.getRealCurrent();
-    if (checkIsOverflow(realCurrent.min)) {
-      this.model.setCurrent({ min: border });
-      this.notify(SliderEvent.ValueChanged, {
-        value: border,
-        position: MinMaxPosition.Min,
-      });
-    }
-    if (checkIsOverflow(realCurrent.max)) {
-      this.model.setCurrent({ max: border });
-      this.notify(SliderEvent.ValueChanged, {
-        value: border,
-        position: MinMaxPosition.Max,
-      });
-    }
-    this.view.updatePosition(
-      this.model.isVertical,
-      this.model.getCurrentPoints(),
-    );
+    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
+    this.updateScaleLines();
   }
 
   private updateScaleLines() {
-    if (this.model.withScale) {
+    if (this.model.withScale()) {
       this.view.updateScaleLines(
-        this.model.step,
-        this.model.getRangeSize(),
-        this.model.isVertical,
+        this.model.getStep(),
+        this.model.getSize(),
+        this.model.isVertical(),
       );
     }
   }

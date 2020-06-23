@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack');
 
 const config = {
   entry: {
@@ -10,15 +11,24 @@ const config = {
     slider: './src/slider/Slider.ts',
     panel: './src/demo/panel/Panel.ts',
   },
-  externals: {
-    jquery: '$',
-  },
+  // todo: return with internet
+  // externals: {
+  //   jquery: '$',
+  // },
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css',
       ignoreOrder: true,
+    }),
+    // todo: del with internet
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jquery: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      'window.$': 'jquery',
     }),
     new HtmlWebpackPlugin({
       template: './src/demo/demo.pug',

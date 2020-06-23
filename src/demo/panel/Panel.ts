@@ -18,11 +18,10 @@ class Panel {
     this.sliderGroup.addSlideListener(this.handleSliderSlide);
   }
 
-  private handleSliderSlide = (data: {
-    value: number;
-    position: MinMaxPosition;
-  }) => {
-    this.changeableInputs[data.position].value = data.value.toString();
+  private handleSliderSlide = (currents: MinMax<number>) => {
+    for (let key in currents) {
+      this.changeableInputs[key].value = currents[key].toString();
+    }
   };
 
   private prepareElement(modelData: SliderOptions, element: HTMLInputElement) {
