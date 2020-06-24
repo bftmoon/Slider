@@ -51,8 +51,13 @@ class Model {
   }
 
   toggleRange() {
-    if (!this.options.isRange) this.normalizeSavedMin();
-    [this.options.current.min, this.rangeSavedMin] = [this.rangeSavedMin, this.options.current.min];
+    if (this.options.isRange) {
+      this.rangeSavedMin = this.options.current.min;
+      this.options.current.min = this.options.border.min;
+    } else {
+      this.normalizeSavedMin();
+      this.options.current.min = this.rangeSavedMin;
+    }
     this.normalizeOrder();
     this.options.isRange = !this.options.isRange;
   }
@@ -152,7 +157,7 @@ class Model {
   private normalizeSavedMin() {
     if (this.rangeSavedMin < this.options.border.min) this.rangeSavedMin = this.options.border.min;
     if (this.rangeSavedMin > this.options.border.max) this.rangeSavedMin = this.options.border.max;
-    if (this.rangeSavedMin % this.options.step !== 0)this.rangeSavedMin = this.normalizeByStep(this.rangeSavedMin);
+    if (this.rangeSavedMin % this.options.step !== 0) this.rangeSavedMin = this.normalizeByStep(this.rangeSavedMin);
   }
 }
 

@@ -41,10 +41,14 @@ class ValidModel extends Model {
   setValidBorders(borderMin: number, borderMax: number) {
     ValidModel.validateBorders(borderMin, borderMax);
     this.options.border = {min: borderMin, max: borderMax};
-    if (this.options.current.min < borderMin) this.options.current.min = borderMin;
+    if (this.options.isRange) {
+      if (this.options.current.min < borderMin) this.options.current.min = borderMin;
+      if (this.options.current.min > borderMax) this.options.current.min = borderMax;
+    } else {
+      this.options.current.min = borderMin;
+    }
     if (this.options.current.max < borderMin) this.options.current.max = borderMin;
     if (this.options.current.max > borderMax) this.options.current.max = borderMax;
-    if (this.options.current.min > borderMax) this.options.current.min = borderMax;
   }
 
   private validateOptions() {
