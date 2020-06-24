@@ -13,7 +13,6 @@ class Model {
     withTooltip: true,
     withScale: true,
   }
-
   private rangeSavedMin: number;
 
   constructor(options?: SliderOptions) {

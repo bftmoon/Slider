@@ -8,9 +8,7 @@ import CssClassUtil from 'utils/CssClassUtil';
 
 class Point extends Observer {
   private element: HTMLDivElement;
-
   private moveDiff: RelativePoint = { x: 0, y: 0 };
-
   private tooltip = new Tooltip();
 
   buildHtml(isVertical: boolean) {

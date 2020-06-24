@@ -12,9 +12,7 @@ import PositionUtil from 'utils/PositionUtil';
 
 class Body extends Observer {
   private element: HTMLElement;
-
   private range: Range = new Range();
-
   private points: MinMax<Point> = { min: new Point(), max: new Point() };
 
   private isMoveStarted = false;
