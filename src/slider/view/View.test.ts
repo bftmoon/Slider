@@ -1,7 +1,8 @@
-import CssClassUtil from 'utils/CssClassUtil';
 import Body from 'body/Body';
 import Scale from 'scale/Scale';
 import ViewOptions from 'types/ViewOptions';
+import CssClassUtil from 'utils/CssClassUtil';
+
 import View from './View';
 
 jest.mock('./scale/Scale');
@@ -18,9 +19,9 @@ describe('DefaultView class', () => {
     step: 2,
     size: 300,
     points: {
-      max: {percent: 20, tooltip: 30},
-      min: {percent: 10, tooltip: 20},
-    }
+      max: { percent: 20, tooltip: 30 },
+      min: { percent: 10, tooltip: 20 },
+    },
   };
   beforeEach(() => {
     view = new View();
@@ -28,7 +29,7 @@ describe('DefaultView class', () => {
   describe('render', () => {
     let tempOptions: ViewOptions;
     beforeEach(() => {
-      tempOptions = {...options};
+      tempOptions = { ...options };
     });
 
     test('init components', () => {
@@ -66,9 +67,8 @@ describe('DefaultView class', () => {
 
   describe('toggles for rendered', () => {
     beforeEach(() => {
-        view.render({...options, element: document.createElement('div')})
-      }
-    );
+      view.render({ ...options, element: document.createElement('div') });
+    });
     test('toggleRange', () => {
       const spy = jest.spyOn(Body.prototype, 'toggleRange');
       view.toggleRange();
@@ -100,9 +100,8 @@ describe('DefaultView class', () => {
     });
     test('updatePosition', () => {
       const spy = jest.spyOn(Body.prototype, 'updatePosition');
-      view.updatePosition(true, {min: {percent: 20}});
+      view.updatePosition(true, { min: { percent: 20 } });
       expect(spy).toBeCalled();
     });
   });
-
 });

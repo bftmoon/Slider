@@ -1,10 +1,10 @@
-import Tooltip from 'tooltip/Tooltip';
 import Observer from 'observer/Observer';
 import SliderEvent from 'observer/SliderEvent';
+import Tooltip from 'tooltip/Tooltip';
 import PointData from 'types/PointData';
-import CssClassUtil from 'utils/CssClassUtil';
-import ClassNames from 'utils/ClassNames';
 import RelativePoint from 'types/RelativePoint';
+import ClassNames from 'utils/ClassNames';
+import CssClassUtil from 'utils/CssClassUtil';
 
 class Point extends Observer {
   private element: HTMLDivElement;

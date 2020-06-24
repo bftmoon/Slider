@@ -1,6 +1,7 @@
-import MinMaxPosition from 'types/MinMaxPosition';
 import SliderError from 'SliderError';
+import MinMaxPosition from 'types/MinMaxPosition';
 import SliderOptions from 'types/SliderOptions';
+
 import Model from './Model';
 
 class ValidModel extends Model {
@@ -28,7 +29,7 @@ class ValidModel extends Model {
     ValidModel.validatePositiveRange(currentMin, currentMax);
     this.validateDivision(currentMin);
     this.validateDivision(currentMax);
-    this.options.current = {min: currentMin, max: currentMax};
+    this.options.current = { min: currentMin, max: currentMax };
   }
 
   setValidStep(step: number) {
@@ -40,7 +41,7 @@ class ValidModel extends Model {
 
   setValidBorders(borderMin: number, borderMax: number) {
     ValidModel.validateBorders(borderMin, borderMax);
-    this.options.border = {min: borderMin, max: borderMax};
+    this.options.border = { min: borderMin, max: borderMax };
     if (this.options.isRange) {
       if (this.options.current.min < borderMin) this.options.current.min = borderMin;
       if (this.options.current.min > borderMax) this.options.current.min = borderMax;
@@ -85,8 +86,7 @@ class ValidModel extends Model {
   }
 
   private validateDivision(current: number) {
-    const isNotDivideToStepOrBorder = (current: number) =>
-      (current - this.options.border.min) % this.options.step !== 0
+    const isNotDivideToStepOrBorder = (current: number) => (current - this.options.border.min) % this.options.step !== 0
       && current !== this.options.border.min
       && current !== this.options.border.max;
     if (isNotDivideToStepOrBorder(current)) {

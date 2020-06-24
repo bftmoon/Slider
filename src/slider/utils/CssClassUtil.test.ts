@@ -1,5 +1,5 @@
-import CssClassUtil from './CssClassUtil';
 import ClassNames from './ClassNames';
+import CssClassUtil from './CssClassUtil';
 
 describe('CssClassUtil class', () => {
   let element: HTMLElement;

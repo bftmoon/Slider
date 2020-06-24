@@ -1,4 +1,4 @@
-import {SliderGroup} from 'Slider';
+import { SliderGroup } from 'Slider';
 import 'slider-jquery';
 import MinMax from 'types/MinMax';
 import SliderOptions from 'types/SliderOptions';
@@ -18,7 +18,7 @@ class Panel {
   }
 
   private handleSliderSlide = (currents: MinMax<number>) => {
-    for (let key in currents) {
+    for (const key in currents) {
       this.changeableInputs[key].value = currents[key].toString();
     }
   };

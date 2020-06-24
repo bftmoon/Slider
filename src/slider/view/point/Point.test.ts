@@ -1,7 +1,8 @@
-import Point from './Point';
-import Tooltip from 'tooltip/Tooltip';
 import SliderEvent from 'observer/SliderEvent';
+import Tooltip from 'tooltip/Tooltip';
 import CssClassUtil from 'utils/CssClassUtil';
+
+import Point from './Point';
 
 describe('Point class', () => {
   let point: Point;

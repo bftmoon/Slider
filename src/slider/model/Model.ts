@@ -1,18 +1,19 @@
 import MinMax from 'types/MinMax';
-import PointData from 'types/PointData';
 import MinMaxPosition from 'types/MinMaxPosition';
+import PointData from 'types/PointData';
 import SliderOptions from 'types/SliderOptions';
 
 class Model {
   protected options: SliderOptions = {
-    current: {min: 0, max: 100},
-    border: {min: 0, max: 100},
+    current: { min: 0, max: 100 },
+    border: { min: 0, max: 100 },
     step: 1,
     isRange: true,
     isVertical: false,
     withTooltip: true,
     withScale: true,
   }
+
   private rangeSavedMin: number;
 
   constructor(options?: SliderOptions) {
@@ -43,7 +44,7 @@ class Model {
 
   willCurrentCollapse(position: MinMaxPosition, value: number) {
     return (position === MinMaxPosition.Min && value > this.options.current.max)
-      || (position === MinMaxPosition.Max && value < this.options.current.min)
+      || (position === MinMaxPosition.Max && value < this.options.current.min);
   }
 
   areCurrentEqual() {
@@ -93,7 +94,7 @@ class Model {
   }
 
   getOptions() {
-    return {...this.options};
+    return { ...this.options };
   }
 
   getSize() {
@@ -101,27 +102,27 @@ class Model {
   }
 
   isVertical() {
-    return this.options.isVertical
+    return this.options.isVertical;
   }
 
   isRange() {
-    return this.options.isRange
+    return this.options.isRange;
   }
 
   withTooltip() {
-    return this.options.withTooltip
+    return this.options.withTooltip;
   }
 
   withScale() {
-    return this.options.withScale
+    return this.options.withScale;
   }
 
   getCurrent(position: MinMaxPosition) {
-    return this.options.current[position]
+    return this.options.current[position];
   }
 
   getCurrents() {
-    return {...this.options.current};
+    return { ...this.options.current };
   }
 
   getStep() {
@@ -141,7 +142,7 @@ class Model {
   }
 
   private mergeOptions(options: SliderOptions) {
-    const temp = {...this.options, ...options};
+    const temp = { ...this.options, ...options };
     if (temp.border.min === undefined) temp.border.min = this.options.border.min;
     if (temp.border.max === undefined) temp.border.max = this.options.border.max;
     if (temp.current.max === undefined) temp.current.max = this.options.border.max;
@@ -150,8 +151,7 @@ class Model {
   }
 
   private normalizeOrder() {
-    if (this.options.current.min > this.options.current.max)
-      [this.options.current.min, this.options.current.max] = [this.options.current.max, this.options.current.min];
+    if (this.options.current.min > this.options.current.max) [this.options.current.min, this.options.current.max] = [this.options.current.max, this.options.current.min];
   }
 
   private normalizeSavedMin() {

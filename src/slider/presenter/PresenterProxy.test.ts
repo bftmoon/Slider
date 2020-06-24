@@ -1,15 +1,16 @@
-import MockView from 'view/MockView';
-import PresenterProxy from './PresenterProxy';
+import ValidModel from 'model/ValidModel';
+import Observer from 'observer/Observer';
 import SliderEvent from 'observer/SliderEvent';
 import SliderOptions from 'types/SliderOptions';
-import ValidModel from 'model/ValidModel';
-import Observer from "observer/Observer";
+import MockView from 'view/MockView';
+
+import PresenterProxy from './PresenterProxy';
 
 describe('PresenterProxy class', () => {
   let presenter: PresenterProxy;
   const options: SliderOptions = {
-    border: {min: 0, max: 100},
-    current: {min: 10, max: 80},
+    border: { min: 0, max: 100 },
+    current: { min: 10, max: 80 },
     step: 2,
     isRange: true,
     isVertical: true,
@@ -76,7 +77,7 @@ describe('PresenterProxy class', () => {
       const spyValid = jest.spyOn(ValidModel.prototype, 'setValidStep');
       const spyView = jest.spyOn(MockView.prototype, 'updatePosition');
       const spyNotify = jest.spyOn(Observer.prototype, 'notify');
-      const spyScale = jest.spyOn(MockView.prototype, 'updateScaleLines')
+      const spyScale = jest.spyOn(MockView.prototype, 'updateScaleLines');
       presenter.setStep(8);
       expect(spyValid).toBeCalled();
       expect(spyView).toBeCalled();
@@ -98,7 +99,7 @@ describe('PresenterProxy class', () => {
       expect(spyValid).toBeCalled();
       expect(spyScale).toBeCalled();
       expect(spyPoints).toBeCalled();
-    })
+    });
     test('setBorderMin', () => {
       presenter.setBorderMin(6);
     });

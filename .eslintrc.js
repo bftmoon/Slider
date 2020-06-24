@@ -20,5 +20,17 @@ module.exports = {
     'import/extensions': 'off',
     'no-unused-vars': 'warn',
     'no-undef': 'warn',
+    'import/order': [
+      'error',
+      {
+        groups: [
+          ["builtin", "external"],
+          "internal",
+          ["parent", "sibling"],
+        ],
+        'newlines-between': "always",
+        alphabetize: {order: 'asc'}
+      }
+    ],
   },
 };

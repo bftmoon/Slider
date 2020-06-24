@@ -1,5 +1,5 @@
-import MinMax from "./MinMax";
-import PointData from "./PointData";
+import MinMax from './MinMax';
+import PointData from './PointData';
 
 type ViewOptions = {
   element: HTMLElement,

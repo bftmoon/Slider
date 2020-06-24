@@ -1,5 +1,6 @@
-import Tooltip from './Tooltip';
 import CssClassUtil from 'utils/CssClassUtil';
+
+import Tooltip from './Tooltip';
 
 describe('Tooltip class', () => {
   let tooltip: Tooltip;

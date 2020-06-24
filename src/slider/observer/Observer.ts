@@ -1,5 +1,6 @@
-import SliderEvent from './SliderEvent';
 import { NotifyCallback } from 'types/NotifyData';
+
+import SliderEvent from './SliderEvent';
 
 class Observer {
   private events = new Map<SliderEvent, NotifyCallback[]>();

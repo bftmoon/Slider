@@ -1,6 +1,7 @@
 import SliderError from 'SliderError';
 import MinMaxPosition from 'types/MinMaxPosition';
 import SliderOptions from 'types/SliderOptions';
+
 import ValidModel from './ValidModel';
 
 describe('DefaultValidModel class', () => {

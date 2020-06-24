@@ -1,9 +1,10 @@
-import Presenter from './Presenter';
+import ValidModel from 'model/ValidModel';
 import SliderEvent from 'observer/SliderEvent';
+import MinMax from 'types/MinMax';
 import MinMaxPosition from 'types/MinMaxPosition';
 import SliderOptions from 'types/SliderOptions';
-import ValidModel from 'model/ValidModel';
-import MinMax from "types/MinMax";
+
+import Presenter from './Presenter';
 
 class PresenterProxy extends Presenter {
   protected model: ValidModel;
@@ -44,37 +45,37 @@ class PresenterProxy extends Presenter {
 
   setStep(step: number) {
     this.model.setValidStep(step);
-    this.view.updatePosition(this.model.isVertical(), this.model.getPoints())
+    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
     this.updateScaleLines();
-    this.notifyValueChanged()
+    this.notifyValueChanged();
   }
 
   setBorderMin(value: number) {
     this.model.setValidBorders(value, this.model.getBorder(MinMaxPosition.Max));
-    this.view.updatePosition(this.model.isVertical(), this.model.getPoints())
+    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
     this.updateScaleLines();
-    this.notifyValueChanged()
+    this.notifyValueChanged();
   }
 
   setBorderMax(value: number) {
     this.model.setValidBorders(this.model.getBorder(MinMaxPosition.Min), value);
-    this.view.updatePosition(this.model.isVertical(), this.model.getPoints())
+    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
     this.updateScaleLines();
-    this.notifyValueChanged()
+    this.notifyValueChanged();
   }
 
   setBorders(borderMin: number, borderMax: number) {
     this.model.setValidBorders(borderMin, borderMax);
-    this.view.updatePosition(this.model.isVertical(), this.model.getPoints())
+    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
     this.updateScaleLines();
-    this.notifyValueChanged()
+    this.notifyValueChanged();
   }
 
   toggleRange() {
     this.model.toggleRange();
     this.view.toggleRange();
     this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
-    this.notifyValueChanged()
+    this.notifyValueChanged();
   }
 
   toggleScale() {

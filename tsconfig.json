@@ -6,6 +6,5 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "baseUrl": "./src/slider"
-  },
-  "include": ["src"]
+  }
 }

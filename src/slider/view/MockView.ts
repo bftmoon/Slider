@@ -1,7 +1,8 @@
 /* eslint-disable class-methods-use-this */
-import ViewOptions from 'types/ViewOptions';
 import MinMax from 'types/MinMax';
 import PointData from 'types/PointData';
+import ViewOptions from 'types/ViewOptions';
+
 import View from './View';
 
 class MockView extends View {

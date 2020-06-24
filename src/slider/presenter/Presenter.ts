@@ -1,10 +1,10 @@
-import Observer from 'observer/Observer';
-import MinMaxPosition from 'types/MinMaxPosition';
 import SliderError from 'SliderError';
-import {CalcPoint, CalcPositionWithDiff, CalcRatio,} from 'types/NotifyData';
 import Model from 'model/Model';
-import View from 'view/View';
+import Observer from 'observer/Observer';
 import SliderEvent from 'observer/SliderEvent';
+import MinMaxPosition from 'types/MinMaxPosition';
+import { CalcPoint, CalcPositionWithDiff, CalcRatio } from 'types/NotifyData';
+import View from 'view/View';
 
 class Presenter extends Observer {
   constructor(protected model: Model, protected view: View) {
@@ -14,23 +14,22 @@ class Presenter extends Observer {
   init(parent: HTMLElement) {
     if (parent === undefined) throw new SliderError('Parent element undefined');
     this.view.render({
-        element: parent,
-        points: this.model.getPoints(),
-        size: this.model.getSize(),
-        step: this.model.getStep(),
-        isRange: this.model.isRange(),
-        isVertical: this.model.isVertical(),
-        withScale: this.model.withScale(),
-        withTooltip: this.model.withTooltip(),
-      }
-    );
+      element: parent,
+      points: this.model.getPoints(),
+      size: this.model.getSize(),
+      step: this.model.getStep(),
+      isRange: this.model.isRange(),
+      isVertical: this.model.isVertical(),
+      withScale: this.model.withScale(),
+      withTooltip: this.model.withTooltip(),
+    });
     this.view
       .subscribe(SliderEvent.SliderClick, this.handleSliderClick)
       .subscribe(SliderEvent.PointMove, this.handlePointMove)
       .subscribe(SliderEvent.PointMoveByScale, this.handlePointMoveByScale);
   }
 
-  protected notifyValueChanged(){
+  protected notifyValueChanged() {
     this.notify(SliderEvent.ValueChanged, this.model.getCurrents());
   }
 
@@ -41,7 +40,7 @@ class Presenter extends Observer {
       const current = this.model.getCurrent(
         position === MinMaxPosition.Max
           ? MinMaxPosition.Min
-          : MinMaxPosition.Max
+          : MinMaxPosition.Max,
       );
       this.updateCurrent(current, position);
     }
@@ -62,12 +61,12 @@ class Presenter extends Observer {
   };
 
   private handlePointMove = (calcPoint: CalcPoint) => {
-    const {ratio, position} = calcPoint(this.model.isVertical());
+    const { ratio, position } = calcPoint(this.model.isVertical());
     this.updateCurrentIfRequired(this.model.calcValue(ratio), position);
   };
 
   private handlePointMoveByScale = (calcPositionWithDiff: CalcPositionWithDiff) => {
-    const {diff, position} = calcPositionWithDiff(this.model.isVertical(), this.model.isRange());
+    const { diff, position } = calcPositionWithDiff(this.model.isVertical(), this.model.isRange());
     const modelValue = this.model.calcValue(
       this.model.getCurrent(position) / this.model.getSize() + diff,
     );

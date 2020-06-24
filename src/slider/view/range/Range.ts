@@ -1,6 +1,6 @@
 import MinMax from 'types/MinMax';
-import CssClassUtil from 'utils/CssClassUtil';
 import ClassNames from 'utils/ClassNames';
+import CssClassUtil from 'utils/CssClassUtil';
 
 class Range {
   private element: HTMLDivElement;

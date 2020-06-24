@@ -1,8 +1,9 @@
-import Presenter from './Presenter';
-import MockView from 'view/MockView';
+import Model from 'model/Model';
 import SliderEvent from 'observer/SliderEvent';
 import MinMaxPosition from 'types/MinMaxPosition';
-import Model from 'model/Model';
+import MockView from 'view/MockView';
+
+import Presenter from './Presenter';
 
 describe('Presenter class', () => {
   describe('init', () => {

@@ -1,5 +1,5 @@
-import CssClassUtil from 'utils/CssClassUtil';
 import ClassNames from 'utils/ClassNames';
+import CssClassUtil from 'utils/CssClassUtil';
 
 class Tooltip {
   private element: HTMLElement;

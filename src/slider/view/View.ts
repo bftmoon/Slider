@@ -1,19 +1,23 @@
-import Scale from 'scale/Scale';
 import Body from 'body/Body';
 import Observer from 'observer/Observer';
 import SliderEvent from 'observer/SliderEvent';
-import ViewOptions from 'types/ViewOptions';
+import Scale from 'scale/Scale';
 import MinMax from 'types/MinMax';
+import { CalcPoint, CalcRatio } from 'types/NotifyData';
 import PointData from 'types/PointData';
+import ViewOptions from 'types/ViewOptions';
 import CssClassUtil from 'utils/CssClassUtil';
-import {CalcPoint, CalcRatio} from 'types/NotifyData';
 
 class View extends Observer {
   private element: HTMLElement;
+
   private body: Body = new Body();
+
   private scale: Scale = new Scale();
 
-  render({element, isVertical, isRange, withTooltip, withScale, points, step, size}: ViewOptions) {
+  render({
+    element, isVertical, isRange, withTooltip, withScale, points, step, size,
+  }: ViewOptions) {
     this.element = element;
     const fragment = document.createDocumentFragment();
     CssClassUtil.initClass(this.element, isVertical);
@@ -24,7 +28,7 @@ class View extends Observer {
     );
 
     this.body.subscribe(SliderEvent.SliderClick, this.handleBodyClick);
-      this.body.subscribe(SliderEvent.PointMove, this.handlePointMove);
+    this.body.subscribe(SliderEvent.PointMove, this.handlePointMove);
     this.scale.subscribe(SliderEvent.SliderClick, this.handleScaleClick);
 
     if (!withTooltip) this.body.toggleTooltip();

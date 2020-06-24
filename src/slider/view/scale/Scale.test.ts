@@ -1,4 +1,5 @@
 import CssClassUtil from 'utils/CssClassUtil';
+
 import Scale from './Scale';
 
 describe('Scale class', () => {
