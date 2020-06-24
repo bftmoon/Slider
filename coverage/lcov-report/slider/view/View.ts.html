@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">87.88% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/32</span>
+                <span class='fraction'>29/33</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.21% </span>
+                <span class="strong">86.67% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>25/29</span>
+                <span class='fraction'>26/30</span>
             </div>
         
             
@@ -139,15 +139,7 @@
 <a name='L80'></a><a href='#L80'>80</a>
 <a name='L81'></a><a href='#L81'>81</a>
 <a name='L82'></a><a href='#L82'>82</a>
-<a name='L83'></a><a href='#L83'>83</a>
-<a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a>
-<a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L83'></a><a href='#L83'>83</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -160,15 +152,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -183,17 +168,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -222,47 +206,40 @@
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import Scale from './scale/Scale';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import Observer from 'observer/Observer';
+import SliderEvent from 'observer/SliderEvent';
+import MinMax from 'types/MinMax';
+import { CalcPoint, CalcRatio } from 'types/NotifyData';
+import PointData from 'types/PointData';
+import ViewOptions from 'types/ViewOptions';
+import CssClassUtil from 'utils/CssClassUtil';
+&nbsp;
 import Body from './body/Body';
-import Observer from '../observer/Observer';
-import SliderEvent from '../observer/SliderEvent';
-import ViewBoolOptions from '../types/ViewBoolOptions';
-import MinMax from '../types/MinMax';
-import PointData from '../types/PointData';
-import CssClassUtil from '../utils/CssClassUtil';
-import { CalcPoint, CalcRatio } from '../types/NotifyData';
+import Scale from './scale/Scale';
 &nbsp;
 class View extends Observer {
   private element: HTMLElement;
-&nbsp;
   private body: Body = new Body();
-&nbsp;
   private scale: Scale = new Scale();
 &nbsp;
-  render(
-    element: HTMLElement,
-    {
-      isVertical, isRange, withTooltip, withScale,
-    }: ViewBoolOptions,
-    points: MinMax&lt;PointData&gt;,
-    step: number,
-    size: number,
-  ) {
+  render({
+    element, isVertical, isRange, withTooltip, withScale, points, step, size,
+  }: ViewOptions) {
     this.element = element;
     const fragment = document.createDocumentFragment();
     CssClassUtil.initClass(this.element, isVertical);
@@ -272,9 +249,8 @@ class View extends Observer {
       this.scale.buildHtml(isVertical),
     );
 &nbsp;
-    this.body
-      .subscribe(SliderEvent.SliderClick, this.handleBodyClick)
-      .subscribe(SliderEvent.PointMove, this.handlePointMove);
+    this.body.subscribe(SliderEvent.SliderClick, this.handleBodyClick);
+    this.body.subscribe(SliderEvent.PointMove, this.handlePointMove);
     this.scale.subscribe(SliderEvent.SliderClick, this.handleScaleClick);
 &nbsp;
     if (!withTooltip) this.body.toggleTooltip();
@@ -334,7 +310,7 @@ export default View;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Jun 23 2020 02:14:28 GMT+0300 (GMT+03:00)
+                at Thu Jun 25 2020 02:09:59 GMT+0300 (GMT+03:00)
             </div>
         </div>
         <script src="../../prettify.js"></script>
