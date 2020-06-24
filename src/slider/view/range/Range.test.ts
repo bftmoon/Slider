@@ -4,9 +4,11 @@ import Range from './Range';
 
 describe('Range class', () => {
   let range: Range;
+
   beforeEach(() => {
     range = new Range();
   });
+
   describe('buildHtml', () => {
     test('return prepared element', () => {
       const mockUtil = jest.spyOn(CssClassUtil, 'initClass');
@@ -24,6 +26,7 @@ describe('Range class', () => {
     test('getElement', () => {
       expect(range.getElement()).toBeDefined();
     });
+
     describe('toggleOrientation', () => {
       test('remove old style attributes', () => {
         range.getElement().style.left = '10px';

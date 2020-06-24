@@ -33,6 +33,7 @@ describe('Model class', () => {
       });
       expect(model.getCurrent(MinMaxPosition.Min)).toBe(40);
     });
+
     test('currents is new object', () => {
       const model = new Model({
         current: { min: 40, max: 60 },
@@ -107,6 +108,7 @@ describe('Model class', () => {
       const model = new Model({ border: { min: 0, max: 200 } });
       expect(model.calcValue(0.5)).toBe(100);
     });
+
     test('normalize value by step', () => {
       expect(new Model({ step: 5, border: { min: 0, max: 100 } }).calcValue(0.123456)).toBe(10);
     });
@@ -146,6 +148,7 @@ describe('Model class', () => {
       expect(model.getCurrents().min).toBe(-1);
       expect(model.isRange()).toBeFalsy();
     });
+
     test('swap saved min value on toggle', () => {
       const model = new Model({
         current: { min: 1, max: 2 },
@@ -157,6 +160,7 @@ describe('Model class', () => {
       expect(model.getCurrents().min).toBe(1);
       expect(model.isRange()).toBeTruthy();
     });
+
     test('swap current if max < min', () => {
       const model = new Model({ current: { min: 2, max: 1 }, isRange: true });
       model.toggleRange();
@@ -165,6 +169,7 @@ describe('Model class', () => {
       expect(model.isRange()).toBeTruthy();
     });
   });
+
   describe('simple toggles', () => {
     const model = new Model({
       isVertical: true,

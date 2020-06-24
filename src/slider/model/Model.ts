@@ -25,8 +25,8 @@ class Model {
     if (value <= this.options.current.min) return MinMaxPosition.Min;
     if (value >= this.options.current.max) return MinMaxPosition.Max;
 
-    const middle = this.options.current.min + (this.options.current.max - this.options.current.min) / 2;
-    return value < middle ? MinMaxPosition.Min : MinMaxPosition.Max;
+    const getMiddle = (values: MinMax<number>) => values.min + (values.max - values.min) / 2;
+    return value < getMiddle(this.options.current) ? MinMaxPosition.Min : MinMaxPosition.Max;
   }
 
   calcValue(ratio: number) {
@@ -150,13 +150,19 @@ class Model {
   }
 
   private normalizeOrder() {
-    if (this.options.current.min > this.options.current.max) [this.options.current.min, this.options.current.max] = [this.options.current.max, this.options.current.min];
+    if (this.options.current.min > this.options.current.max) {
+      const temp = this.options.current.max;
+      this.options.current.max = this.options.current.min;
+      this.options.current.min = temp;
+    }
   }
 
   private normalizeSavedMin() {
     if (this.rangeSavedMin < this.options.border.min) this.rangeSavedMin = this.options.border.min;
     if (this.rangeSavedMin > this.options.border.max) this.rangeSavedMin = this.options.border.max;
-    if (this.rangeSavedMin % this.options.step !== 0) this.rangeSavedMin = this.normalizeByStep(this.rangeSavedMin);
+    if (this.rangeSavedMin % this.options.step !== 0) {
+      this.rangeSavedMin = this.normalizeByStep(this.rangeSavedMin);
+    }
   }
 }
 

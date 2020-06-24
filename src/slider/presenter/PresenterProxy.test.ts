@@ -19,11 +19,13 @@ describe('PresenterProxy class', () => {
   };
   const view = new MockView();
   let model: ValidModel;
+
   beforeEach(() => {
     model = new ValidModel(options);
     presenter = new PresenterProxy(model, view);
     jest.resetAllMocks();
   });
+
   describe('addSlideListener', () => {
     test('subscribe to current changes', () => {
       const spy = jest.spyOn(PresenterProxy.prototype, 'subscribe');
@@ -33,6 +35,7 @@ describe('PresenterProxy class', () => {
       expect(spy).toBeCalledWith(SliderEvent.ValueChanged, callback);
     });
   });
+
   describe('current setters', () => {
     test('setCurrentRange', () => {
       const spyModel = jest.spyOn(ValidModel.prototype, 'setValidCurrents');
@@ -43,6 +46,7 @@ describe('PresenterProxy class', () => {
       expect(spyView).toBeCalled();
       expect(spyNotify).toBeCalled();
     });
+
     test('setCurrentRangeMin', () => {
       const spyModel = jest.spyOn(ValidModel.prototype, 'setValidCurrent');
       const spyView = jest.spyOn(MockView.prototype, 'updatePosition');
@@ -52,6 +56,7 @@ describe('PresenterProxy class', () => {
       expect(spyView).toBeCalled();
       expect(spyNotify).toBeCalled();
     });
+
     test('setCurrentRangeMax', () => {
       const spyModel = jest.spyOn(ValidModel.prototype, 'setValidCurrent');
       const spyView = jest.spyOn(MockView.prototype, 'updatePosition');
@@ -61,6 +66,7 @@ describe('PresenterProxy class', () => {
       expect(spyView).toBeCalled();
       expect(spyNotify).toBeCalled();
     });
+
     test('setCurrent', () => {
       model.toggleRange();
       const spyModel = jest.spyOn(
@@ -71,6 +77,7 @@ describe('PresenterProxy class', () => {
       expect(spyModel).toBeCalled();
     });
   });
+
   describe('setStep', () => {
     test('set without scale', () => {
       model.toggleScale();
@@ -95,21 +102,29 @@ describe('PresenterProxy class', () => {
     const spyValid = jest.spyOn(ValidModel.prototype, 'setValidBorders');
     const spyScale = jest.spyOn(MockView.prototype, 'updateScaleLines');
     const spyPoints = jest.spyOn(MockView.prototype, 'updatePosition');
-    afterEach(() => {
+
+    test('setBorderMin', () => {
+      presenter.setBorderMin(6);
       expect(spyValid).toBeCalled();
       expect(spyScale).toBeCalled();
       expect(spyPoints).toBeCalled();
     });
-    test('setBorderMin', () => {
-      presenter.setBorderMin(6);
-    });
+
     test('setBorderMax', () => {
       presenter.setBorderMax(26);
+      expect(spyValid).toBeCalled();
+      expect(spyScale).toBeCalled();
+      expect(spyPoints).toBeCalled();
     });
+
     test('setBorders', () => {
       presenter.setBorders(2, 50);
+      expect(spyValid).toBeCalled();
+      expect(spyScale).toBeCalled();
+      expect(spyPoints).toBeCalled();
     });
   });
+
   describe('toggles', () => {
     test('toggleRange', () => {
       const spyToggleModel = jest.spyOn(ValidModel.prototype, 'toggleRange');
@@ -123,6 +138,7 @@ describe('PresenterProxy class', () => {
       expect(spyNotify).toBeCalled();
     });
   });
+
   test('toggleScale', () => {
     const spyModel = jest.spyOn(ValidModel.prototype, 'toggleScale');
     const spyView = jest.spyOn(MockView.prototype, 'toggleScale');
@@ -134,6 +150,7 @@ describe('PresenterProxy class', () => {
     presenter.toggleScale();
     expect(spyLines).toBeCalled();
   });
+
   test('toggleTooltip', () => {
     const spyModel = jest.spyOn(ValidModel.prototype, 'toggleTooltip');
     const spyView = jest.spyOn(MockView.prototype, 'toggleTooltip');
@@ -141,6 +158,7 @@ describe('PresenterProxy class', () => {
     expect(spyView).toBeCalled();
     expect(spyModel).toBeCalled();
   });
+
   test('toggleOrientation', () => {
     const spyModel = jest.spyOn(ValidModel.prototype, 'toggleOrientation');
     const spyView = jest.spyOn(MockView.prototype, 'toggleOrientation');

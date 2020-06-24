@@ -1,13 +1,13 @@
+import { SliderGroup } from 'Slider';
 import MinMax from 'types/MinMax';
 import SliderOptions from 'types/SliderOptions';
 import 'slider-jquery';
-import { SliderGroup } from 'Slider';
 
 class Panel {
   private changeableInputs: MinMax<HTMLInputElement> = {};
 
   // eslint-disable-next-line no-useless-constructor, no-empty-function
-  constructor(private sliderGroup: SliderGroup) {}
+  constructor(private sliderGroup: SliderGroup) { }
 
   init(panelElement: HTMLElement) {
     const data = this.sliderGroup.getOptions()[0];
@@ -18,9 +18,9 @@ class Panel {
   }
 
   private handleSliderSlide = (currents: MinMax<number>) => {
-    for (const key in currents) {
+    Object.keys(currents).forEach((key) => {
       this.changeableInputs[key].value = currents[key].toString();
-    }
+    });
   };
 
   private prepareElement(modelData: SliderOptions, element: HTMLInputElement) {

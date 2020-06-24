@@ -10,6 +10,7 @@ describe('Point class', () => {
   beforeEach(() => {
     point = new Point();
   });
+
   describe('buildHtml', () => {
     test('return prepared element', () => {
       const mockTooltip = jest.spyOn(Tooltip.prototype, 'buildHtml');
@@ -37,6 +38,7 @@ describe('Point class', () => {
         expect(spy).toBeCalledTimes(1);
       });
     });
+
     describe('toggleOrientation', () => {
       test('call orientation changes and clean styles', () => {
         const spy = jest.spyOn(CssClassUtil, 'toggleOrientation');
@@ -47,11 +49,13 @@ describe('Point class', () => {
         expect(point.getElement().style.length).toBe(0);
       });
     });
+
     test('toggleTooltip', () => {
       const spy = jest.spyOn(Tooltip.prototype, 'toggleHidden');
       point.toggleTooltip();
       expect(spy).toBeCalled();
     });
+
     describe('subscribe', () => {
       test('handleMouseMove notify about changes', () => {
         point.subscribe(SliderEvent.PointMove, (data) => {
@@ -92,6 +96,7 @@ describe('Point class', () => {
           expect(document.documentElement.classList).toContain('slider-plugin');
         });
       });
+
       describe('handleMouseUp', () => {
         test('remove point and body class', () => {
           jest.resetAllMocks();
@@ -104,6 +109,7 @@ describe('Point class', () => {
           );
         });
       });
+
       describe('handleMouseMove', () => {
         test('will notify', () => {
           const spy = jest.spyOn(Point.prototype, 'notify');

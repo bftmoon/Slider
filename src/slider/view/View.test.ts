@@ -23,9 +23,11 @@ describe('DefaultView class', () => {
       min: { percent: 10, tooltip: 20 },
     },
   };
+
   beforeEach(() => {
     view = new View();
   });
+
   describe('render', () => {
     let tempOptions: ViewOptions;
     beforeEach(() => {
@@ -45,18 +47,21 @@ describe('DefaultView class', () => {
       expect(spyScale).toBeCalled();
       expect(spyScaleLines).toBeCalled();
     });
+
     test('tooltips hiding when off', () => {
       const spyTooltip = jest.spyOn(Body.prototype, 'toggleTooltip');
       options.withTooltip = false;
       view.render(options);
       expect(spyTooltip).toBeCalled();
     });
+
     test('toggle range when range off', () => {
       const spyRange = jest.spyOn(Body.prototype, 'toggleRange');
       options.isRange = false;
       view.render(options);
       expect(spyRange).toBeCalled();
     });
+
     test('scale hiding when off', () => {
       const spyScale = jest.spyOn(Scale.prototype, 'toggleHidden');
       options.withScale = false;
@@ -69,21 +74,25 @@ describe('DefaultView class', () => {
     beforeEach(() => {
       view.render({ ...options, element: document.createElement('div') });
     });
+
     test('toggleRange', () => {
       const spy = jest.spyOn(Body.prototype, 'toggleRange');
       view.toggleRange();
       expect(spy).toBeCalled();
     });
+
     test('toggleTooltip', () => {
       const spy = jest.spyOn(Body.prototype, 'toggleTooltip');
       view.toggleTooltip();
       expect(spy).toBeCalled();
     });
+
     test('toggleScale', () => {
       const spy = jest.spyOn(Scale.prototype, 'toggleHidden');
       view.toggleScale();
       expect(spy).toBeCalled();
     });
+
     test('toggleOrientation', () => {
       const spyClass = jest.spyOn(CssClassUtil, 'toggleOrientation');
       const spyBody = jest.spyOn(Body.prototype, 'toggleOrientation');
@@ -93,11 +102,13 @@ describe('DefaultView class', () => {
       expect(spyBody).toBeCalled();
       expect(spyScale).toBeCalled();
     });
+
     test('updateScaleLines', () => {
       const spy = jest.spyOn(Scale.prototype, 'updateLines');
       view.updateScaleLines(4, 321, true);
       expect(spy).toBeCalled();
     });
+
     test('updatePosition', () => {
       const spy = jest.spyOn(Body.prototype, 'updatePosition');
       view.updatePosition(true, { min: { percent: 20 } });

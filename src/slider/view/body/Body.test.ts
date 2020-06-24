@@ -6,9 +6,11 @@ import CssClassUtil from 'utils/CssClassUtil';
 
 describe('Body class', () => {
   let body: Body;
+
   beforeEach(() => {
     body = new Body();
   });
+
   describe('buildHtml', () => {
     test('return prepared element', () => {
       const spyClass = jest.spyOn(CssClassUtil, 'initClass');
@@ -28,6 +30,7 @@ describe('Body class', () => {
     beforeEach(() => {
       body.buildHtml(true);
     });
+
     test('toggleOrientation', () => {
       const spyClass = jest.spyOn(CssClassUtil, 'toggleOrientation');
       const spyPoint = jest.spyOn(Point.prototype, 'toggleOrientation');
@@ -37,16 +40,19 @@ describe('Body class', () => {
       expect(spyPoint).toBeCalled();
       expect(spyClass).toBeCalled();
     });
+
     test('toggleTooltip', () => {
       const spyPoint = jest.spyOn(Point.prototype, 'toggleTooltip');
       body.toggleTooltip();
       expect(spyPoint).toBeCalledTimes(2);
     });
+
     test('toggleRange', () => {
       const spyPoint = jest.spyOn(Point.prototype, 'toggleHidden');
       body.toggleRange();
       expect(spyPoint).toBeCalledTimes(1);
     });
+
     test('updatePosition', () => {
       const spyPoint = jest.spyOn(Point.prototype, 'updatePosition');
       const spyRange = jest.spyOn(Range.prototype, 'updatePosition');
@@ -60,12 +66,14 @@ describe('Body class', () => {
       expect(spyPoint).toBeCalledTimes(3);
       expect(spyMove).toBeCalledTimes(2);
     });
+
     describe('handleSliderBodyMouseDown', () => {
       const spyNotify = jest.spyOn(Observer.prototype, 'notify');
       const spyMoveStart = jest.spyOn(Body.prototype, 'startPointMove');
       beforeEach(() => {
         jest.resetAllMocks();
       });
+
       test('not work on other children', () => {
         const child = document.createElement('div');
         body.getElement().append(child);
@@ -73,6 +81,7 @@ describe('Body class', () => {
         expect(spyNotify).not.toBeCalled();
         expect(spyMoveStart).not.toBeCalled();
       });
+
       test('work on body', () => {
         body.getElement().dispatchEvent(new MouseEvent('mousedown'));
         expect(spyNotify).toBeCalled();

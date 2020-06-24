@@ -4,9 +4,11 @@ import Tooltip from './Tooltip';
 
 describe('Tooltip class', () => {
   let tooltip: Tooltip;
+
   beforeEach(() => {
     tooltip = new Tooltip();
   });
+
   describe('buildHtml', () => {
     test('return prepared element', () => {
       const spy = jest.spyOn(CssClassUtil, 'initClass');
@@ -20,6 +22,7 @@ describe('Tooltip class', () => {
     beforeEach(() => {
       tooltip.buildHtml(false);
     });
+
     describe('toggleHidden', () => {
       test('toggleHidden call hidden changes', () => {
         const spy = jest.spyOn(CssClassUtil, 'toggleHidden');
@@ -27,6 +30,7 @@ describe('Tooltip class', () => {
         expect(spy).toBeCalledTimes(1);
       });
     });
+
     describe('toggleOrientation', () => {
       test('call orientation changes', () => {
         const spy = jest.spyOn(CssClassUtil, 'toggleOrientation');
@@ -45,6 +49,7 @@ describe('Tooltip class', () => {
           value: 10,
         });
       });
+
       test('set text to html', () => {
         tooltip.update('text', true);
         expect(tooltip.getElement().innerText).toBe('text');

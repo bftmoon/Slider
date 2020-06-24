@@ -26,12 +26,14 @@ describe('Presenter class', () => {
       current: { min: 10, max: 20 },
       isVertical: false,
     });
+
     beforeEach(() => {
       mockView = new MockView();
       presenter = new Presenter(model, mockView);
       presenter.init(document.createElement('div'));
       jest.fn().mockReset();
     });
+
     describe('handleSliderClick', () => {
       test('not update if equal', () => {
         const spyCalc = jest.spyOn(Model.prototype, 'calcValue');
@@ -42,6 +44,7 @@ describe('Presenter class', () => {
         expect(spyCompare).toBeCalled();
         expect(spyUpdate).not.toBeCalled();
       });
+
       test('update if not equal', () => {
         const spyCalc = jest.spyOn(Model.prototype, 'calcValue');
         const spyCompare = jest.spyOn(Model.prototype, 'isSameCurrent');
@@ -52,6 +55,7 @@ describe('Presenter class', () => {
         expect(spyUpdate).toBeCalled();
       });
     });
+
     describe('handlePointMove', () => {
       test('start update', () => {
         model.toggleScale();

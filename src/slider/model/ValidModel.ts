@@ -64,10 +64,13 @@ class ValidModel extends Model {
   }
 
   private validateInBorderRange(current: number) {
-    const isNotInBorderRange = (current: number) => current < this.options.border.min || current > this.options.border.max;
-    if (isNotInBorderRange(current)) {
+    if (this.isNotInBorderRange(current)) {
       throw new SliderError('Not in range');
     }
+  }
+
+  private isNotInBorderRange(value: number) {
+    return value < this.options.border.min || value > this.options.border.max;
   }
 
   private validateRangeActive() {
@@ -86,12 +89,15 @@ class ValidModel extends Model {
   }
 
   private validateDivision(current: number) {
-    const isNotDivideToStepOrBorder = (current: number) => (current - this.options.border.min) % this.options.step !== 0
-      && current !== this.options.border.min
-      && current !== this.options.border.max;
-    if (isNotDivideToStepOrBorder(current)) {
+    if (this.isNotDivideToStepOrBorder(current)) {
       throw new SliderError('Not divide on step');
     }
+  }
+
+  private isNotDivideToStepOrBorder(current: number) {
+    return (current - this.options.border.min) % this.options.step !== 0
+      && current !== this.options.border.min
+      && current !== this.options.border.max;
   }
 
   private static validatePositiveRange(min: number, max: number) {
