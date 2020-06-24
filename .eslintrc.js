@@ -18,6 +18,7 @@ module.exports = {
   rules: {
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
+    'lines-between-class-members': 'off',
     'no-unused-vars': 'warn',
     'no-undef': 'warn',
     'import/order': [
