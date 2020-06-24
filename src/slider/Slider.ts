@@ -1,7 +1,6 @@
-import SliderPlugin from './SliderPlugin';
-import MinMaxPosition from './types/MinMaxPosition';
-import SliderOptions from './types/SliderOptions';
-import MinMax from "./types/MinMax";
+import SliderPlugin from 'SliderPlugin';
+import SliderOptions from 'types/SliderOptions';
+import MinMax from "types/MinMax";
 
 interface SliderCommon {
   toggleRange(): void;

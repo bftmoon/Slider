@@ -4,7 +4,8 @@
     "module": "es6",
     "target": "es5",
     "sourceMap": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./src/slider"
   },
   "include": ["src"]
 }

@@ -1,7 +1,7 @@
-import MinMax from '../types/MinMax';
-import PointData from '../types/PointData';
-import MinMaxPosition from '../types/MinMaxPosition';
-import SliderOptions from '../types/SliderOptions';
+import MinMax from 'types/MinMax';
+import PointData from 'types/PointData';
+import MinMaxPosition from 'types/MinMaxPosition';
+import SliderOptions from 'types/SliderOptions';
 
 class Model {
   protected options: SliderOptions = {

@@ -1,7 +1,7 @@
-import CssClassUtil from '../utils/CssClassUtil';
-import Body from './body/Body';
-import Scale from './scale/Scale';
-import ViewOptions from '../types/ViewOptions';
+import CssClassUtil from 'utils/CssClassUtil';
+import Body from 'body/Body';
+import Scale from 'scale/Scale';
+import ViewOptions from 'types/ViewOptions';
 import View from './View';
 
 jest.mock('./scale/Scale');

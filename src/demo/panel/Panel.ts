@@ -1,8 +1,7 @@
-import { SliderGroup } from '../../slider/Slider';
-import '../../slider/slider-jquery';
-import MinMaxPosition from '../../slider/types/MinMaxPosition';
-import MinMax from '../../slider/types/MinMax';
-import SliderOptions from '../../slider/types/SliderOptions';
+import {SliderGroup} from 'Slider';
+import 'slider-jquery';
+import MinMax from 'types/MinMax';
+import SliderOptions from 'types/SliderOptions';
 
 class Panel {
   private changeableInputs: MinMax<HTMLInputElement> = {};

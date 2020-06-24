@@ -1,12 +1,12 @@
-import Scale from './scale/Scale';
-import Body from './body/Body';
-import Observer from '../observer/Observer';
-import SliderEvent from '../observer/SliderEvent';
-import ViewOptions from '../types/ViewOptions';
-import MinMax from '../types/MinMax';
-import PointData from '../types/PointData';
-import CssClassUtil from '../utils/CssClassUtil';
-import {CalcPoint, CalcRatio} from '../types/NotifyData';
+import Scale from 'scale/Scale';
+import Body from 'body/Body';
+import Observer from 'observer/Observer';
+import SliderEvent from 'observer/SliderEvent';
+import ViewOptions from 'types/ViewOptions';
+import MinMax from 'types/MinMax';
+import PointData from 'types/PointData';
+import CssClassUtil from 'utils/CssClassUtil';
+import {CalcPoint, CalcRatio} from 'types/NotifyData';
 
 class View extends Observer {
   private element: HTMLElement;

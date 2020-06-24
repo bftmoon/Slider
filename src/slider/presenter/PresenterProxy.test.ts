@@ -1,9 +1,9 @@
-import MockView from '../view/MockView';
+import MockView from 'view/MockView';
 import PresenterProxy from './PresenterProxy';
-import SliderEvent from '../observer/SliderEvent';
-import SliderOptions from '../types/SliderOptions';
-import ValidModel from '../model/ValidModel';
-import Observer from "../observer/Observer";
+import SliderEvent from 'observer/SliderEvent';
+import SliderOptions from 'types/SliderOptions';
+import ValidModel from 'model/ValidModel';
+import Observer from "observer/Observer";
 
 describe('PresenterProxy class', () => {
   let presenter: PresenterProxy;

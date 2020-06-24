@@ -1,6 +1,6 @@
-import MinMaxPosition from '../types/MinMaxPosition';
-import SliderError from '../SliderError';
-import SliderOptions from '../types/SliderOptions';
+import MinMaxPosition from 'types/MinMaxPosition';
+import SliderError from 'SliderError';
+import SliderOptions from 'types/SliderOptions';
 import Model from './Model';
 
 class ValidModel extends Model {

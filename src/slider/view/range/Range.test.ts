@@ -1,5 +1,5 @@
 import Range from './Range';
-import CssClassUtil from '../../utils/CssClassUtil';
+import CssClassUtil from 'utils/CssClassUtil';
 
 describe('Range class', () => {
   let range: Range;

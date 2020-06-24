@@ -1,4 +1,4 @@
-import MinMaxPosition from '../types/MinMaxPosition';
+import MinMaxPosition from 'types/MinMaxPosition';
 import Model from './Model';
 
 describe('Model class', () => {

@@ -1,14 +1,14 @@
-import Point from '../point/Point';
-import Range from '../range/Range';
-import Observer from '../../observer/Observer';
-import SliderEvent from '../../observer/SliderEvent';
-import MinMax from '../../types/MinMax';
-import PointData from '../../types/PointData';
-import CssClassUtil from '../../utils/CssClassUtil';
-import MinMaxPosition from '../../types/MinMaxPosition';
-import PositionUtil from '../../utils/PositionUtil';
-import ClassNames from '../../utils/ClassNames';
-import { CalcAbsolute, ViewPointData } from '../../types/NotifyData';
+import Point from 'point/Point';
+import Range from 'range/Range';
+import Observer from 'observer/Observer';
+import SliderEvent from 'observer/SliderEvent';
+import MinMax from 'types/MinMax';
+import PointData from 'types/PointData';
+import CssClassUtil from 'utils/CssClassUtil';
+import MinMaxPosition from 'types/MinMaxPosition';
+import PositionUtil from 'utils/PositionUtil';
+import ClassNames from 'utils/ClassNames';
+import { CalcAbsolute, ViewPointData } from 'types/NotifyData';
 
 class Body extends Observer {
   private element: HTMLElement;

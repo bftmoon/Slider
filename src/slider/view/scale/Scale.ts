@@ -1,8 +1,8 @@
-import Observer from '../../observer/Observer';
-import SliderEvent from '../../observer/SliderEvent';
-import CssClassUtil from '../../utils/CssClassUtil';
-import PositionUtil from '../../utils/PositionUtil';
-import ClassNames from '../../utils/ClassNames';
+import Observer from 'observer/Observer';
+import SliderEvent from 'observer/SliderEvent';
+import CssClassUtil from 'utils/CssClassUtil';
+import PositionUtil from 'utils/PositionUtil';
+import ClassNames from 'utils/ClassNames';
 
 class Scale extends Observer {
   private element: HTMLElement;

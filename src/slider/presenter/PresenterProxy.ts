@@ -1,9 +1,9 @@
 import Presenter from './Presenter';
-import SliderEvent from '../observer/SliderEvent';
-import MinMaxPosition from '../types/MinMaxPosition';
-import SliderOptions from '../types/SliderOptions';
-import ValidModel from '../model/ValidModel';
-import MinMax from "../types/MinMax";
+import SliderEvent from 'observer/SliderEvent';
+import MinMaxPosition from 'types/MinMaxPosition';
+import SliderOptions from 'types/SliderOptions';
+import ValidModel from 'model/ValidModel';
+import MinMax from "types/MinMax";
 
 class PresenterProxy extends Presenter {
   protected model: ValidModel;
