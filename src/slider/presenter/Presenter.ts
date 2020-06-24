@@ -1,7 +1,7 @@
-import SliderError from 'SliderError';
 import Model from 'model/Model';
 import Observer from 'observer/Observer';
 import SliderEvent from 'observer/SliderEvent';
+import SliderError from 'SliderError';
 import MinMaxPosition from 'types/MinMaxPosition';
 import { CalcPoint, CalcPositionWithDiff, CalcRatio } from 'types/NotifyData';
 import View from 'view/View';

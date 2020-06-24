@@ -29,7 +29,7 @@ module.exports = {
           ["parent", "sibling"],
         ],
         'newlines-between': "always",
-        alphabetize: {order: 'asc'}
+        alphabetize: {order: 'asc', caseInsensitive: true}
       }
     ],
   },

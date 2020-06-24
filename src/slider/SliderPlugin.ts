@@ -1,7 +1,7 @@
 import 'slider.scss';
-import { Slider } from 'Slider';
 import ValidModel from 'model/ValidModel';
 import PresenterProxy from 'presenter/PresenterProxy';
+import { Slider } from 'Slider';
 import SliderOptions from 'types/SliderOptions';
 import View from 'view/View';
 

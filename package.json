@@ -37,6 +37,7 @@
     "eslint-plugin-fsd": "^1.0.1",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.13.1",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
     "file-loader": "^6.0.0",
     "gh-pages": "^3.0.0",
     "html-webpack-plugin": "^4.3.0",
