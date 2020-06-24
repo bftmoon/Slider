@@ -10,9 +10,7 @@ import CssClassUtil from 'utils/CssClassUtil';
 
 class View extends Observer {
   private element: HTMLElement;
-
   private body: Body = new Body();
-
   private scale: Scale = new Scale();
 
   render({
