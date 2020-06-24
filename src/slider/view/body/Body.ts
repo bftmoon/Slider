@@ -1,7 +1,5 @@
 import Observer from 'observer/Observer';
 import SliderEvent from 'observer/SliderEvent';
-import Point from 'point/Point';
-import Range from 'range/Range';
 import MinMax from 'types/MinMax';
 import MinMaxPosition from 'types/MinMaxPosition';
 import { CalcAbsolute, ViewPointData } from 'types/NotifyData';
@@ -9,6 +7,9 @@ import PointData from 'types/PointData';
 import ClassNames from 'utils/ClassNames';
 import CssClassUtil from 'utils/CssClassUtil';
 import PositionUtil from 'utils/PositionUtil';
+
+import Point from '../point/Point';
+import Range from '../range/Range';
 
 class Body extends Observer {
   private element: HTMLElement;

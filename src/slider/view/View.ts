@@ -1,12 +1,13 @@
-import Body from 'body/Body';
 import Observer from 'observer/Observer';
 import SliderEvent from 'observer/SliderEvent';
-import Scale from 'scale/Scale';
 import MinMax from 'types/MinMax';
 import { CalcPoint, CalcRatio } from 'types/NotifyData';
 import PointData from 'types/PointData';
 import ViewOptions from 'types/ViewOptions';
 import CssClassUtil from 'utils/CssClassUtil';
+
+import Body from './body/Body';
+import Scale from './scale/Scale';
 
 class View extends Observer {
   private element: HTMLElement;
