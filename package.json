@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "jest": {
-    "coverageDirectory": "./dist/coverage"
+    "coverageDirectory": "./dist/coverage",
+    "moduleDirectories": ["node_modules", "src/slider"]
   },
   "scripts": {
     "dev": "webpack-dev-server --open --mode development",

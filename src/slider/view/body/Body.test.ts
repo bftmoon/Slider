@@ -1,8 +1,9 @@
-import Body from 'body/Body';
 import Observer from 'observer/Observer';
-import Point from 'point/Point';
-import Range from 'range/Range';
 import CssClassUtil from 'utils/CssClassUtil';
+
+import Point from '../point/Point';
+import Range from '../range/Range';
+import Body from './Body';
 
 describe('Body class', () => {
   let body: Body;
