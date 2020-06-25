@@ -1,10 +1,9 @@
-import 'slider.scss';
-import 'slider-jquery';
+import 'index';
 
 import './theme.scss';
 import './demo.scss';
 import './panel/panel.scss';
-import Panel from './panel/Panel';
+import Panel from './panel/index';
 
 $('.js-demo__container').each((index, element) => {
   new Panel(

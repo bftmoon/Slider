@@ -1,6 +1,6 @@
 import CssClassUtil from 'utils/CssClassUtil';
 
-import Scale from './Scale';
+import Scale from './index';
 
 describe('Scale class', () => {
   let scale: Scale;

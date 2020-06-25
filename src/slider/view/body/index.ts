@@ -1,4 +1,4 @@
-import Observer from 'observer/Observer';
+import Observer from 'observer/index';
 import SliderEvent from 'observer/SliderEvent';
 import MinMax from 'types/MinMax';
 import MinMaxPosition from 'types/MinMaxPosition';
@@ -8,8 +8,8 @@ import ClassNames from 'utils/ClassNames';
 import CssClassUtil from 'utils/CssClassUtil';
 import PositionUtil from 'utils/PositionUtil';
 
-import Point from '../point/Point';
-import Range from '../range/Range';
+import Point from '../point/index';
+import Range from '../range/index';
 
 class Body extends Observer {
   private element: HTMLElement;

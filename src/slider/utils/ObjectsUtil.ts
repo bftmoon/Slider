@@ -10,7 +10,7 @@ class ObjectsUtil {
         // @ts-ignore
         result[key] = inject?.hasOwnProperty(key) ? inject[key] : main[key];
       }
-    })
+    });
     return result;
   }
 

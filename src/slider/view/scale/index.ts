@@ -1,4 +1,4 @@
-import Observer from 'observer/Observer';
+import Observer from 'observer/index';
 import SliderEvent from 'observer/SliderEvent';
 import ClassNames from 'utils/ClassNames';
 import CssClassUtil from 'utils/CssClassUtil';

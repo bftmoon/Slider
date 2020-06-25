@@ -8,9 +8,8 @@ const webpack = require('webpack');
 const config = {
   entry: {
     demo: './src/demo/index.ts',
-    jqslider: './src/slider/slider-jquery.ts',
-    slider: './src/slider/Slider.ts',
-    panel: './src/demo/panel/Panel.ts',
+    jqslider: './src/slider/index.ts',
+    panel: './src/demo/panel/index.ts',
   },
   // todo: return with internet
   // externals: {

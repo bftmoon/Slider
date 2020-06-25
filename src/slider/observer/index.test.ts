@@ -1,5 +1,6 @@
-import Observer from './Observer';
 import SliderEvent from './SliderEvent';
+
+import Observer from './index';
 
 describe('Observer class', () => {
   let observer: Observer;

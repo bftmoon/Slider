@@ -2,7 +2,7 @@ import MinMax from 'types/MinMax';
 import MinMaxPosition from 'types/MinMaxPosition';
 import PointData from 'types/PointData';
 import SliderOptions from 'types/SliderOptions';
-import ObjectsUtil from "utils/ObjectsUtil";
+import ObjectsUtil from 'utils/ObjectsUtil';
 
 class Model {
   protected options: SliderOptions = {
