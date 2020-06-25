@@ -11,10 +11,16 @@ import Range from '../range/index';
 
 class Body extends Observer {
   private element: HTMLElement;
-  private range: Range = new Range();
-  private points: MinMax<Point> = { min: new Point(), max: new Point() };
-
+  private range: Range;
+  private points: MinMax<Point> = {};
   private isMoveStarted = false;
+
+  constructor(data?: {range?: Range, points?: MinMax<Point>}) {
+    super();
+    this.range = data?.range || new Range();
+    this.points.min = data?.points?.min || new Point();
+    this.points.max = data?.points?.max || new Point();
+  }
 
   buildHtml(isVertical: boolean) {
     this.element = document.createElement('div');
