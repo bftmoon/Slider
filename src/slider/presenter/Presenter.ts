@@ -22,9 +22,8 @@ class Presenter extends Observer {
       withScale: this.model.withScale(),
       withTooltip: this.model.withTooltip(),
     });
-    this.view
-      .subscribe(SliderEvent.SliderClick, this.handleSliderClick)
-      .subscribe(SliderEvent.PointMove, this.handlePointMove);
+    this.view.subscribe(SliderEvent.SliderClick, this.handleSliderClick);
+    this.view.subscribe(SliderEvent.PointMove, this.handlePointMove);
   }
 
   protected notifyValueChanged() {
@@ -32,7 +31,6 @@ class Presenter extends Observer {
   }
 
   private updateCurrent(modelValue: number, position: Position) {
-    console.log('hi')
     this.model.setCurrent(position, modelValue);
     this.view.updateCurrent(this.model.isVertical(), {
       [position]: this.model.getPoint(position),

@@ -1,10 +1,13 @@
 import Model from 'model/Model';
-import { Position, SliderEvent } from 'support/enums';
+import {Position, SliderEvent} from 'support/enums';
 import MockView from 'view/MockView';
 
 import Presenter from './Presenter';
+import SliderError from "../support/errors";
 
 describe('Presenter class', () => {
+  beforeEach(() => jest.clearAllMocks());
+
   describe('init', () => {
     test('call render and subscribe', () => {
       const spyRender = jest.spyOn(MockView.prototype, 'render');
@@ -12,61 +15,70 @@ describe('Presenter class', () => {
       new Presenter(new Model(), new MockView()).init(
         document.createElement('div'),
       );
-      expect(spySubscribe).toBeCalledTimes(3);
+      expect(spySubscribe).toBeCalledTimes(2);
       expect(spyRender).toBeCalledTimes(1);
     });
+    test('throw error if element undefined', ()=>{
+      const presenter = new Presenter(new Model(), new MockView());
+      expect(()=>presenter.init(undefined)).toThrow(SliderError);
+    })
   });
 
   describe('handlers', () => {
-    let presenter: Presenter;
-    let mockView: MockView;
-    const model = new Model({
-      border: { min: 0, max: 100 },
-      current: { min: 10, max: 20 },
-      isVertical: false,
-    });
-
-    beforeEach(() => {
-      mockView = new MockView();
-      presenter = new Presenter(model, mockView);
-      presenter.init(document.createElement('div'));
-      jest.fn().mockReset();
-    });
+    const mockView = new MockView();
+    const model = new Model();
+    const presenter = new Presenter(model, mockView);
+    presenter.init(document.createElement('div'))
 
     describe('handleSliderClick', () => {
       test('not update if equal', () => {
-        const spyCalc = jest.spyOn(Model.prototype, 'calcValue');
-        const spyCompare = jest.spyOn(Model.prototype, 'isSameCurrent');
+        model.isSameCurrent = jest.fn(()=>true);
+        const calcMock = jest.fn(()=>0);
         const spyUpdate = jest.spyOn(Model.prototype, 'selectPosition');
-        mockView.notify(SliderEvent.SliderClick, () => 0.1);
-        expect(spyCalc).toBeCalled();
-        expect(spyCompare).toBeCalled();
+        mockView.notify(SliderEvent.SliderClick, calcMock);
+        expect(model.isSameCurrent).toBeCalled();
+        expect(calcMock).toBeCalled();
         expect(spyUpdate).not.toBeCalled();
       });
 
       test('update if not equal', () => {
-        const spyCalc = jest.spyOn(Model.prototype, 'calcValue');
-        const spyCompare = jest.spyOn(Model.prototype, 'isSameCurrent');
+        model.isSameCurrent = jest.fn(()=>false);
+        const calcMock = jest.fn(()=>0);
         const spyUpdate = jest.spyOn(Model.prototype, 'selectPosition');
-        mockView.notify(SliderEvent.SliderClick, () => 1);
-        expect(spyCalc).toBeCalled();
-        expect(spyCompare).toBeCalled();
+        mockView.notify(SliderEvent.SliderClick, calcMock);
+        expect(model.isSameCurrent).toBeCalled();
+        expect(calcMock).toBeCalled();
         expect(spyUpdate).toBeCalled();
       });
     });
 
     describe('handlePointMove', () => {
-      test('start update', () => {
-        model.toggleScale();
-        const spyCalc = jest.spyOn(Model.prototype, 'calcValue');
-        const spyScale = jest.spyOn(MockView.prototype, 'updateScaleLines');
-        mockView.notify(SliderEvent.PointMove, () => ({
-          ratio: 0.2,
-          position: Position.Min,
-        }));
-        expect(spyCalc).toBeCalled();
-        expect(spyScale).not.toBeCalled();
+      test('simple update if min <= max', () => {
+        const spyEqual = jest.spyOn(Model.prototype, 'areCurrentEqual');
+        model.willCurrentCollapse = () => false;
+        mockView.notify(SliderEvent.PointMove, () => ({ratio: 0, position: Position.Min}));
+        expect(spyEqual).not.toBeCalled();
       });
+
+      test('not update if current already equal', () => {
+        const spyModelUpdate = jest.spyOn(Model.prototype, 'setCurrent')
+        const spyViewUpdate = jest.spyOn(MockView.prototype, 'updateCurrent')
+        model.willCurrentCollapse = () => true;
+        model.areCurrentEqual = () => true;
+        mockView.notify(SliderEvent.PointMove, () => ({ratio: 0, position: Position.Min}));
+        expect(spyModelUpdate).not.toBeCalled();
+        expect(spyViewUpdate).not.toBeCalled();
+      })
+
+      test('set moved point to value, equal to other point, if they collapse and not equal', ()=>{
+        model.willCurrentCollapse = () => true;
+        model.areCurrentEqual = () => false;
+        model.getCurrent = (position)=> {
+          expect(position).toBe(Position.Max);
+          return 0;
+        }
+        mockView.notify(SliderEvent.PointMove, () => ({ratio: 0, position: Position.Min}));
+      })
     });
   });
 });
