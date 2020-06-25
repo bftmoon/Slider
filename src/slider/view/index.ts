@@ -32,7 +32,7 @@ class View extends Observer {
     if (!withTooltip) this.body.toggleTooltip();
     element.append(fragment);
 
-    this.updatePosition(isVertical, points);
+    this.updateCurrent(isVertical, points);
     if (!isRange) this.body.toggleRange();
     if (withScale) this.scale.updateLines(step, size, isVertical);
     else this.scale.toggleHidden();
@@ -60,7 +60,7 @@ class View extends Observer {
     this.scale.updateLines(step, size, isVertical);
   }
 
-  updatePosition(isVertical: boolean, points: MinMax<PointData>) {
+  updateCurrent(isVertical: boolean, points: MinMax<PointData>) {
     this.body.updatePosition(isVertical, points);
   }
 

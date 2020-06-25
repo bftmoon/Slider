@@ -15,7 +15,7 @@ class MockView extends View {
 
   toggleTooltip() {}
 
-  updatePosition(isVertical: boolean, points: MinMax<PointData>) {}
+  updateCurrent(isVertical: boolean, points: MinMax<PointData>) {}
 
   updateScaleLines(step: number, size: number, isVertical: boolean) {}
 }

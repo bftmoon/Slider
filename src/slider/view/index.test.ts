@@ -6,8 +6,8 @@ import Scale from './scale/index';
 
 import View from './index';
 
-jest.mock('./scale/Scale');
-jest.mock('./body/Body');
+jest.mock('./scale/index');
+jest.mock('./body/index');
 
 describe('DefaultView class', () => {
   let view: View;
@@ -112,7 +112,7 @@ describe('DefaultView class', () => {
 
     test('updatePosition', () => {
       const spy = jest.spyOn(Body.prototype, 'updatePosition');
-      view.updatePosition(true, { min: { percent: 20 } });
+      view.updateCurrent(true, { min: { percent: 20 } });
       expect(spy).toBeCalled();
     });
   });

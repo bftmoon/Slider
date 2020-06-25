@@ -1,8 +1,8 @@
 import Model from 'model/Model';
 import Observer from 'observer/index';
-import { Position, SliderEvent } from 'support/enums';
+import {Position, SliderEvent} from 'support/enums';
 import SliderError from 'support/errors';
-import { CalcPoint, CalcPositionWithDiff, CalcRatio } from 'support/types';
+import {CalcPoint, CalcRatio} from 'support/types';
 import View from 'view/index';
 
 class Presenter extends Observer {
@@ -24,15 +24,31 @@ class Presenter extends Observer {
     });
     this.view
       .subscribe(SliderEvent.SliderClick, this.handleSliderClick)
-      .subscribe(SliderEvent.PointMove, this.handlePointMove)
-      .subscribe(SliderEvent.PointMoveByScale, this.handlePointMoveByScale);
+      .subscribe(SliderEvent.PointMove, this.handlePointMove);
   }
 
   protected notifyValueChanged() {
     this.notify(SliderEvent.ValueChanged, this.model.getCurrents());
   }
 
-  private updateCurrentIfRequired(modelValue: number, position: Position) {
+  private updateCurrent(modelValue: number, position: Position) {
+    console.log('hi')
+    this.model.setCurrent(position, modelValue);
+    this.view.updateCurrent(this.model.isVertical(), {
+      [position]: this.model.getPoint(position),
+    });
+    this.notifyValueChanged();
+  }
+
+  private handleSliderClick = (calcRatio: CalcRatio) => {
+    const modelValue = this.model.calcValue(calcRatio(this.model.isVertical()));
+    if (this.model.isSameCurrent(modelValue)) return;
+    this.updateCurrent(modelValue, this.model.selectPosition(modelValue));
+  };
+
+  private handlePointMove = (calcPoint: CalcPoint) => {
+    const { ratio, position } = calcPoint(this.model.isVertical());
+    const modelValue = this.model.calcValue(ratio);
     if (!this.model.willCurrentCollapse(position, modelValue)) {
       this.updateCurrent(modelValue, position);
     } else if (!this.model.areCurrentEqual()) {
@@ -43,34 +59,6 @@ class Presenter extends Observer {
       );
       this.updateCurrent(current, position);
     }
-  }
-
-  private updateCurrent(modelValue: number, position: Position) {
-    this.model.setCurrent(position, modelValue);
-    this.view.updatePosition(this.model.isVertical(), {
-      [position]: this.model.getPoint(position),
-    });
-    this.notifyValueChanged();
-  }
-
-  private handleSliderClick = (calcRatio: CalcRatio) => {
-    const modelValue = this.model.calcValue(calcRatio(this.model.isVertical()));
-    if (this.model.isSameCurrent(modelValue)) return;
-    this.updateCurrentIfRequired(modelValue, this.model.selectPosition(modelValue));
-  };
-
-  private handlePointMove = (calcPoint: CalcPoint) => {
-    const { ratio, position } = calcPoint(this.model.isVertical());
-    this.updateCurrentIfRequired(this.model.calcValue(ratio), position);
-  };
-
-  private handlePointMoveByScale = (calcPositionWithDiff: CalcPositionWithDiff) => {
-    const { diff, position } = calcPositionWithDiff(this.model.isVertical(), this.model.isRange());
-    const modelValue = this.model.calcValue(
-      this.model.getCurrent(position) / this.model.getSize() + diff,
-    );
-    if (this.model.isSameCurrent(modelValue)) return;
-    this.updateCurrentIfRequired(modelValue, position);
   };
 }
 

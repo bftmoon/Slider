@@ -17,13 +17,13 @@ class PresenterProxy extends Presenter {
 
   setCurrentRange(valueMin: number, valueMax: number) {
     this.model.setValidCurrents(valueMin, valueMax);
-    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
+    this.view.updateCurrent(this.model.isVertical(), this.model.getPoints());
     this.notifyValueChanged();
   }
 
   setCurrentRangeMin(value: number) {
     this.model.setValidCurrent(value, Position.Min);
-    this.view.updatePosition(this.model.isVertical(), {
+    this.view.updateCurrent(this.model.isVertical(), {
       min: this.model.getPoint(Position.Min),
     });
     this.notifyValueChanged();
@@ -31,7 +31,7 @@ class PresenterProxy extends Presenter {
 
   setCurrentRangeMax(value: number) {
     this.model.setValidCurrent(value, Position.Max);
-    this.view.updatePosition(this.model.isVertical(), {
+    this.view.updateCurrent(this.model.isVertical(), {
       max: this.model.getPoint(Position.Max),
     });
     this.notifyValueChanged();
@@ -43,28 +43,28 @@ class PresenterProxy extends Presenter {
 
   setStep(step: number) {
     this.model.setValidStep(step);
-    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
+    this.view.updateCurrent(this.model.isVertical(), this.model.getPoints());
     this.updateScaleLines();
     this.notifyValueChanged();
   }
 
   setBorderMin(value: number) {
     this.model.setValidBorders(value, this.model.getBorder(Position.Max));
-    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
+    this.view.updateCurrent(this.model.isVertical(), this.model.getPoints());
     this.updateScaleLines();
     this.notifyValueChanged();
   }
 
   setBorderMax(value: number) {
     this.model.setValidBorders(this.model.getBorder(Position.Min), value);
-    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
+    this.view.updateCurrent(this.model.isVertical(), this.model.getPoints());
     this.updateScaleLines();
     this.notifyValueChanged();
   }
 
   setBorders(borderMin: number, borderMax: number) {
     this.model.setValidBorders(borderMin, borderMax);
-    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
+    this.view.updateCurrent(this.model.isVertical(), this.model.getPoints());
     this.updateScaleLines();
     this.notifyValueChanged();
   }
@@ -72,7 +72,7 @@ class PresenterProxy extends Presenter {
   toggleRange() {
     this.model.toggleRange();
     this.view.toggleRange();
-    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
+    this.view.updateCurrent(this.model.isVertical(), this.model.getPoints());
     this.notifyValueChanged();
   }
 
@@ -90,7 +90,7 @@ class PresenterProxy extends Presenter {
   toggleOrientation() {
     this.model.toggleOrientation();
     this.view.toggleOrientation();
-    this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
+    this.view.updateCurrent(this.model.isVertical(), this.model.getPoints());
     this.updateScaleLines();
   }
 

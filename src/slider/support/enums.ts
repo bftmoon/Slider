@@ -6,9 +6,8 @@ enum Position {
 enum SliderEvent {
   SliderClick,
   PointMove,
-  PointMoveByScale,
-  ValueChanged,
   StopPointMove,
+  ValueChanged,
 }
 
 enum ClassNames {
