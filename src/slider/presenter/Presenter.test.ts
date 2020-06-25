@@ -1,8 +1,8 @@
 import Model from 'model/Model';
 import { Position, SliderEvent } from 'support/enums';
+import SliderError from 'support/errors';
 import MockView from 'view/MockView';
 
-import SliderError from '../support/errors';
 import Presenter from './Presenter';
 
 describe('Presenter class', () => {

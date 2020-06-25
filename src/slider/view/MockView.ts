@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 
-import { MinMax, PointData, ViewOptions } from '../support/types';
+import { MinMax, PointData, ViewOptions } from 'support/types';
 
 import View from './index';
 

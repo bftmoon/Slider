@@ -1,8 +1,8 @@
+import Observer from 'observer/index';
 import { Position, SliderEvent } from 'support/enums';
+import CssClassUtil from 'utils/CssClassUtil';
+import PositionUtil from 'utils/PositionUtil';
 
-import Observer from '../../observer/index';
-import CssClassUtil from '../../utils/CssClassUtil';
-import PositionUtil from '../../utils/PositionUtil';
 import Point from '../point/index';
 import Range from '../range/index';
 
