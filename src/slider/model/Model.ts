@@ -2,6 +2,7 @@ import MinMax from 'types/MinMax';
 import MinMaxPosition from 'types/MinMaxPosition';
 import PointData from 'types/PointData';
 import SliderOptions from 'types/SliderOptions';
+import ObjectsUtil from "utils/ObjectsUtil";
 
 class Model {
   protected options: SliderOptions = {
@@ -16,7 +17,7 @@ class Model {
   private rangeSavedMin: number;
 
   constructor(options?: SliderOptions) {
-    if (options !== undefined) this.options = this.mergeOptions(options);
+    if (options !== undefined) this.options = ObjectsUtil.update(this.options, options);
     this.rangeSavedMin = this.options.border.min;
   }
 
@@ -138,15 +139,6 @@ class Model {
     if (diff === 0) return value;
     newValue += this.options.step / 2 > diff ? -diff : this.options.step - diff;
     return newValue > this.options.border.max ? this.options.border.max : newValue;
-  }
-
-  private mergeOptions(options: SliderOptions) {
-    const temp = { ...this.options, ...options };
-    if (temp.border.min === undefined) temp.border.min = this.options.border.min;
-    if (temp.border.max === undefined) temp.border.max = this.options.border.max;
-    if (temp.current.max === undefined) temp.current.max = this.options.border.max;
-    if (temp.current.min === undefined) temp.current.min = this.options.border.min;
-    return temp;
   }
 
   private normalizeOrder() {
