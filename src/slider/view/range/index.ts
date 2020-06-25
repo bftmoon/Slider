@@ -1,5 +1,5 @@
-import MinMax from 'types/MinMax';
-import ClassNames from 'utils/ClassNames';
+import { ClassNames } from 'support/enums';
+import { MinMax } from 'support/types';
 import CssClassUtil from 'utils/CssClassUtil';
 
 class Range {

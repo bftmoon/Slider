@@ -1,7 +1,6 @@
 import { SliderGroup } from 'Slider';
-import MinMax from 'types/MinMax';
-import SliderOptions from 'types/SliderOptions';
 import 'index';
+import SliderOptions, { MinMax } from 'support/types';
 
 class Panel {
   private changeableInputs: MinMax<HTMLInputElement> = {};

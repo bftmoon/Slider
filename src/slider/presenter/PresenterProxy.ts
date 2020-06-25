@@ -1,8 +1,6 @@
-import ValidModel from 'model/ValidModel';
-import SliderEvent from 'observer/SliderEvent';
-import MinMax from 'types/MinMax';
-import MinMaxPosition from 'types/MinMaxPosition';
-import SliderOptions from 'types/SliderOptions';
+import { ValidModel } from 'model/index';
+import { Position, SliderEvent } from 'support/enums';
+import SliderOptions, { MinMax } from 'support/types';
 
 import Presenter from './Presenter';
 
@@ -24,17 +22,17 @@ class PresenterProxy extends Presenter {
   }
 
   setCurrentRangeMin(value: number) {
-    this.model.setValidCurrent(value, MinMaxPosition.Min);
+    this.model.setValidCurrent(value, Position.Min);
     this.view.updatePosition(this.model.isVertical(), {
-      min: this.model.getPoint(MinMaxPosition.Min),
+      min: this.model.getPoint(Position.Min),
     });
     this.notifyValueChanged();
   }
 
   setCurrentRangeMax(value: number) {
-    this.model.setValidCurrent(value, MinMaxPosition.Max);
+    this.model.setValidCurrent(value, Position.Max);
     this.view.updatePosition(this.model.isVertical(), {
-      max: this.model.getPoint(MinMaxPosition.Max),
+      max: this.model.getPoint(Position.Max),
     });
     this.notifyValueChanged();
   }
@@ -51,14 +49,14 @@ class PresenterProxy extends Presenter {
   }
 
   setBorderMin(value: number) {
-    this.model.setValidBorders(value, this.model.getBorder(MinMaxPosition.Max));
+    this.model.setValidBorders(value, this.model.getBorder(Position.Max));
     this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
     this.updateScaleLines();
     this.notifyValueChanged();
   }
 
   setBorderMax(value: number) {
-    this.model.setValidBorders(this.model.getBorder(MinMaxPosition.Min), value);
+    this.model.setValidBorders(this.model.getBorder(Position.Min), value);
     this.view.updatePosition(this.model.isVertical(), this.model.getPoints());
     this.updateScaleLines();
     this.notifyValueChanged();

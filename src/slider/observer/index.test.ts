@@ -1,4 +1,5 @@
-import SliderEvent from './SliderEvent';
+
+import { SliderEvent } from 'support/enums';
 
 import Observer from './index';
 

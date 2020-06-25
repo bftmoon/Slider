@@ -1,7 +1,6 @@
 import { SliderGroup } from 'Slider';
 import SliderPlugin from 'SliderPlugin';
-import MinMax from 'types/MinMax';
-import SliderOptions from 'types/SliderOptions';
+import SliderOptions, { MinMax } from 'support/types';
 
 declare global {
   interface JQuery {

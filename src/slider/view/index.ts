@@ -1,9 +1,8 @@
 import Observer from 'observer/index';
-import SliderEvent from 'observer/SliderEvent';
-import MinMax from 'types/MinMax';
-import { CalcPoint, CalcRatio } from 'types/NotifyData';
-import PointData from 'types/PointData';
-import ViewOptions from 'types/ViewOptions';
+import { SliderEvent } from 'support/enums';
+import {
+  CalcPoint, CalcRatio, MinMax, PointData, ViewOptions,
+} from 'support/types';
 import CssClassUtil from 'utils/CssClassUtil';
 
 import Body from './body/index';

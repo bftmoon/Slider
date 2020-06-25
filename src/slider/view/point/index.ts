@@ -1,15 +1,14 @@
+
 import Observer from 'observer/index';
-import SliderEvent from 'observer/SliderEvent';
-import PointData from 'types/PointData';
-import RelativePoint from 'types/RelativePoint';
-import ClassNames from 'utils/ClassNames';
+import { ClassNames, SliderEvent } from 'support/enums';
+import { PointData } from 'support/types';
 import CssClassUtil from 'utils/CssClassUtil';
 
 import Tooltip from '../tooltip/index';
 
 class Point extends Observer {
   private element: HTMLDivElement;
-  private moveDiff: RelativePoint = { x: 0, y: 0 };
+  private moveDiff = { x: 0, y: 0 };
   private tooltip = new Tooltip();
 
   buildHtml(isVertical: boolean) {

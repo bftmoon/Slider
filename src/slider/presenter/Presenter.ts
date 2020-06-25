@@ -1,9 +1,8 @@
 import Model from 'model/Model';
 import Observer from 'observer/index';
-import SliderEvent from 'observer/SliderEvent';
-import SliderError from 'SliderError';
-import MinMaxPosition from 'types/MinMaxPosition';
-import { CalcPoint, CalcPositionWithDiff, CalcRatio } from 'types/NotifyData';
+import { Position, SliderEvent } from 'support/enums';
+import SliderError from 'support/errors';
+import { CalcPoint, CalcPositionWithDiff, CalcRatio } from 'support/types';
 import View from 'view/index';
 
 class Presenter extends Observer {
@@ -33,20 +32,20 @@ class Presenter extends Observer {
     this.notify(SliderEvent.ValueChanged, this.model.getCurrents());
   }
 
-  private updateCurrentIfRequired(modelValue: number, position: MinMaxPosition) {
+  private updateCurrentIfRequired(modelValue: number, position: Position) {
     if (!this.model.willCurrentCollapse(position, modelValue)) {
       this.updateCurrent(modelValue, position);
     } else if (!this.model.areCurrentEqual()) {
       const current = this.model.getCurrent(
-        position === MinMaxPosition.Max
-          ? MinMaxPosition.Min
-          : MinMaxPosition.Max,
+        position === Position.Max
+          ? Position.Min
+          : Position.Max,
       );
       this.updateCurrent(current, position);
     }
   }
 
-  private updateCurrent(modelValue: number, position: MinMaxPosition) {
+  private updateCurrent(modelValue: number, position: Position) {
     this.model.setCurrent(position, modelValue);
     this.view.updatePosition(this.model.isVertical(), {
       [position]: this.model.getPoint(position),

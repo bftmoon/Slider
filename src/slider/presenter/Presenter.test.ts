@@ -1,6 +1,5 @@
 import Model from 'model/Model';
-import SliderEvent from 'observer/SliderEvent';
-import MinMaxPosition from 'types/MinMaxPosition';
+import { Position, SliderEvent } from 'support/enums';
 import MockView from 'view/MockView';
 
 import Presenter from './Presenter';
@@ -63,7 +62,7 @@ describe('Presenter class', () => {
         const spyScale = jest.spyOn(MockView.prototype, 'updateScaleLines');
         mockView.notify(SliderEvent.PointMove, () => ({
           ratio: 0.2,
-          position: MinMaxPosition.Min,
+          position: Position.Min,
         }));
         expect(spyCalc).toBeCalled();
         expect(spyScale).not.toBeCalled();

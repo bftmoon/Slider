@@ -1,4 +1,4 @@
-import ViewOptions from 'types/ViewOptions';
+import { ViewOptions } from 'support/types';
 import CssClassUtil from 'utils/CssClassUtil';
 
 import Body from './body/index';

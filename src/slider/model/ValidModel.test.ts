@@ -1,6 +1,6 @@
-import SliderError from 'SliderError';
-import MinMaxPosition from 'types/MinMaxPosition';
-import SliderOptions from 'types/SliderOptions';
+import { Position } from 'support/enums';
+import SliderError from 'support/errors';
+import SliderOptions from 'support/types';
 
 import ValidModel from './ValidModel';
 
@@ -64,7 +64,7 @@ describe('DefaultValidModel class', () => {
   describe('setValidCurrent', () => {
     test('Throw error when set min and range off', () => {
       const model = new ValidModel({ isRange: false });
-      expect(() => model.setValidCurrent(3, MinMaxPosition.Min)).toThrow(
+      expect(() => model.setValidCurrent(3, Position.Min)).toThrow(
         SliderError,
       );
     });
@@ -74,7 +74,7 @@ describe('DefaultValidModel class', () => {
         isRange: true,
         border: { min: 0, max: 200 },
       });
-      expect(() => model.setValidCurrent(-100, MinMaxPosition.Min)).toThrow(
+      expect(() => model.setValidCurrent(-100, Position.Min)).toThrow(
         SliderError,
       );
     });
@@ -84,7 +84,7 @@ describe('DefaultValidModel class', () => {
         isRange: true,
         current: { min: 10, max: 20 },
       });
-      expect(() => model.setValidCurrent(30, MinMaxPosition.Min)).toThrow(
+      expect(() => model.setValidCurrent(30, Position.Min)).toThrow(
         SliderError,
       );
     });
@@ -96,13 +96,13 @@ describe('DefaultValidModel class', () => {
         step: 3,
         border: { min: 0, max: 200 },
       });
-      expect(() => model.setValidCurrent(32, MinMaxPosition.Max)).toThrow(
+      expect(() => model.setValidCurrent(32, Position.Max)).toThrow(
         SliderError,
       );
-      expect(() => model.setValidCurrent(60, MinMaxPosition.Max)).not.toThrow(
+      expect(() => model.setValidCurrent(60, Position.Max)).not.toThrow(
         SliderError,
       );
-      expect(() => model.setValidCurrent(200, MinMaxPosition.Max)).not.toThrow(
+      expect(() => model.setValidCurrent(200, Position.Max)).not.toThrow(
         SliderError,
       );
     });

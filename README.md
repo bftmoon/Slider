@@ -25,8 +25,19 @@ slider.init('put element here');
 // or
 let slider = $('element').slider('options');
 ```
-
-All options can be found in [SliderOptions.ts](src/slider/types/SliderOptions.ts)  
+Options example:
+```javascript
+new SliderPlugin({
+    current: { min: 10, max: 90 },
+    border: { min: 0, max: 100 },
+    step: 1,
+    isRange: true,
+    isVertical: false,
+    withTooltip: true,
+    withScale: true,
+})
+```
+All options can be found in [SliderOptions](src/slider/support/types.ts)  
 All supported methods can be found in [Slider.ts](src/slider/Slider.ts)
 
 JQuery support multiple slider and more methods like:

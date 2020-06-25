@@ -1,6 +1,4 @@
-import SliderPlugin from 'SliderPlugin';
-import MinMax from 'types/MinMax';
-import SliderOptions from 'types/SliderOptions';
+import SliderOptions, { MinMax } from 'support/types';
 
 interface SliderCommon {
   toggleRange(): void;
@@ -25,7 +23,7 @@ interface Slider extends SliderCommon {
 }
 
 interface SliderGroup extends SliderCommon {
-  getSlider(index: number): SliderPlugin;
+  getSlider(index: number): Slider;
   getElementsQuery(): JQuery;
   getOptions(): SliderOptions[];
   size(): number;

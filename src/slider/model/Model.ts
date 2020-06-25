@@ -1,7 +1,5 @@
-import MinMax from 'types/MinMax';
-import MinMaxPosition from 'types/MinMaxPosition';
-import PointData from 'types/PointData';
-import SliderOptions from 'types/SliderOptions';
+import { Position } from 'support/enums';
+import SliderOptions, { MinMax, PointData } from 'support/types';
 import ObjectsUtil from 'utils/ObjectsUtil';
 
 class Model {
@@ -22,12 +20,12 @@ class Model {
   }
 
   selectPosition(value: number) {
-    if (!this.options.isRange) return MinMaxPosition.Max;
-    if (value <= this.options.current.min) return MinMaxPosition.Min;
-    if (value >= this.options.current.max) return MinMaxPosition.Max;
+    if (!this.options.isRange) return Position.Max;
+    if (value <= this.options.current.min) return Position.Min;
+    if (value >= this.options.current.max) return Position.Max;
 
     const getMiddle = (values: MinMax<number>) => values.min + (values.max - values.min) / 2;
-    return value < getMiddle(this.options.current) ? MinMaxPosition.Min : MinMaxPosition.Max;
+    return value < getMiddle(this.options.current) ? Position.Min : Position.Max;
   }
 
   calcValue(ratio: number) {
@@ -42,9 +40,9 @@ class Model {
     return value === this.options.current.min || value === this.options.current.max;
   }
 
-  willCurrentCollapse(position: MinMaxPosition, value: number) {
-    return (position === MinMaxPosition.Min && value > this.options.current.max)
-      || (position === MinMaxPosition.Max && value < this.options.current.min);
+  willCurrentCollapse(position: Position, value: number) {
+    return (position === Position.Min && value > this.options.current.max)
+      || (position === Position.Max && value < this.options.current.min);
   }
 
   areCurrentEqual() {
@@ -75,11 +73,11 @@ class Model {
     this.options.withScale = !this.options.withScale;
   }
 
-  setCurrent(position: MinMaxPosition, current: number) {
+  setCurrent(position: Position, current: number) {
     this.options.current[position] = current;
   }
 
-  getPoint(position: MinMaxPosition): PointData {
+  getPoint(position: Position): PointData {
     return {
       percent: ((this.options.current[position] - this.options.border.min) / this.getSize()) * 100,
       tooltip: this.options.current[position],
@@ -88,8 +86,8 @@ class Model {
 
   getPoints(): MinMax<PointData> {
     return {
-      min: this.getPoint(MinMaxPosition.Min),
-      max: this.getPoint(MinMaxPosition.Max),
+      min: this.getPoint(Position.Min),
+      max: this.getPoint(Position.Max),
     };
   }
 
@@ -117,7 +115,7 @@ class Model {
     return this.options.withScale;
   }
 
-  getCurrent(position: MinMaxPosition) {
+  getCurrent(position: Position) {
     return this.options.current[position];
   }
 
@@ -129,7 +127,7 @@ class Model {
     return this.options.step;
   }
 
-  getBorder(position: MinMaxPosition) {
+  getBorder(position: Position) {
     return this.options.border[position];
   }
 

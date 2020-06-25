@@ -1,4 +1,4 @@
-import ClassNames from 'utils/ClassNames';
+import { ClassNames } from 'support/enums';
 import CssClassUtil from 'utils/CssClassUtil';
 
 class Tooltip {

@@ -1,4 +1,4 @@
-import ClassNames from './ClassNames';
+import { ClassNames } from 'support/enums';
 
 class CssClassUtil {
   static readonly MAIN_PREFIX = 'slider';

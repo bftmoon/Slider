@@ -1,6 +1,6 @@
-import SliderError from 'SliderError';
-import MinMaxPosition from 'types/MinMaxPosition';
-import SliderOptions from 'types/SliderOptions';
+import { Position } from 'support/enums';
+import SliderError from 'support/errors';
+import SliderOptions from 'support/types';
 
 import Model from './Model';
 
@@ -10,9 +10,9 @@ class ValidModel extends Model {
     this.validateOptions();
   }
 
-  setValidCurrent(current: number, position: MinMaxPosition) {
+  setValidCurrent(current: number, position: Position) {
     this.validateInBorderRange(current);
-    if (position === MinMaxPosition.Min) {
+    if (position === Position.Min) {
       this.validateRangeActive();
       ValidModel.validatePositiveRange(current, this.options.current.max);
     } else {

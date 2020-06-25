@@ -1,7 +1,7 @@
 import ValidModel from 'model/ValidModel';
 import Observer from 'observer/index';
-import SliderEvent from 'observer/SliderEvent';
-import SliderOptions from 'types/SliderOptions';
+import { SliderEvent } from 'support/enums';
+import SliderOptions from 'support/types';
 import MockView from 'view/MockView';
 
 import PresenterProxy from './PresenterProxy';

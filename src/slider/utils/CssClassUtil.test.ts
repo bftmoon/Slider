@@ -1,4 +1,5 @@
-import ClassNames from './ClassNames';
+import { ClassNames } from 'support/enums';
+
 import CssClassUtil from './CssClassUtil';
 
 describe('CssClassUtil class', () => {

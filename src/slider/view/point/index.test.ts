@@ -1,4 +1,4 @@
-import SliderEvent from 'observer/SliderEvent';
+import { SliderEvent } from 'support/enums';
 import CssClassUtil from 'utils/CssClassUtil';
 
 import Tooltip from '../tooltip/index';

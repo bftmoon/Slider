@@ -1,10 +1,8 @@
 import Observer from 'observer/index';
-import SliderEvent from 'observer/SliderEvent';
-import MinMax from 'types/MinMax';
-import MinMaxPosition from 'types/MinMaxPosition';
-import { CalcAbsolute, ViewPointData } from 'types/NotifyData';
-import PointData from 'types/PointData';
-import ClassNames from 'utils/ClassNames';
+import { ClassNames, Position, SliderEvent } from 'support/enums';
+import {
+  CalcAbsolute, MinMax, PointData, ViewPointData,
+} from 'support/types';
 import CssClassUtil from 'utils/CssClassUtil';
 import PositionUtil from 'utils/PositionUtil';
 
@@ -89,7 +87,7 @@ class Body extends Observer {
   };
 
   private handleMaxPointMove = (calcAbsolute: CalcAbsolute) => {
-    this.handlePointMove(calcAbsolute, MinMaxPosition.Max);
+    this.handlePointMove(calcAbsolute, Position.Max);
   };
 
   private handleSliderBodyMouseDown = (event: MouseEvent) => {
@@ -114,7 +112,7 @@ class Body extends Observer {
 
   private handlePointMove = (
     calcAbsolute: CalcAbsolute,
-    position = MinMaxPosition.Min,
+    position = Position.Min,
   ) => {
     this.notify(
       SliderEvent.PointMove,

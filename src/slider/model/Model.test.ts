@@ -1,4 +1,4 @@
-import MinMaxPosition from 'types/MinMaxPosition';
+import { Position } from 'support/enums';
 
 import Model from './Model';
 
@@ -19,8 +19,8 @@ describe('Model class', () => {
   describe('setCurrent', () => {
     test('Set min and max', () => {
       const model = new Model();
-      model.setCurrent(MinMaxPosition.Min, 50);
-      model.setCurrent(MinMaxPosition.Max, 60);
+      model.setCurrent(Position.Min, 50);
+      model.setCurrent(Position.Max, 60);
       expect(model.getCurrents()).toEqual({ min: 50, max: 60 });
     });
   });
@@ -31,7 +31,7 @@ describe('Model class', () => {
         current: { min: 40, max: 60 },
         isRange: true,
       });
-      expect(model.getCurrent(MinMaxPosition.Min)).toBe(40);
+      expect(model.getCurrent(Position.Min)).toBe(40);
     });
 
     test('currents is new object', () => {
@@ -40,7 +40,7 @@ describe('Model class', () => {
         isRange: true,
       });
       model.getCurrents().min = 20;
-      expect(model.getCurrent(MinMaxPosition.Min)).toBe(40);
+      expect(model.getCurrent(Position.Min)).toBe(40);
     });
   });
 
@@ -50,11 +50,11 @@ describe('Model class', () => {
         current: { min: 10, max: 15 },
         border: { min: 0, max: 100 },
       });
-      expect(model.getPoint(MinMaxPosition.Min).percent).toBe(10);
-      expect(model.getPoint(MinMaxPosition.Max).percent).toBe(15);
+      expect(model.getPoint(Position.Min).percent).toBe(10);
+      expect(model.getPoint(Position.Max).percent).toBe(15);
       model = new Model({ current: { min: 10, max: 15 }, border: { min: 10, max: 30 } });
-      expect(model.getPoint(MinMaxPosition.Max).percent).toBe(25);
-      expect(model.getPoint(MinMaxPosition.Min).percent).toBe(0);
+      expect(model.getPoint(Position.Max).percent).toBe(25);
+      expect(model.getPoint(Position.Min).percent).toBe(0);
     });
   });
 
@@ -62,8 +62,8 @@ describe('Model class', () => {
     test('Equals to min and max for getPoint', () => {
       const model = new Model();
       expect(model.getPoints()).toEqual({
-        min: model.getPoint(MinMaxPosition.Min),
-        max: model.getPoint(MinMaxPosition.Max),
+        min: model.getPoint(Position.Min),
+        max: model.getPoint(Position.Max),
       });
     });
   });
@@ -81,17 +81,17 @@ describe('Model class', () => {
         isRange: false,
         current: { min: 33, max: 66 },
       });
-      expect(model.selectPosition(32)).toBe(MinMaxPosition.Max);
-      expect(model.selectPosition(33)).toBe(MinMaxPosition.Max);
-      expect(model.selectPosition(50)).toBe(MinMaxPosition.Max);
+      expect(model.selectPosition(32)).toBe(Position.Max);
+      expect(model.selectPosition(33)).toBe(Position.Max);
+      expect(model.selectPosition(50)).toBe(Position.Max);
     });
 
     test('Position with less diff when range off', () => {
       const model = new Model({ current: { min: 5, max: 10 } });
-      expect(model.selectPosition(1)).toBe(MinMaxPosition.Min);
-      expect(model.selectPosition(7)).toBe(MinMaxPosition.Min);
-      expect(model.selectPosition(8)).toBe(MinMaxPosition.Max);
-      expect(model.selectPosition(70)).toBe(MinMaxPosition.Max);
+      expect(model.selectPosition(1)).toBe(Position.Min);
+      expect(model.selectPosition(7)).toBe(Position.Min);
+      expect(model.selectPosition(8)).toBe(Position.Max);
+      expect(model.selectPosition(70)).toBe(Position.Max);
     });
   });
 
@@ -127,13 +127,13 @@ describe('Model class', () => {
     test('Return true when min > max', () => {
       const model = new Model({ current: { min: 33, max: 66 } });
 
-      expect(model.willCurrentCollapse(MinMaxPosition.Min, 77)).toBeTruthy();
-      expect(model.willCurrentCollapse(MinMaxPosition.Min, 66)).toBeFalsy();
-      expect(model.willCurrentCollapse(MinMaxPosition.Min, 33)).toBeFalsy();
+      expect(model.willCurrentCollapse(Position.Min, 77)).toBeTruthy();
+      expect(model.willCurrentCollapse(Position.Min, 66)).toBeFalsy();
+      expect(model.willCurrentCollapse(Position.Min, 33)).toBeFalsy();
 
-      expect(model.willCurrentCollapse(MinMaxPosition.Max, 22)).toBeTruthy();
-      expect(model.willCurrentCollapse(MinMaxPosition.Max, 33)).toBeFalsy();
-      expect(model.willCurrentCollapse(MinMaxPosition.Max, 66)).toBeFalsy();
+      expect(model.willCurrentCollapse(Position.Max, 22)).toBeTruthy();
+      expect(model.willCurrentCollapse(Position.Max, 33)).toBeFalsy();
+      expect(model.willCurrentCollapse(Position.Max, 66)).toBeFalsy();
     });
   });
 

@@ -1,6 +1,6 @@
-import { NotifyCallback } from 'types/NotifyData';
+import { SliderEvent } from 'support/enums';
+import { NotifyCallback } from 'support/types';
 
-import SliderEvent from './SliderEvent';
 
 class Observer {
   private events = new Map<SliderEvent, NotifyCallback[]>();
