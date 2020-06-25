@@ -1,10 +1,12 @@
-import {Position, SliderEvent} from "support/enums";
-import Body from "./index";
-import CssClassUtil from "../../utils/CssClassUtil";
-import Point from "../point/index";
-import Range from "../range/index";
-import PositionUtil from "../../utils/PositionUtil";
-import Observer from "../../observer/index";
+import { Position, SliderEvent } from 'support/enums';
+
+import Observer from '../../observer/index';
+import CssClassUtil from '../../utils/CssClassUtil';
+import PositionUtil from '../../utils/PositionUtil';
+import Point from '../point/index';
+import Range from '../range/index';
+
+import Body from './index';
 
 describe('Body class', () => {
   let body: Body;
@@ -58,12 +60,12 @@ describe('Body class', () => {
     test('updatePosition', () => {
       const spyPoint = jest.spyOn(Point.prototype, 'updatePosition');
       const spyRange = jest.spyOn(Range.prototype, 'updatePosition');
-      body.updatePosition(true, {min: {percent: 10}});
+      body.updatePosition(true, { min: { percent: 10 } });
       expect(spyPoint).toBeCalledTimes(1);
       expect(spyRange).toBeCalledTimes(1);
       const spyMove = jest.spyOn(Point.prototype, 'startGrabbing');
       body.startPointMove();
-      body.updatePosition(true, {min: {percent: 2}, max: {percent: 20}});
+      body.updatePosition(true, { min: { percent: 2 }, max: { percent: 20 } });
       expect(spyRange).toBeCalledTimes(2);
       expect(spyPoint).toBeCalledTimes(3);
       expect(spyMove).toBeCalledTimes(2);
@@ -91,7 +93,7 @@ describe('Body class', () => {
         expect(spyMoveStart).toBeCalled();
       });
 
-      test('notify with position func', (done) => {
+      test('notify with position func', () => new Promise((done) => {
         const spyUtil = jest.spyOn(PositionUtil, 'calc');
         const event = new MouseEvent('mousedown');
         body.subscribe(SliderEvent.SliderClick, (func) => {
@@ -106,49 +108,53 @@ describe('Body class', () => {
           }
         });
         body.getElement().dispatchEvent(event);
-      })
+      }));
     });
 
     describe('handlePointMove', () => {
-      test('for max', (doneMax) => {
-        const points = {min: new Point(), max: new Point()};
-        const body = new Body({points}); // should be unique
-        body.buildHtml(true);
+      test('for max', () => new Promise((doneMax) => {
+        const points = { min: new Point(), max: new Point() };
+        const moveBody = new Body({ points }); // should be unique
+        moveBody.buildHtml(true);
         // @ts-ignore
-        body.getElement().getBoundingClientRect = () => ({top: 1, height: 2, left: 2, width: 4})
-        body.subscribe(SliderEvent.PointMove, (func) => {
+        moveBody.getElement().getBoundingClientRect = () => ({
+          top: 1, height: 2, left: 2, width: 4,
+        });
+        moveBody.subscribe(SliderEvent.PointMove, (func) => {
           try {
             let res = func(true);
-            expect(res).toEqual({position: Position.Max, ratio: -3});
+            expect(res).toEqual({ position: Position.Max, ratio: -3 });
             res = func(false);
-            expect(res).toEqual({position: Position.Max, ratio: 1.75});
-            doneMax()
+            expect(res).toEqual({ position: Position.Max, ratio: 1.75 });
+            doneMax();
           } catch (error) {
             doneMax(error);
           }
-        })
+        });
         points.max.notify(SliderEvent.PointMove, () => 9);
-      })
+      }));
 
-      test('for min', (doneMin) => {
-        const points = {min: new Point(), max: new Point()};
-        const body = new Body({points});
-        body.buildHtml(true);
+      test('for min', () => new Promise((doneMin) => {
+        const points = { min: new Point(), max: new Point() };
+        const moveBody = new Body({ points });
+        moveBody.buildHtml(true);
         // @ts-ignore
-        body.getElement().getBoundingClientRect = () => ({top: 1, height: 2, left: 2, width: 4})
-        body.subscribe(SliderEvent.PointMove, (func) => {
+        moveBody.getElement().getBoundingClientRect = () => ({
+          top: 1, height: 2, left: 2, width: 4,
+        });
+        moveBody.subscribe(SliderEvent.PointMove, (func) => {
           try {
             let res = func(true);
-            expect(res).toEqual({position: Position.Min, ratio: 1.5});
+            expect(res).toEqual({ position: Position.Min, ratio: 1.5 });
             res = func(false);
-            expect(res).toEqual({position: Position.Min, ratio: -0.5});
-            doneMin()
+            expect(res).toEqual({ position: Position.Min, ratio: -0.5 });
+            doneMin();
           } catch (error) {
             doneMin(error);
           }
-        })
+        });
         points.min.notify(SliderEvent.PointMove, () => 0);
-      })
-    })
-  })
+      }));
+    });
+  });
 });

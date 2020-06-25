@@ -1,4 +1,4 @@
-import {SliderEvent} from 'support/enums';
+import { SliderEvent } from 'support/enums';
 import CssClassUtil from 'utils/CssClassUtil';
 
 import Tooltip from '../tooltip/index';
@@ -60,21 +60,21 @@ describe('Point class', () => {
     describe('subscribe', () => {
       test('handleMouseMove notify about changes', () => {
         point.subscribe(SliderEvent.PointMove, (data) => {
-          expect(data).toEqual({x: 1, y: 2});
+          expect(data).toEqual({ x: 1, y: 2 });
         });
-        const event = new MouseEvent('mousemove', {clientX: 1, clientY: 2});
+        const event = new MouseEvent('mousemove', { clientX: 1, clientY: 2 });
         point.getElement().dispatchEvent(event);
       });
     });
 
     describe('updatePosition', () => {
       beforeEach(() => {
-        Object.defineProperty(point.getElement(), 'offsetWidth', {value: 10});
+        Object.defineProperty(point.getElement(), 'offsetWidth', { value: 10 });
       });
 
       test('update vertical without tooltip', () => {
         const spy = jest.spyOn(Tooltip.prototype, 'update');
-        point.updatePosition(true, {percent: 10});
+        point.updatePosition(true, { percent: 10 });
         expect(spy).not.toBeCalled();
         expect(point.getElement().style.bottom).toBe('calc(10% - 5px)');
         spy.mockReset();
@@ -82,7 +82,7 @@ describe('Point class', () => {
 
       test('update horizontal and tooltip', () => {
         const spy = jest.spyOn(Tooltip.prototype, 'update');
-        point.updatePosition(false, {percent: 10, tooltip: 10});
+        point.updatePosition(false, { percent: 10, tooltip: 10 });
         expect(spy).toBeCalledTimes(1);
         expect(point.getElement().style.left).toBe('calc(10% - 5px)');
         spy.mockReset();
@@ -122,15 +122,17 @@ describe('Point class', () => {
 
         test('calcAbsolute', () => {
           // @ts-ignore
-          point.getElement().getBoundingClientRect = () => ({x: 5, y: 10, width: 10, height: 14})
+          point.getElement().getBoundingClientRect = () => ({
+            x: 5, y: 10, width: 10, height: 14,
+          });
           point.subscribe(SliderEvent.PointMove, (calcAbsolute) => {
-            expect(calcAbsolute(false)).toBe(44)
-            expect(calcAbsolute(true)).toBe(56)
-          })
-          point.getElement().dispatchEvent(new MouseEvent('mousedown', {clientX: 6, clientY: 11}));
-          document.dispatchEvent(new MouseEvent('mousemove', {clientX: 40, clientY: 50}));
+            expect(calcAbsolute(false)).toBe(44);
+            expect(calcAbsolute(true)).toBe(56);
+          });
+          point.getElement().dispatchEvent(new MouseEvent('mousedown', { clientX: 6, clientY: 11 }));
+          document.dispatchEvent(new MouseEvent('mousemove', { clientX: 40, clientY: 50 }));
           expect.assertions(2);
-        })
+        });
       });
     });
   });
