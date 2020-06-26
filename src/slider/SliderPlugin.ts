@@ -1,9 +1,9 @@
 import 'slider.scss';
-import { ValidModel } from 'model/index';
-import { PresenterProxy } from 'presenter/index';
+import { ValidModel } from 'model';
+import { PresenterProxy } from 'presenter';
 import { Slider } from 'Slider';
 import SliderOptions from 'support/types';
-import View from 'view/index';
+import View from 'view';
 
 class SliderPlugin extends PresenterProxy implements Slider {
   constructor(options?: SliderOptions) {

@@ -1,5 +1,5 @@
-import ValidModel from 'model/ValidModel';
-import Observer from 'observer/index';
+import { ValidModel } from 'model';
+import Observer from 'observer';
 import { SliderEvent } from 'support/enums';
 import SliderOptions from 'support/types';
 import MockView from 'view/MockView';

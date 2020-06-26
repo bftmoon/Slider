@@ -1,7 +1,7 @@
 
+import Observer from 'observer';
 import { SliderEvent } from 'support/enums';
 
-import Observer from './index';
 
 describe('Observer class', () => {
   let observer: Observer;

@@ -2,7 +2,7 @@
 
 import { MinMax, PointData, ViewOptions } from 'support/types';
 
-import View from './index';
+import View from '../view';
 
 class MockView extends View {
   render(options:ViewOptions) {}

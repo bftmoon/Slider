@@ -1,12 +1,12 @@
-import Observer from 'observer/index';
+import Observer from 'observer';
 import { SliderEvent } from 'support/enums';
 import {
   CalcPoint, CalcRatio, MinMax, PointData, ViewOptions,
 } from 'support/types';
 import CssClassUtil from 'utils/CssClassUtil';
 
-import Body from './body/index';
-import Scale from './scale/index';
+import Body from './body';
+import Scale from './scale';
 
 class View extends Observer {
   private element: HTMLElement;

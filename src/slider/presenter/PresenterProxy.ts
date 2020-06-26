@@ -1,4 +1,4 @@
-import { ValidModel } from 'model/index';
+import { ValidModel } from 'model';
 import { Position, SliderEvent } from 'support/enums';
 import SliderOptions, { MinMax } from 'support/types';
 

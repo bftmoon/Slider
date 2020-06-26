@@ -1,13 +1,13 @@
 import { ViewOptions } from 'support/types';
 import CssClassUtil from 'utils/CssClassUtil';
 
-import Body from './body/index';
-import Scale from './scale/index';
+import View from '../view';
+import Body from './body';
+import Scale from './scale';
 
-import View from './index';
 
-jest.mock('./scale/index');
-jest.mock('./body/index');
+jest.mock('./scale');
+jest.mock('./body');
 
 describe('DefaultView class', () => {
   let view: View;

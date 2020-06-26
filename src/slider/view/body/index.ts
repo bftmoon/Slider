@@ -1,4 +1,4 @@
-import Observer from 'observer/index';
+import Observer from 'observer';
 import { ClassNames, Position, SliderEvent } from 'support/enums';
 import {
   CalcAbsolute, MinMax, PointData, ViewPointData,
@@ -6,8 +6,8 @@ import {
 import CssClassUtil from 'utils/CssClassUtil';
 import PositionUtil from 'utils/PositionUtil';
 
-import Point from '../point/index';
-import Range from '../range/index';
+import Point from '../point';
+import Range from '../range';
 
 class Body extends Observer {
   private element: HTMLElement;

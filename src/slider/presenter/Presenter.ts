@@ -1,9 +1,9 @@
-import Model from 'model/Model';
-import Observer from 'observer/index';
+import { Model } from 'model';
+import Observer from 'observer';
 import { Position, SliderEvent } from 'support/enums';
 import SliderError from 'support/errors';
 import { CalcPoint, CalcRatio } from 'support/types';
-import View from 'view/index';
+import View from 'view';
 
 class Presenter extends Observer {
   constructor(protected model: Model, protected view: View) {

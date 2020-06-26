@@ -1,8 +1,6 @@
 import CssClassUtil from 'utils/CssClassUtil';
 
-import { ClassNames } from '../../support/enums';
-
-import Range from './index';
+import Range from '../range';
 
 describe('Range class', () => {
   let range: Range;

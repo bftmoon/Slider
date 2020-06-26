@@ -1,4 +1,4 @@
-import Observer from 'observer/index';
+import Observer from 'observer';
 import { ClassNames, SliderEvent } from 'support/enums';
 import CssClassUtil from 'utils/CssClassUtil';
 import PositionUtil from 'utils/PositionUtil';

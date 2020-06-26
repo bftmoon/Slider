@@ -1,9 +1,9 @@
 import { SliderEvent } from 'support/enums';
 import CssClassUtil from 'utils/CssClassUtil';
 
-import Tooltip from '../tooltip/index';
+import Point from '../point';
+import Tooltip from '../tooltip';
 
-import Point from './index';
 
 describe('Point class', () => {
   let point: Point;

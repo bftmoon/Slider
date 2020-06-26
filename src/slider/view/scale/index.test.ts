@@ -2,7 +2,7 @@ import { SliderEvent } from 'support/enums';
 import CssClassUtil from 'utils/CssClassUtil';
 import PositionUtil from 'utils/PositionUtil';
 
-import Scale from './index';
+import Scale from '../scale';
 
 describe('Scale class', () => {
   let scale: Scale;
