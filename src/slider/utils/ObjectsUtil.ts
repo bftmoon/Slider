@@ -1,5 +1,5 @@
 class ObjectsUtil {
-  static update(main: Object, inject: Object) {
+  static update<T>(main: T, inject: T) {
     const result = {};
     Object.keys(main).forEach((key) => {
       // @ts-ignore

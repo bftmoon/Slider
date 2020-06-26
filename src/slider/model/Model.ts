@@ -15,7 +15,7 @@ class Model {
   private rangeSavedMin: number;
 
   constructor(options?: SliderOptions) {
-    if (options !== undefined) this.options = ObjectsUtil.update(this.options, options);
+    if (options !== undefined) this.options = ObjectsUtil.update<SliderOptions>(this.options, options);
     this.rangeSavedMin = this.options.border.min;
   }
 
