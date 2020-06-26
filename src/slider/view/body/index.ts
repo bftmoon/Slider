@@ -62,22 +62,22 @@ class Body extends Observer {
 
   updatePosition(isVertical: boolean, { min, max }: MinMax<PointData>) {
     const percents: MinMax<number> = {};
-    if (min !== undefined) {
-      this.points.min.updatePosition(isVertical, min);
-      percents.min = min.percent;
-      if (this.isMoveStarted) this.points.min.startGrabbing();
-    }
-    if (max !== undefined) {
-      this.points.max.updatePosition(isVertical, max);
-      percents.max = max.percent;
-      if (this.isMoveStarted) this.points.max.startGrabbing();
-    }
-
+    percents.min = this.updatePointPosition(isVertical, min, Position.Min);
+    percents.max = this.updatePointPosition(isVertical, max, Position.Max);
     this.range.updatePosition(
       isVertical,
       percents,
       isVertical ? this.element.offsetHeight : undefined,
     );
+  }
+
+  private updatePointPosition(isVertical: boolean, point: PointData, position: Position) {
+    if (point !== undefined) {
+      this.points[position].updatePosition(isVertical, point);
+      if (this.isMoveStarted) this.points[position].startGrabbing();
+      return point.percent;
+    }
+    return undefined;
   }
 
   startPointMove() {

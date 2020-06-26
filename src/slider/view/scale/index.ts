@@ -25,7 +25,6 @@ class Scale extends Observer {
     CssClassUtil.toggleOrientation(this.element, ClassNames.Scale);
     this.element.childNodes.forEach((child: ChildNode) => {
       CssClassUtil.toggleOrientation(child as HTMLElement, ClassNames.Line);
-      return null;
     });
   }
 
@@ -39,7 +38,6 @@ class Scale extends Observer {
         step,
         size,
       );
-
       const fragment = document.createDocumentFragment();
       for (let i = 0; i < visibleCount; i += 1) {
         fragment.append(Scale.buildLineHtml(isVertical, i + 1, percentGap));

@@ -1,5 +1,7 @@
 import CssClassUtil from 'utils/CssClassUtil';
 
+import { ClassNames } from '../../support/enums';
+
 import Range from './index';
 
 describe('Range class', () => {
@@ -40,12 +42,24 @@ describe('Range class', () => {
         range.updatePosition(false, { min: 10, max: 90 });
         expect(range.getElement().style.marginLeft).toBe('10%');
         expect(range.getElement().style.marginRight).toBe('10%');
+        range.updatePosition(false, { min: 20 });
+        expect(range.getElement().style.marginLeft).toBe('20%');
+        expect(range.getElement().style.marginRight).toBe('10%');
+        range.updatePosition(false, { max: 70 });
+        expect(range.getElement().style.marginLeft).toBe('20%');
+        expect(range.getElement().style.marginRight).toBe('30%');
       });
 
       test('use pixels for positioning on vertical', () => {
         range.updatePosition(true, { min: 10, max: 90 }, 100);
         expect(range.getElement().style.marginBottom).toBe('10px');
         expect(range.getElement().style.marginTop).toBe('10px');
+        range.updatePosition(true, { min: 20 }, 100);
+        expect(range.getElement().style.marginBottom).toBe('20px');
+        expect(range.getElement().style.marginTop).toBe('10px');
+        range.updatePosition(true, { max: 70 }, 100);
+        expect(range.getElement().style.marginBottom).toBe('20px');
+        expect(range.getElement().style.marginTop).toBe('30px');
       });
     });
   });

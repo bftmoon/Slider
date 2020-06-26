@@ -58,17 +58,25 @@ describe('Body class', () => {
     });
 
     test('updatePosition', () => {
+      Object.defineProperty(body.getElement(), 'offsetHeight', {
+        value: 500,
+      });
       const spyPoint = jest.spyOn(Point.prototype, 'updatePosition');
       const spyRange = jest.spyOn(Range.prototype, 'updatePosition');
       body.updatePosition(true, { min: { percent: 10 } });
-      expect(spyPoint).toBeCalledTimes(1);
-      expect(spyRange).toBeCalledTimes(1);
+      expect(spyPoint).toBeCalled();
+      expect(spyRange).toBeCalledWith(true, { min: 10 }, 500);
+      spyPoint.mockClear();
+      spyRange.mockClear();
       const spyMove = jest.spyOn(Point.prototype, 'startGrabbing');
       body.startPointMove();
       body.updatePosition(true, { min: { percent: 2 }, max: { percent: 20 } });
-      expect(spyRange).toBeCalledTimes(2);
-      expect(spyPoint).toBeCalledTimes(3);
-      expect(spyMove).toBeCalledTimes(2);
+      expect(spyRange).toBeCalledWith(true, { min: 2, max: 20 }, 500);
+      expect(spyPoint).toBeCalled();
+      expect(spyMove).toBeCalled();
+      spyRange.mockClear();
+      body.updatePosition(false, { min: { percent: 2 }, max: { percent: 20 } });
+      expect(spyRange).toBeCalledWith(false, { min: 2, max: 20 }, undefined);
     });
   });
 
@@ -76,7 +84,8 @@ describe('Body class', () => {
     describe('handleSliderBodyMouseDown', () => {
       const spyNotify = jest.spyOn(Observer.prototype, 'notify');
       const spyMoveStart = jest.spyOn(Body.prototype, 'startPointMove');
-      body = new Body();
+      const range = new Range();
+      body = new Body({ range });
       body.buildHtml(true);
 
       test('not work on other children', () => {
@@ -89,6 +98,13 @@ describe('Body class', () => {
 
       test('work on body', () => {
         body.getElement().dispatchEvent(new MouseEvent('mousedown'));
+        expect(spyNotify).toBeCalled();
+        expect(spyMoveStart).toBeCalled();
+      });
+
+      test('work on range', () => {
+        // @ts-ignore
+        body.getElement().dispatchEvent(new MouseEvent('mousedown', { target: range.getElement() }));
         expect(spyNotify).toBeCalled();
         expect(spyMoveStart).toBeCalled();
       });
@@ -155,6 +171,20 @@ describe('Body class', () => {
         });
         points.min.notify(SliderEvent.PointMove, () => 0);
       }));
+    });
+
+    test('handleStopPointMove', () => {
+      const points = { min: new Point(), max: new Point() };
+      const moveBody = new Body({ points });
+      moveBody.buildHtml(true);
+      moveBody.startPointMove();
+      const spyGrab = jest.spyOn(Point.prototype, 'startGrabbing');
+      moveBody.updatePosition(true, { min: { percent: 10, tooltip: 77 } });
+      expect(spyGrab).toBeCalled();
+      spyGrab.mockClear();
+      points.min.notify(SliderEvent.StopPointMove);
+      moveBody.updatePosition(true, { min: { percent: 30, tooltip: 97 } });
+      expect(spyGrab).not.toBeCalled();
     });
   });
 });

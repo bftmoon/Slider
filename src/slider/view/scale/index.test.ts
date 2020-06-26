@@ -1,4 +1,6 @@
+import { SliderEvent } from 'support/enums';
 import CssClassUtil from 'utils/CssClassUtil';
+import PositionUtil from 'utils/PositionUtil';
 
 import Scale from './index';
 
@@ -7,6 +9,7 @@ describe('Scale class', () => {
 
   beforeEach(() => {
     scale = new Scale();
+    jest.clearAllMocks();
   });
 
   describe('buildHtml', () => {
@@ -35,10 +38,26 @@ describe('Scale class', () => {
       });
     });
 
-    test('toggleOrientation', () => {
-      const spy = jest.spyOn(CssClassUtil, 'toggleOrientation');
-      scale.toggleOrientation();
-      expect(spy).toBeCalledTimes(1);
+    describe('toggleOrientation', () => {
+      test('update element class', () => {
+        const spy = jest.spyOn(CssClassUtil, 'toggleOrientation');
+        scale.toggleOrientation();
+        expect(spy).toBeCalledTimes(1);
+      });
+      test('also update lines', () => {
+        Object.defineProperty(scale.getElement(), 'offsetHeight', {
+          value: 500,
+        });
+        scale.updateLines(1, 100, true);
+        const spy = jest.spyOn(CssClassUtil, 'toggleOrientation');
+        expect(scale.getElement().childElementCount).toBeGreaterThan(0);
+        scale.toggleOrientation();
+        expect(spy).toBeCalledTimes(100);
+        spy.mockClear();
+        scale.getElement().innerHTML = '';
+        scale.toggleOrientation();
+        expect(spy).toBeCalledTimes(1);
+      });
     });
 
     describe('updateLines', () => {
@@ -55,6 +74,29 @@ describe('Scale class', () => {
         scale.updateLines(2, 100, false);
         expect(scale.getElement().childElementCount).toBe(6);
       });
+
+      test('count of lines < 0', () => {
+        scale.updateLines(4, 3, true);
+        expect(scale.getElement().childElementCount).toBe(0);
+      });
     });
+
+    test('handleScaleMouseDown', () => new Promise((done) => {
+      const spy = jest.spyOn(PositionUtil, 'calc');
+      const event = new MouseEvent('mousedown');
+      scale.subscribe(SliderEvent.SliderClick, (func) => {
+        try {
+          func(true);
+          expect(spy).toBeCalledWith(true, scale.getElement(), event);
+          spy.mockClear();
+          func(false);
+          expect(spy).toBeCalledWith(false, scale.getElement(), event);
+          done();
+        } catch (error) {
+          done(error);
+        }
+      });
+      scale.getElement().dispatchEvent(event);
+    }));
   });
 });
