@@ -1,22 +1,19 @@
 class ObjectsUtil {
   static update<T>(main: T, inject: T) {
-    const result = {};
-    Object.keys(main).forEach((key) => {
-      // @ts-ignore
-      if (ObjectsUtil.isNotArrayOrPrimitive(key, main)) {
-        // @ts-ignore
+    type K = keyof T;
+    const result = {...main};
+    Object.keys(main).map(key => key as K).forEach((key) => {
+      if (ObjectsUtil.isDeepUpdateRequired(inject[key])) {
         result[key] = ObjectsUtil.update(main[key], inject[key]);
       } else {
-        // @ts-ignore
-        result[key] = inject?.hasOwnProperty(key) ? inject[key] : main[key];
+        result[key] = inject[key] !== undefined ? inject[key] : main[key];
       }
     });
     return result;
   }
 
-  private static isNotArrayOrPrimitive(key: string, object: Object) {
-    // @ts-ignore
-    return typeof object[key] === 'object' && !Array.isArray(object[key]);
+  private static isDeepUpdateRequired(value: any) {
+    return typeof value === 'object' && !Array.isArray(value) && value != null;
   }
 }
 
