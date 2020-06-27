@@ -1,4 +1,5 @@
 import { SliderEvent } from 'support/enums';
+import { CalcAbsolute } from 'support/types';
 import CssClassUtil from 'utils/CssClassUtil';
 
 import Point from '../point';
@@ -58,13 +59,23 @@ describe('Point class', () => {
     });
 
     describe('subscribe', () => {
-      test('handleMouseMove notify about changes', () => {
-        point.subscribe(SliderEvent.PointMove, (data) => {
-          expect(data).toEqual({ x: 1, y: 2 });
+      test('handleMouseMove notify about changes', () => new Promise((done) => {
+        point.getElement().getBoundingClientRect = () => ({
+          x: 3, y: 4, width: 8, height: 10,
         });
+        point.subscribe(SliderEvent.PointMove, (calcAbsolute: CalcAbsolute) => {
+          try {
+            expect(calcAbsolute(true)).toEqual(6);
+            expect(calcAbsolute(false)).toEqual(5);
+            done();
+          } catch (error) {
+            done(error);
+          }
+        });
+        point.getElement().dispatchEvent(new MouseEvent('mousedown', { clientX: 3, clientY: 5 }));
         const event = new MouseEvent('mousemove', { clientX: 1, clientY: 2 });
-        point.getElement().dispatchEvent(event);
-      });
+        document.dispatchEvent(event);
+      }));
     });
 
     describe('updatePosition', () => {
@@ -120,19 +131,23 @@ describe('Point class', () => {
           expect(spy).toBeCalled();
         });
 
-        test('calcAbsolute', () => {
+        test('calcAbsolute', () => new Promise((done) => {
           // @ts-ignore
           point.getElement().getBoundingClientRect = () => ({
             x: 5, y: 10, width: 10, height: 14,
           });
-          point.subscribe(SliderEvent.PointMove, (calcAbsolute) => {
-            expect(calcAbsolute(false)).toBe(44);
-            expect(calcAbsolute(true)).toBe(56);
+          point.subscribe(SliderEvent.PointMove, (calcAbsolute: CalcAbsolute) => {
+            try {
+              expect(calcAbsolute(false)).toBe(44);
+              expect(calcAbsolute(true)).toBe(56);
+              done();
+            } catch (error) {
+              done(error);
+            }
           });
           point.getElement().dispatchEvent(new MouseEvent('mousedown', { clientX: 6, clientY: 11 }));
           document.dispatchEvent(new MouseEvent('mousemove', { clientX: 40, clientY: 50 }));
-          expect.assertions(2);
-        });
+        }));
       });
     });
   });

@@ -1,8 +1,8 @@
 class ObjectsUtil {
   static update<T>(main: T, inject: T) {
     type K = keyof T;
-    const result = {...main};
-    Object.keys(main).map(key => key as K).forEach((key) => {
+    const result = { ...main };
+    Object.keys(main).map((key) => key as K).forEach((key) => {
       if (ObjectsUtil.isDeepUpdateRequired(inject[key])) {
         result[key] = ObjectsUtil.update(main[key], inject[key]);
       } else {

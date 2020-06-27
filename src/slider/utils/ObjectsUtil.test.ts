@@ -19,8 +19,8 @@ describe('ObjectsUtil class', () => {
       {
         saved: 0,
         changed: 1,
-        undef: {saved: 9},
-        null: {removed: 10},
+        undef: { saved: 9 },
+        null: { removed: 10 },
         deep: {
           saved: 2,
           changed: 3,
@@ -48,7 +48,7 @@ describe('ObjectsUtil class', () => {
       {
         saved: 0,
         changed: 6,
-        undef: {saved: 9},
+        undef: { saved: 9 },
         null: null,
         deep: {
           saved: 2,

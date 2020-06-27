@@ -1,5 +1,6 @@
 import Observer from 'observer';
 import { Position, SliderEvent } from 'support/enums';
+import { CalcPoint, CalcRatio } from 'support/types';
 import CssClassUtil from 'utils/CssClassUtil';
 import PositionUtil from 'utils/PositionUtil';
 
@@ -112,11 +113,11 @@ describe('Body class', () => {
       test('notify with position func', () => new Promise((done) => {
         const spyUtil = jest.spyOn(PositionUtil, 'calc');
         const event = new MouseEvent('mousedown');
-        body.subscribe(SliderEvent.SliderClick, (func) => {
+        body.subscribe(SliderEvent.SliderClick, (calcRatio: CalcRatio) => {
           try {
-            func(true);
+            calcRatio(true);
             expect(spyUtil).toBeCalledWith(true, body.getElement(), event);
-            func(false);
+            calcRatio(false);
             expect(spyUtil).toBeCalledWith(false, body.getElement(), event);
             done();
           } catch (error) {
@@ -136,11 +137,11 @@ describe('Body class', () => {
         moveBody.getElement().getBoundingClientRect = () => ({
           top: 1, height: 2, left: 2, width: 4,
         });
-        moveBody.subscribe(SliderEvent.PointMove, (func) => {
+        moveBody.subscribe(SliderEvent.PointMove, (calcPoint: CalcPoint) => {
           try {
-            let res = func(true);
+            let res = calcPoint(true);
             expect(res).toEqual({ position: Position.Max, ratio: -3 });
-            res = func(false);
+            res = calcPoint(false);
             expect(res).toEqual({ position: Position.Max, ratio: 1.75 });
             doneMax();
           } catch (error) {
@@ -158,11 +159,11 @@ describe('Body class', () => {
         moveBody.getElement().getBoundingClientRect = () => ({
           top: 1, height: 2, left: 2, width: 4,
         });
-        moveBody.subscribe(SliderEvent.PointMove, (func) => {
+        moveBody.subscribe(SliderEvent.PointMove, (calcPoint:CalcPoint) => {
           try {
-            let res = func(true);
+            let res = calcPoint(true);
             expect(res).toEqual({ position: Position.Min, ratio: 1.5 });
-            res = func(false);
+            res = calcPoint(false);
             expect(res).toEqual({ position: Position.Min, ratio: -0.5 });
             doneMin();
           } catch (error) {

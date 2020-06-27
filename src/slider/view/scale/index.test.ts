@@ -1,4 +1,5 @@
 import { SliderEvent } from 'support/enums';
+import { CalcRatio } from 'support/types';
 import CssClassUtil from 'utils/CssClassUtil';
 import PositionUtil from 'utils/PositionUtil';
 
@@ -84,12 +85,12 @@ describe('Scale class', () => {
     test('handleScaleMouseDown', () => new Promise((done) => {
       const spy = jest.spyOn(PositionUtil, 'calc');
       const event = new MouseEvent('mousedown');
-      scale.subscribe(SliderEvent.SliderClick, (func) => {
+      scale.subscribe(SliderEvent.SliderClick, (calcRatio: CalcRatio) => {
         try {
-          func(true);
+          calcRatio(true);
           expect(spy).toBeCalledWith(true, scale.getElement(), event);
           spy.mockClear();
-          func(false);
+          calcRatio(false);
           expect(spy).toBeCalledWith(false, scale.getElement(), event);
           done();
         } catch (error) {
