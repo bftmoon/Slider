@@ -60,6 +60,7 @@ describe('Point class', () => {
 
     describe('subscribe', () => {
       test('handleMouseMove notify about changes', () => new Promise((done) => {
+        // @ts-ignore
         point.getElement().getBoundingClientRect = () => ({
           x: 3, y: 4, width: 8, height: 10,
         });

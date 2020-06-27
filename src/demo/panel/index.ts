@@ -1,4 +1,4 @@
-import { SliderGroup } from 'slider/Slider';
+import { SliderGroup } from 'Slider';
 import SliderOptions, { MinMax } from 'support/types';
 
 class Panel {
