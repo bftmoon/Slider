@@ -7,7 +7,7 @@ import PositionUtil from 'utils/PositionUtil';
 import Point from '../point';
 import Range from '../range';
 
-import Body from './index';
+import Body from '.';
 
 describe('Body class', () => {
   let body: Body;

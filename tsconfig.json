@@ -5,6 +5,7 @@
     "target": "es5",
     "sourceMap": true,
     "skipLibCheck": true,
-    "baseUrl": "./src/slider"
+    "baseUrl": "./src/slider",
+    "moduleResolution": "Node"
   }
 }
