@@ -37,7 +37,7 @@ new SliderPlugin({
     withScale: true,
 })
 ```
-All options can be found in [SliderOptions](src/slider/support/types.ts)  
+
 All supported methods can be found in [Slider.ts](src/slider/Slider.ts)
 
 JQuery support multiple slider and more methods like:
