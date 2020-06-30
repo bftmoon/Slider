@@ -93,7 +93,7 @@ class Model {
     };
   }
 
-  getOptions() {
+  getOptions(): SliderOptions {
     return { ...this.options };
   }
 

@@ -16,7 +16,7 @@
     "gh-pages": "gh-pages -d dist coverage",
     "eslint": "eslint . --ext .ts",
     "eslint fix": "eslint . --ext .ts --fix",
-    "generate uml": "tplant --input src/slider/*.ts -o diagrams/uml.puml",
+    "generate uml": "tplant --input src/slider/SliderPlugin.ts -o diagrams/uml.puml",
     "prettier": "prettier src"
   },
   "author": "",

@@ -1,44 +1,61 @@
 @startuml
-class Observer {
-    -events: Map<SliderEvent, ((data?: any) => void)[]>
-    +subscribe(event: SliderEvent, callback: (data?: any) => void): Observer
-    +notify(event: SliderEvent, data?: any): void
-}
 
-class SliderError extends Error {
-    +name: string
+class ObjectsUtil {
+    +{static} update(main: T, inject: T): T
+    -{static} isDeepUpdateRequired(value: any): boolean
 }
 class Model {
-    #current: MinMax<number>
-    +border: MinMax<number>
-    +step: number
-    +isRange: boolean
-    +isVertical: boolean
-    +withTooltip: boolean
-    +withScale: boolean
-    #copyBool(__0: SliderOptions): void
-    +setCurrent(current: MinMax<number>): void
-    +getCurrent(): MinMax<number>
-    +getRealCurrent(): MinMax<number>
-    +getPoint(position: MinMaxPosition): PointData
-    +getCurrentPoints(): MinMax<PointData>
-    +getOptions(): SliderOptions
-    +getBoolOptions(): ViewBoolOptions
-    +getRangeSize(): number
-    +selectPosition(value: number): MinMaxPosition
-    +normalizeCurrentOrder(): void
-    +normalizeByStep(value: number): number
+    #options: SliderOptions
+    -rangeSavedMin: number
+    +selectPosition(value: number): Position
     +calcValue(ratio: number): number
-    +isOrderNormalizeRequired(): boolean
     +isSameCurrent(value: number): boolean
-    +willCurrentCollapse(position: MinMaxPosition, value: number): boolean
+    +willCurrentCollapse(position: Position, value: number): boolean
     +areCurrentEqual(): boolean
     +toggleRange(): void
     +toggleTooltip(): void
     +toggleOrientation(): void
     +toggleScale(): void
+    +setCurrent(position: Position, current: number): void
+    +getPoint(position: Position): PointData
+    +getPoints(): MinMax<PointData>
+    +getOptions(): SliderOptions
+    +getSize(): number
+    +isVertical(): boolean
+    +isRange(): boolean
+    +withTooltip(): boolean
+    +withScale(): boolean
+    +getCurrent(position: Position): number
+    +getCurrents(): { [x: string]: number; min?: number; max?: number; }
+    +getStep(): number
+    +getBorder(position: Position): number
+    #normalizeByStep(value: number): number
+    -normalizeOrder(): void
+    -normalizeSavedMin(): void
 }
-
+class SliderError extends Error {
+    +name: string
+}
+class ValidModel extends Model {
+    +setValidCurrent(current: number, position: Position): void
+    +setValidCurrents(currentMin: number, currentMax: number): void
+    +setValidStep(step: number): void
+    +setValidBorders(borderMin: number, borderMax: number): void
+    -validateOptions(): void
+    -validateInBorderRange(current: number): void
+    -isNotInBorderRange(value: number): boolean
+    -validateRangeActive(): void
+    -validateStep(step: number): void
+    -validateDivision(current: number): void
+    -isNotDivideToStepOrBorder(current: number): boolean
+    -{static} validatePositiveRange(min: number, max: number): void
+    -{static} validateBorders(borderMin: number, borderMax: number): void
+}
+class Observer {
+    -events: Map<SliderEvent, NotifyCallback[]>
+    +subscribe(event: SliderEvent, callback: NotifyCallback): void
+    +notify(event: SliderEvent, data?: any): void
+}
 class CssClassUtil {
     +{static} MAIN_PREFIX: "slider"
     +{static} initClass(element: HTMLElement, isVertical: boolean, name?: ClassNames): void
@@ -52,17 +69,6 @@ class PositionUtil {
     +{static} calc(isVertical: boolean, element: HTMLElement, event: MouseEvent): number
     -{static} calcForOwner(isVertical: boolean, element: HTMLElement, event: MouseEvent): number
 }
-class Scale extends Observer {
-    -element: HTMLElement
-    +buildHtml(isVertical: boolean): HTMLElement
-    +getElement(): HTMLElement
-    +toggleHidden(): void
-    +toggleOrientation(): void
-    +updateLines(step: number, size: number, isVertical: boolean): void
-    -handleScaleMouseDown: (event: MouseEvent) => void
-    -{static} buildLineHtml(isVertical: boolean, index: number, gap: number): HTMLDivElement
-    -{static} calcGapAndCount(childCount: number, elementSize: number, modelStep: number, modelSize: number): { percentGap: number; visibleCount: number; }
-}
 class Tooltip {
     -element: HTMLElement
     +getElement(): HTMLElement
@@ -73,7 +79,7 @@ class Tooltip {
 }
 class Point extends Observer {
     -element: HTMLDivElement
-    -moveDiff: RelativePoint
+    -moveDiff: { x: number; y: number; }
     -tooltip: Tooltip
     +buildHtml(isVertical: boolean): HTMLDivElement
     +getElement(): HTMLDivElement
@@ -106,26 +112,38 @@ class Body extends Observer {
     +toggleTooltip(): void
     +toggleOrientation(): void
     +updatePosition(isVertical: boolean, __1: MinMax<PointData>): void
+    -updatePointPosition(isVertical: boolean, point: PointData, position: Position): number
     +startPointMove(): void
     -handleStopPointMove: () => void
     -handleMinPointMove: (calcAbsolute: CalcAbsolute) => void
     -handleMaxPointMove: (calcAbsolute: CalcAbsolute) => void
     -handleSliderBodyMouseDown: (event: MouseEvent) => void
     -isRangeOrBodyElement(event: Event): boolean
-    -handlePointMove: (calcAbsolute: CalcAbsolute, position?: MinMaxPosition) => void
+    -handlePointMove: (calcAbsolute: CalcAbsolute, position?: Position) => void
     -calcValue(isVertical: boolean, coordinate: number): number
+}
+class Scale extends Observer {
+    -element: HTMLElement
+    +buildHtml(isVertical: boolean): HTMLElement
+    +getElement(): HTMLElement
+    +toggleHidden(): void
+    +toggleOrientation(): void
+    +updateLines(step: number, size: number, isVertical: boolean): void
+    -handleScaleMouseDown: (event: MouseEvent) => void
+    -{static} buildLineHtml(isVertical: boolean, index: number, gap: number): HTMLDivElement
+    -{static} calcGapAndCount(childCount: number, elementSize: number, modelStep: number, modelSize: number): { percentGap: number; visibleCount: number; }
 }
 class View extends Observer {
     -element: HTMLElement
     -body: Body
     -scale: Scale
-    +render(element: HTMLElement, __1: ViewBoolOptions, points: MinMax<PointData>, step: number, size: number): void
+    +render(__0: ViewOptions): void
     +toggleRange(): void
     +toggleTooltip(): void
     +toggleScale(): void
     +toggleOrientation(): void
     +updateScaleLines(step: number, size: number, isVertical: boolean): void
-    +updatePosition(isVertical: boolean, points: MinMax<PointData>): void
+    +updateCurrent(isVertical: boolean, points: MinMax<PointData>): void
     -handlePointMove: (calcPoint: CalcPoint) => void
     -handleScaleClick: (calcRatio: CalcRatio) => void
     -handleBodyClick: (calcRatio: CalcRatio) => void
@@ -134,31 +152,15 @@ class Presenter extends Observer {
     #model: Model
     #view: View
     +init(parent: HTMLElement): void
-    #updatePosition(modelValue: number, position: MinMaxPosition): void
-    -updateModelAndViewCurrent(modelValue: number, position: MinMaxPosition): void
+    #notifyValueChanged(): void
+    -updateCurrent(modelValue: number, position: Position): void
     -handleSliderClick: (calcRatio: CalcRatio) => void
     -handlePointMove: (calcPoint: CalcPoint) => void
-    -handlePointMoveByScale: (calcPositionWithDiff: CalcPositionWithDiff) => void
-}
-class ValidModel extends Model {
-    +setValidCurrent(current: number, position: MinMaxPosition): void
-    +setValidCurrents(currentMin: number, currentMax: number): void
-    +setValidStep(step: number): void
-    +setValidBorder(value: number, position: MinMaxPosition): void
-    +setValidBorders(borderMin: number, borderMax: number): void
-    -isInBorderRange(current: number): void
-    -isRangeActive(): void
-    -isValidStep(step: number): void
-    -isDivideToStepOrBorder(current: number): void
-    -isNotValidByStepOrBorder(current: number): boolean
-    -isValidBorder(value: number, position: MinMaxPosition): void
-    -{static} isPositiveRange(min: number, max: number): void
-    -{static} isValidBorders(borderMin: number, borderMax: number): void
 }
 class PresenterProxy extends Presenter {
     #model: ValidModel
     +getOptions(): SliderOptions
-    +addSlideListener(callback: (data: { value: number; position: MinMaxPosition; }) => void): void
+    +addSlideListener(callback: (data: MinMax<number>) => void): void
     +setCurrentRange(valueMin: number, valueMax: number): void
     +setCurrentRangeMin(value: number): void
     +setCurrentRangeMax(value: number): void
@@ -171,17 +173,14 @@ class PresenterProxy extends Presenter {
     +toggleScale(): void
     +toggleTooltip(): void
     +toggleOrientation(): void
-    -updatePointByStep(position: MinMaxPosition): void
-    -normalizePoints(border: number, checkIsOverflow: (current: number) => boolean): void
     -updateScaleLines(): void
 }
-class SliderPlugin extends PresenterProxy implements Slider
 interface SliderCommon {
     +toggleRange(): void
     +toggleScale(): void
     +toggleTooltip(): void
     +toggleOrientation(): void
-    +addSlideListener(callback: (data: { value: number; position: MinMaxPosition; }) => void): void
+    +addSlideListener(callback: (currents: MinMax<number>) => void): void
     +setCurrentRangeMin(value: number): void
     +setCurrentRangeMax(value: number): void
     +setCurrent(value: number): void
@@ -195,11 +194,13 @@ interface Slider extends SliderCommon {
     +getOptions(): SliderOptions
 }
 interface SliderGroup extends SliderCommon {
-    +getSlider(index: number): SliderPlugin
+    +getSlider(index: number): Slider
     +getElementsQuery(): JQuery<HTMLElement>
     +getOptions(): SliderOptions[]
     +size(): number
 }
+class SliderPlugin extends PresenterProxy implements Slider
+
 View..>CssClassUtil
 Body..>CssClassUtil
 Range..>CssClassUtil
@@ -208,6 +209,8 @@ Tooltip..>CssClassUtil
 
 Scale..>PositionUtil
 Body..>PositionUtil
+
+Model..>ObjectsUtil
 
 PresenterProxy..>SliderError
 ValidModel..>SliderError
@@ -223,4 +226,5 @@ View o-- Scale
 Body o-- Point
 Body o-- Range
 Point o-- Tooltip
+
 @enduml
