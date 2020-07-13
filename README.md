@@ -8,14 +8,20 @@ Slider plugin with optional jQuery interface for FSD
 ### How to:
 
 ##### Install and run project
+If you haven't installed npm (or yarn knowledge) you should download and install [Node.js](https://nodejs.org/en/)
 
+Installation:
 ```
 git clone https://github.com/bigfatmoon/Slider.git
+cd Slider
 npm install
-npm run prod
 ```
+Run in production mode: ```npm run prod```  
+Run in development mode: ```npm run dev```
 
-You can also use any other script in [package.json](./package.json) instead "prod"
+##### Check code quality
+With ESLint: ```npm run eslint```  
+By coverage: ```npm run coverage```
 
 ##### Create slider
 
