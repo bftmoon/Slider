@@ -17,7 +17,8 @@ cd Slider
 npm install
 ```
 Run in production mode: ```npm run prod```  
-Run in development mode: ```npm run dev```
+Run in development mode: ```npm run dev```  
+Build project: ```npm run build```
 
 ##### Check code quality
 With ESLint: ```npm run eslint```  
