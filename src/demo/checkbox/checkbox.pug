@@ -1,0 +1,7 @@
+mixin checkbox({name, title, isChecked=false})
+  label.checkbox
+    input(type="checkbox" name=name checked=isChecked).checkbox__input
+    .checkbox__title= title
+    if block
+      .checkbox__content
+        block

@@ -1,0 +1,13 @@
+.field {
+  &__input {
+    margin-top: 3px;
+    background: #1b1b1b;
+    width: 100%;
+    border: 1px solid #453386 {
+      radius: 4px;
+    }
+    color: whitesmoke;
+    padding: 5px;
+    -moz-appearance: textfield;
+  }
+}

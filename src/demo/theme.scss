@@ -1,14 +1,6 @@
-input {
-  background: #c2c2c2;
-  border: 1px solid darkgrey {
-    radius: 4px;
-  }
-  padding: 4px;
-}
-
 html {
-  background: #525252;
-  height: 100%;
+  background: radial-gradient(ellipse at top left, #171717 20%, #262626);
+  min-height: 100%;
 }
 
 body {

@@ -1,0 +1,42 @@
+.checkbox {
+  padding: 2px;
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__title {
+    display: flex;
+  }
+
+  &__title:before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    box-shadow: 0 0 4px #10445c;
+    border-radius: 4px;
+    background: #1b1b1b;
+    display: inline-flex;
+  }
+
+  &__input:checked + &__title:before {
+    content: ' \2718';
+    line-height: 18px;
+    justify-content: center;
+    text-shadow: 0 0 0.5px whitesmoke;
+    color: #453386;
+  }
+
+  &__content {
+    display: none;
+  }
+
+  &__input:checked ~ &__content {
+    display: block;
+    margin-top: 10px;
+  }
+}

@@ -1,7 +1,9 @@
 import { SliderGroup } from 'Slider';
 import SliderOptions, { MinMax } from 'support/types';
+import '../checkbox/checkbox.scss'
+import '../field/field.scss'
 
-class Panel {
+class Index {
   private changeableInputs: MinMax<HTMLInputElement> = {};
 
   // eslint-disable-next-line no-useless-constructor, no-empty-function
@@ -113,28 +115,28 @@ class Panel {
   };
 
   private handleCurrentMinInput = (event: InputEvent) => {
-    this.sliderGroup.setCurrentRangeMin(Panel.getNumber(event));
+    this.sliderGroup.setCurrentRangeMin(Index.getNumber(event));
   };
 
   private handleCurrentMaxInput = (event: InputEvent) => {
-    this.sliderGroup.setCurrentRangeMax(Panel.getNumber(event));
+    this.sliderGroup.setCurrentRangeMax(Index.getNumber(event));
   };
 
   private handleStepInput = (event: InputEvent) => {
-    this.sliderGroup.setStep(Panel.getNumber(event));
+    this.sliderGroup.setStep(Index.getNumber(event));
   };
 
   private handleMaxInput = (event: InputEvent) => {
-    this.sliderGroup.setBorderMax(Panel.getNumber(event));
+    this.sliderGroup.setBorderMax(Index.getNumber(event));
   };
 
   private handleMinInput = (event: InputEvent) => {
-    this.sliderGroup.setBorderMin(Panel.getNumber(event));
+    this.sliderGroup.setBorderMin(Index.getNumber(event));
   };
 
   private static getNumber(event: InputEvent) {
     const { value } = event.target as HTMLInputElement;
-    if (!Panel.isNumber(value)) throw Error('Number required');
+    if (!Index.isNumber(value)) throw Error('Number required');
     return Number(value);
   }
 
@@ -143,4 +145,4 @@ class Panel {
   }
 }
 
-export default Panel;
+export default Index;

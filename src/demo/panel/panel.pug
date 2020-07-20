@@ -1,25 +1,14 @@
+include ../checkbox/checkbox
+include ../field/field
+
 mixin panel
   .panel.js-panel
-    label.panel__input-label Min
-      input(name='min' type='number').panel__min
-    label.panel__input-label Max
-      input(name='max' type='number').panel__max
-    label.panel__input-label Step
-      input(name='step' type='number').panel__step
-    label.panel__input-label Current
-      input(name='currentMax' type='number').panel__current-max
-    label.panel__checkbox-label
-      input(type="checkbox" name='isRange').panel__range
-      | Is range
-      .panel__config
-        label.panel__input-label Current 2
-          input(name='currentMin' type='number').panel__current-min
-    label.panel__checkbox-label
-      input(type="checkbox" name='isVertical').panel__vertical
-      | Is vertical
-    label.panel__checkbox-label
-      input(type="checkbox" name='withTooltip').panel__tooltip
-      | With tooltip
-    label.panel__checkbox-label
-      input(type="checkbox" name='withScale').panel__scale
-      | With scale
+    +field({name: "min", type:"number", label:"Min"})
+    +field({name: "max", type:"number", label:"Max"})
+    +field({name: "step", type:"number", label:"Step"})
+    +field({name: "currentMax", type:"number", label:"Current"})
+    +checkbox({name: "isRange", title: "Is range"})
+      +field({name: "currentMin", type: "number", label: "Current 2"})
+    +checkbox({name:"isVertical", title:"Is vertical"})
+    +checkbox({name:"withTooltip", title:"With tooltip"})
+    +checkbox({name:"withScale", title:"With scale"})

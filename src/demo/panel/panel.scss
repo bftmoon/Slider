@@ -2,25 +2,12 @@
   display: flex;
   flex-direction: column;
   max-width: 250px;
-  background: #7f7f7f;
+  background: #14171c;
+  color: whitesmoke;
   padding: 30px;
-  border-radius: 10px;
+  box-shadow: 0 0 5px #453386, inset 0 0 5px #10445c;
 
-  &__input-label {
-    margin-top: 5px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__checkbox-label {
-    margin-top: 5px;
-  }
-
-  &__config {
-    display: none;
-  }
-
-  &__range:checked + &__config {
-    display: initial;
+  > * {
+    margin: 5px;
   }
 }
